@@ -22,49 +22,49 @@
 FontComboBox::FontComboColums FontComboBox::s_fontComboCols;
 
 FontComboBox::FontComboBox()
-	: Glib::ObjectBase("FontComboBox"), Gtk::ComboBox(true) {
-	init();
+    : Glib::ObjectBase("FontComboBox"), Gtk::ComboBox(true) {
+    init();
 }
 
 FontComboBox::FontComboBox(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Builder>& builder)
-	: Glib::ObjectBase("FontComboBox"), Gtk::ComboBox(cobject) {
-	init();
+    : Glib::ObjectBase("FontComboBox"), Gtk::ComboBox(cobject) {
+    init();
 }
 
 void FontComboBox::init() {
-	set_model(getModel());
-	set_entry_text_column(s_fontComboCols.fontFamily);
-	add_attribute(*get_first_cell(), "family", s_fontComboCols.fontFamily);
-	Glib::RefPtr<Gtk::EntryCompletion> completion = Gtk::EntryCompletion::create();
-	completion->set_model(getModel());
-	completion->set_text_column(s_fontComboCols.fontFamily);
-	get_entry()->set_completion(completion);
-	CONNECT(this, changed, [this] { m_signal_font_changed.emit(get_active_font()); });
+    set_model(getModel());
+    set_entry_text_column(s_fontComboCols.fontFamily);
+    add_attribute(*get_first_cell(), "family", s_fontComboCols.fontFamily);
+    Glib::RefPtr<Gtk::EntryCompletion> completion = Gtk::EntryCompletion::create();
+    completion->set_model(getModel());
+    completion->set_text_column(s_fontComboCols.fontFamily);
+    get_entry()->set_completion(completion);
+    CONNECT(this, changed, [this] { m_signal_font_changed.emit(get_active_font()); });
 }
 
 Glib::ustring FontComboBox::get_active_font() const {
-	return get_entry()->get_text();
+    return get_entry()->get_text();
 }
 
 void FontComboBox::set_active_font(const Glib::ustring& font) {
-	get_entry()->set_text(font);
+    get_entry()->set_text(font);
 }
 
 Glib::RefPtr<Gtk::ListStore> FontComboBox::getModel() {
-	static Glib::RefPtr<Gtk::ListStore> fontComboModel;
-	if (!fontComboModel) {
-		std::vector<Glib::ustring> fontFamilies;
-		Glib::RefPtr<Pango::FontMap> fontMap = Glib::wrap(pango_cairo_font_map_get_default(),  true);
-		for (const Glib::RefPtr<Pango::FontFamily>& family : fontMap->list_families()) {
-			fontFamilies.push_back(family->get_name());
-		}
-		std::sort(fontFamilies.begin(), fontFamilies.end(), [](const Glib::ustring & a, const Glib::ustring & b) {
-			return a.casefold().compare(b.casefold()) < 0;
-		});
-		fontComboModel = Gtk::ListStore::create(s_fontComboCols);
-		for (const Glib::ustring& family : fontFamilies) {
-			(*fontComboModel->append()) [s_fontComboCols.fontFamily] = family;
-		}
-	}
-	return fontComboModel;
+    static Glib::RefPtr<Gtk::ListStore> fontComboModel;
+    if (!fontComboModel) {
+        std::vector<Glib::ustring> fontFamilies;
+        Glib::RefPtr<Pango::FontMap> fontMap = Glib::wrap(pango_cairo_font_map_get_default(),  true);
+        for (const Glib::RefPtr<Pango::FontFamily>& family : fontMap->list_families()) {
+            fontFamilies.push_back(family->get_name());
+        }
+        std::sort(fontFamilies.begin(), fontFamilies.end(), [](const Glib::ustring & a, const Glib::ustring & b) {
+            return a.casefold().compare(b.casefold()) < 0;
+        });
+        fontComboModel = Gtk::ListStore::create(s_fontComboCols);
+        for (const Glib::ustring& family : fontFamilies) {
+            (*fontComboModel->append()) [s_fontComboCols.fontFamily] = family;
+        }
+    }
+    return fontComboModel;
 }

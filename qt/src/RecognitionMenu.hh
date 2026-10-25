@@ -31,36 +31,36 @@
 class QActionGroup;
 
 class RecognitionMenu : public QMenu {
-	Q_OBJECT
+    Q_OBJECT
 public:
-	RecognitionMenu(QWidget* parent = nullptr);
+    RecognitionMenu(QWidget* parent = nullptr);
 
-	void rebuild();
-	const Config::Lang& getRecognitionLanguage() const { return m_curLang; }
-	tesseract::PageSegMode getPageSegmentationMode() const;
-	QString getCharacterWhitelist() const;
-	QString getCharacterBlacklist() const;
+    void rebuild();
+    const Config::Lang& getRecognitionLanguage() const { return m_curLang; }
+    tesseract::PageSegMode getPageSegmentationMode() const;
+    QString getCharacterWhitelist() const;
+    QString getCharacterBlacklist() const;
 
 signals:
-	void languageChanged(Config::Lang lang);
+    void languageChanged(Config::Lang lang);
 
 private slots:
-	void psmSelected(QAction* action);
-	void setLanguage(Config::Lang lang);
-	void setMultiLanguage();
+    void psmSelected(QAction* action);
+    void setLanguage(Config::Lang lang);
+    void setMultiLanguage();
 
 private:
-	Config::Lang m_curLang;
+    Config::Lang m_curLang;
 
-	QMenu* m_menuMultilanguage = nullptr;
-	QActionGroup* m_langMenuRadioGroup = nullptr;
-	QActionGroup* m_langMenuCheckGroup = nullptr;
-	QActionGroup* m_psmCheckGroup = nullptr;
-	QAction* m_multilingualAction = nullptr;
-	QDialog* m_charListDialog = nullptr;
-	Ui::CharacterListDialog m_charListDialogUi;
+    QMenu* m_menuMultilanguage = nullptr;
+    QActionGroup* m_langMenuRadioGroup = nullptr;
+    QActionGroup* m_langMenuCheckGroup = nullptr;
+    QActionGroup* m_psmCheckGroup = nullptr;
+    QAction* m_multilingualAction = nullptr;
+    QDialog* m_charListDialog = nullptr;
+    Ui::CharacterListDialog m_charListDialogUi;
 
-	bool eventFilter(QObject* obj, QEvent* ev) override;
+    bool eventFilter(QObject* obj, QEvent* ev) override;
 };
 
 #endif // RECOGNITIONMENU_HH

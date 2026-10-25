@@ -22,40 +22,40 @@
 #include "SubstitutionsManager.hh"
 
 SearchReplaceFrame::SearchReplaceFrame(QWidget* parent, Qt::WindowFlags f)
-	: QFrame(parent, f) {
-	ui.setupUi(this);
+    : QFrame(parent, f) {
+    ui.setupUi(this);
 
-	m_substitutionsManager = new SubstitutionsManager(this);
+    m_substitutionsManager = new SubstitutionsManager(this);
 
-	connect(ui.checkBoxMatchCase, &QCheckBox::toggled, this, &SearchReplaceFrame::clearErrorState);
-	connect(ui.lineEditSearch, &QLineEdit::textChanged, this, &SearchReplaceFrame::clearErrorState);
-	connect(ui.lineEditSearch, &QLineEdit::returnPressed, this, &SearchReplaceFrame::findNext);
-	connect(ui.lineEditReplace, &QLineEdit::returnPressed, this, &SearchReplaceFrame::replaceNext);
-	connect(ui.toolButtonFindNext, &QToolButton::clicked, this, &SearchReplaceFrame::findNext);
-	connect(ui.toolButtonFindPrev, &QToolButton::clicked, this, &SearchReplaceFrame::findPrev);
-	connect(ui.toolButtonReplace, &QToolButton::clicked, this, &SearchReplaceFrame::replaceNext);
-	connect(ui.toolButtonReplaceAll, &QToolButton::clicked, this, &SearchReplaceFrame::emitReplaceAll);
+    connect(ui.checkBoxMatchCase, &QCheckBox::toggled, this, &SearchReplaceFrame::clearErrorState);
+    connect(ui.lineEditSearch, &QLineEdit::textChanged, this, &SearchReplaceFrame::clearErrorState);
+    connect(ui.lineEditSearch, &QLineEdit::returnPressed, this, &SearchReplaceFrame::findNext);
+    connect(ui.lineEditReplace, &QLineEdit::returnPressed, this, &SearchReplaceFrame::replaceNext);
+    connect(ui.toolButtonFindNext, &QToolButton::clicked, this, &SearchReplaceFrame::findNext);
+    connect(ui.toolButtonFindPrev, &QToolButton::clicked, this, &SearchReplaceFrame::findPrev);
+    connect(ui.toolButtonReplace, &QToolButton::clicked, this, &SearchReplaceFrame::replaceNext);
+    connect(ui.toolButtonReplaceAll, &QToolButton::clicked, this, &SearchReplaceFrame::emitReplaceAll);
 
-	connect(ui.pushButtonSubstitutions, &QPushButton::clicked, m_substitutionsManager, &SubstitutionsManager::show);
-	connect(ui.pushButtonSubstitutions, &QPushButton::clicked, m_substitutionsManager, &SubstitutionsManager::raise);
-	connect(m_substitutionsManager, &SubstitutionsManager::applySubstitutions, this, &SearchReplaceFrame::emitApplySubstitutions);
+    connect(ui.pushButtonSubstitutions, &QPushButton::clicked, m_substitutionsManager, &SubstitutionsManager::show);
+    connect(ui.pushButtonSubstitutions, &QPushButton::clicked, m_substitutionsManager, &SubstitutionsManager::raise);
+    connect(m_substitutionsManager, &SubstitutionsManager::applySubstitutions, this, &SearchReplaceFrame::emitApplySubstitutions);
 
-	ADD_SETTING(SwitchSetting("searchmatchcase", ui.checkBoxMatchCase));
+    ADD_SETTING(SwitchSetting("searchmatchcase", ui.checkBoxMatchCase));
 }
 
 void SearchReplaceFrame::clear() {
-	ui.lineEditSearch->clear();
-	ui.lineEditReplace->clear();
+    ui.lineEditSearch->clear();
+    ui.lineEditReplace->clear();
 }
 
 void SearchReplaceFrame::clearErrorState() {
-	ui.lineEditSearch->setStyleSheet("");
+    ui.lineEditSearch->setStyleSheet("");
 }
 
 void SearchReplaceFrame::setErrorState() {
-	ui.lineEditSearch->setStyleSheet("background: #FF7777; color: #FFFFFF;");
+    ui.lineEditSearch->setStyleSheet("background: #FF7777; color: #FFFFFF;");
 }
 
 void SearchReplaceFrame::hideSubstitutionsManager() {
-	m_substitutionsManager->hide();
+    m_substitutionsManager->hide();
 }

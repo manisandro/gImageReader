@@ -31,80 +31,80 @@ class DisplayRenderer;
 class FileTreeModel;
 
 struct Source : public DataObject {
-	Source(const Glib::RefPtr<Gio::File>& _file, const std::string& _displayname, const Glib::RefPtr<Gio::FileMonitor>& _monitor, bool _isTemp = false)
-		: file(_file), displayname(_displayname), monitor(_monitor), isTemp(_isTemp) {}
-	~Source() {
-		if (isTemp && file) {
-			try {
-				file->remove();
-			} catch (const Glib::Error&) {
-				/* pass */
-			}
-		}
-	}
-	Glib::RefPtr<Gio::File> file;
-	std::string displayname;
-	Glib::ustring password;
-	Glib::RefPtr<Gio::FileMonitor> monitor;
-	bool isTemp;
-	int brightness = 0;
-	int contrast = 0;
-	int resolution = -1;
-	int page = 1;
-	std::vector<double> angle;
-	bool invert = false;
+    Source(const Glib::RefPtr<Gio::File>& _file, const std::string& _displayname, const Glib::RefPtr<Gio::FileMonitor>& _monitor, bool _isTemp = false)
+        : file(_file), displayname(_displayname), monitor(_monitor), isTemp(_isTemp) {}
+    ~Source() {
+        if (isTemp && file) {
+            try {
+                file->remove();
+            } catch (const Glib::Error&) {
+                /* pass */
+            }
+        }
+    }
+    Glib::RefPtr<Gio::File> file;
+    std::string displayname;
+    Glib::ustring password;
+    Glib::RefPtr<Gio::FileMonitor> monitor;
+    bool isTemp;
+    int brightness = 0;
+    int contrast = 0;
+    int resolution = -1;
+    int page = 1;
+    std::vector<double> angle;
+    bool invert = false;
 
-	//Additional info from original file
-	Glib::ustring author, title, creator, producer, keywords, subject;
-	guint pdfVersionMajor = -1, pdfVersionMinor = -1;
+    //Additional info from original file
+    Glib::ustring author, title, creator, producer, keywords, subject;
+    guint pdfVersionMajor = -1, pdfVersionMinor = -1;
 };
 
 class SourceManager {
 public:
-	SourceManager(const Ui::MainWindow& _ui);
-	~SourceManager();
+    SourceManager(const Ui::MainWindow& _ui);
+    ~SourceManager();
 
-	int addSources(const std::vector<Glib::RefPtr<Gio::File >>& files, bool suppressWarnings = false);
-	bool addSource(Glib::RefPtr<Gio::File> file, bool suppressWarnings) {
-		return addSources({file}, suppressWarnings) == 1;
-	}
-	std::vector<Source*> getSelectedSources() const;
-	sigc::signal<void> signal_sourceChanged() {
-		return m_signal_sourceChanged;
-	}
+    int addSources(const std::vector<Glib::RefPtr<Gio::File >>& files, bool suppressWarnings = false);
+    bool addSource(Glib::RefPtr<Gio::File> file, bool suppressWarnings) {
+        return addSources({file}, suppressWarnings) == 1;
+    }
+    std::vector<Source*> getSelectedSources() const;
+    sigc::signal<void> signal_sourceChanged() {
+        return m_signal_sourceChanged;
+    }
 
 private:
-	enum class PdfWithTextAction {Ask, Add, Skip};
-	const Ui::MainWindow& ui;
-	ClassData m_classdata;
-	Glib::RefPtr<FileTreeModel> m_fileTreeModel;
-	std::map<std::string, std::pair<int, Glib::RefPtr<Gio::FileMonitor >>> m_watchedDirectories;
-	Glib::RefPtr<Gtk::Clipboard> m_clipboard;
-	int m_screenshotCount = 0;
-	int m_pasteCount = 0;
-	sigc::signal<void> m_signal_sourceChanged;
-	sigc::connection m_connectionSelectionChanged;
-	bool m_inSelectionChanged = false;
+    enum class PdfWithTextAction {Ask, Add, Skip};
+    const Ui::MainWindow& ui;
+    ClassData m_classdata;
+    Glib::RefPtr<FileTreeModel> m_fileTreeModel;
+    std::map<std::string, std::pair<int, Glib::RefPtr<Gio::FileMonitor >>> m_watchedDirectories;
+    Glib::RefPtr<Gtk::Clipboard> m_clipboard;
+    int m_screenshotCount = 0;
+    int m_pasteCount = 0;
+    sigc::signal<void> m_signal_sourceChanged;
+    sigc::connection m_connectionSelectionChanged;
+    bool m_inSelectionChanged = false;
 
-	void clearSources();
-	void indexClicked(const Gtk::TreePath& path, Gtk::TreeViewColumn* col);
-	void fileChanged(const Glib::RefPtr<Gio::File>& file, const Glib::RefPtr<Gio::File>& otherFile, Gio::FileMonitorEvent event);
-	void dirChanged(const Glib::RefPtr<Gio::File>& file, const Glib::RefPtr<Gio::File>& otherFile, Gio::FileMonitorEvent event);
-	void addFolder();
-	void openSources();
-	void pasteClipboard();
-	bool checkPdfSource(Source* source, PdfWithTextAction& textAction, std::vector<Glib::ustring>& failed) const;
-	void removeSource(bool deleteFile);
-	void savePixbuf(const Glib::RefPtr<Gdk::Pixbuf>& pixbuf, const std::string& displayname);
-	void selectionChanged();
-	void selectRecursive(const Gtk::TreeIter& iter, std::vector<Gtk::TreeIter>& selection) const;
-	void takeScreenshot();
-	void onScreenshotResponse(const Glib::RefPtr<Gio::DBus::Connection>&,
-	                          const Glib::ustring&,
-	                          const Glib::ustring&,
-	                          const Glib::ustring&,
-	                          const Glib::ustring&,
-	                          const Glib::VariantContainerBase& parameters);
+    void clearSources();
+    void indexClicked(const Gtk::TreePath& path, Gtk::TreeViewColumn* col);
+    void fileChanged(const Glib::RefPtr<Gio::File>& file, const Glib::RefPtr<Gio::File>& otherFile, Gio::FileMonitorEvent event);
+    void dirChanged(const Glib::RefPtr<Gio::File>& file, const Glib::RefPtr<Gio::File>& otherFile, Gio::FileMonitorEvent event);
+    void addFolder();
+    void openSources();
+    void pasteClipboard();
+    bool checkPdfSource(Source* source, PdfWithTextAction& textAction, std::vector<Glib::ustring>& failed) const;
+    void removeSource(bool deleteFile);
+    void savePixbuf(const Glib::RefPtr<Gdk::Pixbuf>& pixbuf, const std::string& displayname);
+    void selectionChanged();
+    void selectRecursive(const Gtk::TreeIter& iter, std::vector<Gtk::TreeIter>& selection) const;
+    void takeScreenshot();
+    void onScreenshotResponse(const Glib::RefPtr<Gio::DBus::Connection>&,
+        const Glib::ustring&,
+        const Glib::ustring&,
+        const Glib::ustring&,
+        const Glib::ustring&,
+        const Glib::VariantContainerBase& parameters);
 };
 
 #endif // SOURCEMANAGER_HH

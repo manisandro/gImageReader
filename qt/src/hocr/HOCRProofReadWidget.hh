@@ -30,38 +30,38 @@ class QVBoxLayout;
 class HOCRItem;
 
 class HOCRProofReadWidget : public QFrame {
-	Q_OBJECT
+    Q_OBJECT
 public:
-	HOCRProofReadWidget(QTreeView* treeView, QWidget* parent = nullptr);
-	void setProofreadEnabled(bool enabled);
-	void clear();
-	QTreeView* documentTree() const { return m_treeView; }
-	void setConfidenceLabel(int wconf);
-	QString confidenceStyle(int wconf) const;
-	void adjustFontSize(int diff);
+    HOCRProofReadWidget(QTreeView* treeView, QWidget* parent = nullptr);
+    void setProofreadEnabled(bool enabled);
+    void clear();
+    QTreeView* documentTree() const { return m_treeView; }
+    void setConfidenceLabel(int wconf);
+    QString confidenceStyle(int wconf) const;
+    void adjustFontSize(int diff);
 
 private:
-	class LineEdit;
+    class LineEdit;
 
-	QTreeView* m_treeView = nullptr;
-	QVBoxLayout* m_linesLayout = nullptr;
-	const HOCRItem* m_currentLine = nullptr;
-	QWidget* m_controlsWidget = nullptr;
-	QLabel* m_confidenceLabel = nullptr;
-	QMap<const HOCRItem*, QWidget*> m_currentLines;
-	QSpinBox* m_spinLinesBefore = nullptr;
-	QSpinBox* m_spinLinesAfter = nullptr;
-	int m_fontSizeDiff = 0;
-	bool m_enabled = false;
+    QTreeView* m_treeView = nullptr;
+    QVBoxLayout* m_linesLayout = nullptr;
+    const HOCRItem* m_currentLine = nullptr;
+    QWidget* m_controlsWidget = nullptr;
+    QLabel* m_confidenceLabel = nullptr;
+    QMap<const HOCRItem*, QWidget*> m_currentLines;
+    QSpinBox* m_spinLinesBefore = nullptr;
+    QSpinBox* m_spinLinesAfter = nullptr;
+    int m_fontSizeDiff = 0;
+    bool m_enabled = false;
 
-	// Disable auto tab handling
-	bool focusNextPrevChild(bool) override { return false; }
+    // Disable auto tab handling
+    bool focusNextPrevChild(bool) override { return false; }
 
-	void repositionWidget();
+    void repositionWidget();
 
 private slots:
-	void updateWidget(bool force = false);
-	void showShortcutsDialog();
+    void updateWidget(bool force = false);
+    void showShortcutsDialog();
 };
 
 

@@ -30,37 +30,37 @@ class HOCRPdfExportWidget;
 class HOCRBatchExportDialog {
 
 public:
-	HOCRBatchExportDialog(Gtk::Window* parent = nullptr);
-	~HOCRBatchExportDialog();
-	void run();
+    HOCRBatchExportDialog(Gtk::Window* parent = nullptr);
+    ~HOCRBatchExportDialog();
+    void run();
 
 private:
-	enum ExportMode { ExportPdf, ExportOdt, ExportTxt };
-	Ui::HOCRBatchExportDialog ui;
+    enum ExportMode { ExportPdf, ExportOdt, ExportTxt };
+    Ui::HOCRBatchExportDialog ui;
 
-	ClassData m_classdata;
-	Glib::RefPtr<FileTreeModel> m_sourceTreeModel;
-	Glib::RefPtr<FileTreeModel> m_outputTreeModel;
-	std::map<std::string, std::vector<Glib::RefPtr<Gio::File >>> m_outputMap;
-	HOCRPdfExportWidget* m_pdfExportWidget = nullptr;
-	sigc::connection m_connectionPreviewTimeout;
+    ClassData m_classdata;
+    Glib::RefPtr<FileTreeModel> m_sourceTreeModel;
+    Glib::RefPtr<FileTreeModel> m_outputTreeModel;
+    std::map<std::string, std::vector<Glib::RefPtr<Gio::File >>> m_outputMap;
+    HOCRPdfExportWidget* m_pdfExportWidget = nullptr;
+    sigc::connection m_connectionPreviewTimeout;
 
-	struct FormatComboColums : public Gtk::TreeModel::ColumnRecord {
-		Gtk::TreeModelColumn<ExportMode> format;
-		Gtk::TreeModelColumn<Glib::ustring> label;
-		FormatComboColums() {
-			add(format);
-			add(label);
-		}
-	} m_formatComboCols;
+    struct FormatComboColums : public Gtk::TreeModel::ColumnRecord {
+        Gtk::TreeModelColumn<ExportMode> format;
+        Gtk::TreeModelColumn<Glib::ustring> label;
+        FormatComboColums() {
+            add(format);
+            add(label);
+        }
+    } m_formatComboCols;
 
-	void setupFileTreeView(Gtk::TreeView* treeView);
-	void apply();
-	void setSourceFolder();
-	void scanSourceDir(const std::string& dir, std::vector<std::string>& files);
-	void setExportFormat();
-	bool updateExportPreview();
-	void updateOutputTree();
+    void setupFileTreeView(Gtk::TreeView* treeView);
+    void apply();
+    void setSourceFolder();
+    void scanSourceDir(const std::string& dir, std::vector<std::string>& files);
+    void setExportFormat();
+    bool updateExportPreview();
+    void updateOutputTree();
 };
 
 #endif // HOCRBATCHEXPORTDIALOG_HH

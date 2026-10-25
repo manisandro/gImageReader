@@ -22,28 +22,28 @@ typedef struct ddjvu_format_s     ddjvu_format_t;
 
 class DjVuDocument {
 public:
-	DjVuDocument();
-	~DjVuDocument();
+    DjVuDocument();
+    ~DjVuDocument();
 
-	struct Page {
-		int width;
-		int height;
-		int dpi;
-	};
+    struct Page {
+        int width;
+        int height;
+        int dpi;
+    };
 
-	bool openFile(const std::string& fileName);
-	void closeFile();
-	Cairo::RefPtr<Cairo::ImageSurface> image(int pageno, int resolution);
-	int pageCount() const {
-		return m_pages.size();
-	}
-	const Page& page(int pageno) const { return m_pages[pageno]; }
+    bool openFile(const std::string& fileName);
+    void closeFile();
+    Cairo::RefPtr<Cairo::ImageSurface> image(int pageno, int resolution);
+    int pageCount() const {
+        return m_pages.size();
+    }
+    const Page& page(int pageno) const { return m_pages[pageno]; }
 
 private:
-	ddjvu_context_t* m_djvu_cxt = nullptr;
-	ddjvu_document_t* m_djvu_document = nullptr;
-	ddjvu_format_t* m_format = nullptr;
-	std::vector<Page> m_pages;
+    ddjvu_context_t* m_djvu_cxt = nullptr;
+    ddjvu_document_t* m_djvu_document = nullptr;
+    ddjvu_format_t* m_format = nullptr;
+    std::vector<Page> m_pages;
 };
 
 #endif

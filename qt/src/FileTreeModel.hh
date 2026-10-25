@@ -26,74 +26,74 @@
 
 class FileTreeModel : public QAbstractItemModel {
 public:
-	FileTreeModel(QObject* parent = nullptr);
+    FileTreeModel(QObject* parent = nullptr);
 
-	QModelIndex insertFile(QString filePath, DataObject* data, const QString& displayName = QString());
-	QModelIndex findFile(const QString& filePath, bool isFile = true) const;
-	bool removeIndex(const QModelIndex& index);
-	void clear();
-	bool isDir(const QModelIndex& index) const;
-	void setFileEditable(const QModelIndex& index, bool editable);
-	bool isFileEditable(const QModelIndex& index) const;
+    QModelIndex insertFile(QString filePath, DataObject* data, const QString& displayName = QString());
+    QModelIndex findFile(const QString& filePath, bool isFile = true) const;
+    bool removeIndex(const QModelIndex& index);
+    void clear();
+    bool isDir(const QModelIndex& index) const;
+    void setFileEditable(const QModelIndex& index, bool editable);
+    bool isFileEditable(const QModelIndex& index) const;
 
-	template<class T>
-	T fileData(const QModelIndex& index) const { return static_cast<T> (fileData(index)); }
-	DataObject* fileData(const QModelIndex& index) const;
+    template<class T>
+    T fileData(const QModelIndex& index) const { return static_cast<T> (fileData(index)); }
+    DataObject* fileData(const QModelIndex& index) const;
 
-	QVariant data(const QModelIndex& index, int role) const override;
-	Qt::ItemFlags flags(const QModelIndex& index) const override;
-	QModelIndex index(int row, int column, const QModelIndex& parent = QModelIndex()) const override;
-	QModelIndex parent(const QModelIndex& child) const override;
-	int rowCount(const QModelIndex& parent = QModelIndex()) const override;
-	int columnCount(const QModelIndex& parent = QModelIndex()) const override;
+    QVariant data(const QModelIndex& index, int role) const override;
+    Qt::ItemFlags flags(const QModelIndex& index) const override;
+    QModelIndex index(int row, int column, const QModelIndex& parent = QModelIndex()) const override;
+    QModelIndex parent(const QModelIndex& child) const override;
+    int rowCount(const QModelIndex& parent = QModelIndex()) const override;
+    int columnCount(const QModelIndex& parent = QModelIndex()) const override;
 
 private:
-	template<class T>
-	class NodeList : public std::vector<T> {
-	public:
-		typedef typename std::vector<T>::iterator iterator;
-		typedef typename std::vector<T>::const_iterator const_iterator;
+    template<class T>
+    class NodeList : public std::vector<T> {
+    public:
+        typedef typename std::vector<T>::iterator iterator;
+        typedef typename std::vector<T>::const_iterator const_iterator;
 
-		T add(T node);
-		T add(T node, int pos);
-		T take(T node);
-		const_iterator find(const QString& fileName) const;
-		int insIndex(const QString& fileName) const;
-		int index(T node) const;
-		int index(const_iterator it) const;
-	};
+        T add(T node);
+        T add(T node, int pos);
+        T take(T node);
+        const_iterator find(const QString& fileName) const;
+        int insIndex(const QString& fileName) const;
+        int index(T node) const;
+        int index(const_iterator it) const;
+    };
 
-	struct DirNode;
-	struct Node {
-		Node(const QString& _fileName, const QString& _path, DirNode* _parent, const QString& _displayName = QString())
-			: fileName(_fileName), path(_path), displayName(_displayName), parent(_parent) {}
-		virtual ~Node() = default;
-		QString fileName;
-		QString path;
-		QString displayName;
-		DirNode* parent = nullptr;
-	};
-	struct FileNode : Node {
-		FileNode(const QString& _fileName, const QString& _path, DirNode* _parent, DataObject* _data, const QString& _displayName)
-			: Node(_fileName, _path, _parent, _displayName), data(_data) {}
-		~FileNode() { delete data; }
-		bool editable = false;
-		DataObject* data = nullptr;
-	};
-	struct DirNode : Node {
-		using Node::Node;
-		~DirNode() {
-			qDeleteAll(dirs);
-			qDeleteAll(files);
-		}
-		NodeList<DirNode*> dirs;
-		NodeList<FileNode*> files;
-		int childCount() const { return dirs.size() + files.size(); }
-	};
+    struct DirNode;
+    struct Node {
+        Node(const QString& _fileName, const QString& _path, DirNode* _parent, const QString& _displayName = QString())
+            : fileName(_fileName), path(_path), displayName(_displayName), parent(_parent) {}
+        virtual ~Node() = default;
+        QString fileName;
+        QString path;
+        QString displayName;
+        DirNode* parent = nullptr;
+    };
+    struct FileNode : Node {
+        FileNode(const QString& _fileName, const QString& _path, DirNode* _parent, DataObject* _data, const QString& _displayName)
+            : Node(_fileName, _path, _parent, _displayName), data(_data) {}
+        ~FileNode() { delete data; }
+        bool editable = false;
+        DataObject* data = nullptr;
+    };
+    struct DirNode : Node {
+        using Node::Node;
+        ~DirNode() {
+            qDeleteAll(dirs);
+            qDeleteAll(files);
+        }
+        NodeList<DirNode*> dirs;
+        NodeList<FileNode*> files;
+        int childCount() const { return dirs.size() + files.size(); }
+    };
 
-	DirNode* m_root = nullptr;
-	DirNode* m_tmpdir = nullptr;
-	QFileIconProvider m_iconProvider;
+    DirNode* m_root = nullptr;
+    DirNode* m_tmpdir = nullptr;
+    QFileIconProvider m_iconProvider;
 };
 
 #endif // FILETREEMODEL_HH

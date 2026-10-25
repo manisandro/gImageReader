@@ -32,27 +32,27 @@ class HOCRPdfExportWidget;
 
 class HOCRBatchExportDialog : public QDialog {
 
-	Q_OBJECT
+    Q_OBJECT
 
 public:
-	HOCRBatchExportDialog(QWidget* parent = nullptr);
+    HOCRBatchExportDialog(QWidget* parent = nullptr);
 
 private:
-	enum ExportMode { ExportPdf, ExportOdt, ExportTxt };
-	Ui::BatchExportDialog ui;
+    enum ExportMode { ExportPdf, ExportOdt, ExportTxt };
+    Ui::BatchExportDialog ui;
 
-	FileTreeModel* m_sourceTreeModel = nullptr;
-	FileTreeModel* m_outputTreeModel = nullptr;
-	QMap<QString, QStringList> m_outputMap;
-	HOCRPdfExportWidget* m_pdfExportWidget = nullptr;
-	QTimer m_previewTimer;
+    FileTreeModel* m_sourceTreeModel = nullptr;
+    FileTreeModel* m_outputTreeModel = nullptr;
+    QMap<QString, QStringList> m_outputMap;
+    HOCRPdfExportWidget* m_pdfExportWidget = nullptr;
+    QTimer m_previewTimer;
 
 private slots:
-	void apply();
-	void setSourceFolder();
-	void setExportFormat();
-	void updateExportPreview();
-	void updateOutputTree();
+    void apply();
+    void setSourceFolder();
+    void setExportFormat();
+    void updateExportPreview();
+    void updateOutputTree();
 };
 
 #endif // HOCRBATCHEXPORTDIALOG_HH

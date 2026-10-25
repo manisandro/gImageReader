@@ -28,48 +28,48 @@ class TessBaseAPI;
 }
 
 class OutputEditor : public QObject {
-	Q_OBJECT
+    Q_OBJECT
 public:
-	struct PageInfo {
-		QString filename;
-		int page;
-		double angle;
-		int resolution;
-	};
-	struct ReadSessionData {
-		virtual ~ReadSessionData() = default;
-		bool prependFile;
-		bool prependPage;
-		PageInfo pageInfo;
-	};
-	class BatchProcessor {
-	public:
-		virtual ~BatchProcessor() = default;
-		virtual QString fileSuffix() const = 0;
-		virtual void writeHeader(QIODevice* /*dev*/, tesseract::TessBaseAPI* /*tess*/, const PageInfo& /*pageInfo*/) const {}
-		virtual void writeFooter(QIODevice* /*dev*/) const {}
-		virtual void appendOutput(QIODevice* dev, tesseract::TessBaseAPI* tess, const PageInfo& pageInfo, bool firstArea) const = 0;
-	};
+    struct PageInfo {
+        QString filename;
+        int page;
+        double angle;
+        int resolution;
+    };
+    struct ReadSessionData {
+        virtual ~ReadSessionData() = default;
+        bool prependFile;
+        bool prependPage;
+        PageInfo pageInfo;
+    };
+    class BatchProcessor {
+    public:
+        virtual ~BatchProcessor() = default;
+        virtual QString fileSuffix() const = 0;
+        virtual void writeHeader(QIODevice* /*dev*/, tesseract::TessBaseAPI* /*tess*/, const PageInfo& /*pageInfo*/) const {}
+        virtual void writeFooter(QIODevice* /*dev*/) const {}
+        virtual void appendOutput(QIODevice* dev, tesseract::TessBaseAPI* tess, const PageInfo& pageInfo, bool firstArea) const = 0;
+    };
 
-	OutputEditor(QObject* parent = 0);
+    OutputEditor(QObject* parent = 0);
 
-	virtual QWidget* getUI() = 0;
-	virtual ReadSessionData* initRead(tesseract::TessBaseAPI& tess) = 0;
-	virtual void read(tesseract::TessBaseAPI& tess, ReadSessionData* data) = 0;
-	virtual void readError(const QString& errorMsg, ReadSessionData* data) = 0;
-	virtual void finalizeRead(ReadSessionData* data) {
-		delete data;
-	}
-	virtual BatchProcessor* createBatchProcessor(const QMap<QString, QVariant>& options) const = 0;
+    virtual QWidget* getUI() = 0;
+    virtual ReadSessionData* initRead(tesseract::TessBaseAPI& tess) = 0;
+    virtual void read(tesseract::TessBaseAPI& tess, ReadSessionData* data) = 0;
+    virtual void readError(const QString& errorMsg, ReadSessionData* data) = 0;
+    virtual void finalizeRead(ReadSessionData* data) {
+        delete data;
+    }
+    virtual BatchProcessor* createBatchProcessor(const QMap<QString, QVariant>& options) const = 0;
 
-	virtual bool containsSource(const QString& source, int sourcePage) const { return false; }
-	virtual QString crashSave(const QString& filename) const = 0;
+    virtual bool containsSource(const QString& source, int sourcePage) const { return false; }
+    virtual QString crashSave(const QString& filename) const = 0;
 
 public slots:
-	virtual void onVisibilityChanged(bool /*visible*/) {}
-	virtual bool open(const QString& filename) = 0;
-	virtual bool clear(bool hide = true) = 0;
-	virtual void setLanguage(const Config::Lang& /*lang*/) {}
+    virtual void onVisibilityChanged(bool /*visible*/) {}
+    virtual bool open(const QString& filename) = 0;
+    virtual bool clear(bool hide = true) = 0;
+    virtual void setLanguage(const Config::Lang& /*lang*/) {}
 };
 
 #endif // OUTPUTEDITOR_HH

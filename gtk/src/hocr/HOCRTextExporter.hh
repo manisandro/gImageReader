@@ -28,10 +28,10 @@ class HOCRItem;
 
 class HOCRTextExporter : public HOCRExporter {
 public:
-	bool run(const HOCRDocument* hocrdocument, const std::string& outname, const ExporterSettings* settings = nullptr) override;
+    bool run(const HOCRDocument* hocrdocument, const std::string& outname, const ExporterSettings* settings = nullptr) override;
 
 private:
-	void printItem(std::ofstream& outputStream, const HOCRItem* item, bool lastChild = false);
+    void printItem(std::ofstream& outputStream, const HOCRItem* item, bool lastChild = false);
 };
 
 #endif // HOCRTEXTEXPORTER_HH

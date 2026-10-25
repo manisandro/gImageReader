@@ -25,33 +25,33 @@
 class UI_MainWindow;
 
 class Acquirer : public QObject {
-	Q_OBJECT
+    Q_OBJECT
 public:
-	Acquirer(const UI_MainWindow& _ui);
-	~Acquirer();
+    Acquirer(const UI_MainWindow& _ui);
+    ~Acquirer();
 
 signals:
-	void scanPageAvailable(QString);
+    void scanPageAvailable(QString);
 
 private:
-	const UI_MainWindow& ui;
-	QString m_outputPath;
+    const UI_MainWindow& ui;
+    QString m_outputPath;
 
-	Scanner* m_scanner;
+    Scanner* m_scanner;
 
-	void genOutputPath();
+    void genOutputPath();
 
 private slots:
-	void cancelScan();
-	void doneDetectDevices(QList<Scanner::Device> devices);
-	void doneScan();
-	void scanInitFailed();
-	void scanFailed(const QString& msg);
-	void selectOutputPath();
-	void setDeviceComboTooltip();
-	void setScanState(Scanner::State state);
-	void startDetectDevices();
-	void startScan();
+    void cancelScan();
+    void doneDetectDevices(QList<Scanner::Device> devices);
+    void doneScan();
+    void scanInitFailed();
+    void scanFailed(const QString& msg);
+    void selectOutputPath();
+    void setDeviceComboTooltip();
+    void setScanState(Scanner::State state);
+    void startDetectDevices();
+    void startScan();
 };
 
 Q_DECLARE_METATYPE(QList<Scanner::Device>)

@@ -25,22 +25,22 @@
 
 class CrashHandler : public Gtk::Application {
 public:
-	CrashHandler(int argc, char* argv[]);
-	void on_startup();
+    CrashHandler(int argc, char* argv[]);
+    void on_startup();
 
 private:
-	Ui::CrashHandler ui;
-	ClassData m_classdata;
-	sigc::connection m_progressConnection;
-	std::string m_saveFile;
-	int m_pid = 0;
-	int m_tesseractCrash = 0;
+    Ui::CrashHandler ui;
+    ClassData m_classdata;
+    sigc::connection m_progressConnection;
+    std::string m_saveFile;
+    int m_pid = 0;
+    int m_tesseractCrash = 0;
 
-	void generate_backtrace();
-	void generate_backtrace_end(bool success);
-	bool pulse_progress();
-	bool handle_stdout(Glib::IOCondition cond, Glib::RefPtr<Glib::IOChannel> ch);
-	static void handle_child_exit(GPid pid, gint status, void* data);
+    void generate_backtrace();
+    void generate_backtrace_end(bool success);
+    bool pulse_progress();
+    bool handle_stdout(Glib::IOCondition cond, Glib::RefPtr<Glib::IOChannel> ch);
+    static void handle_child_exit(GPid pid, gint status, void* data);
 };
 
 #endif // CRASH_HANDLER_HH

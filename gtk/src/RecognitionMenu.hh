@@ -31,37 +31,37 @@
 
 class RecognitionMenu : public Gtk::Menu {
 public:
-	RecognitionMenu();
+    RecognitionMenu();
 
-	void rebuild();
-	const Config::Lang& getRecognitionLanguage() const { return m_curLang; }
-	tesseract::PageSegMode getPageSegmentationMode() const;
-	Glib::ustring getCharacterWhitelist() const;
-	Glib::ustring getCharacterBlacklist() const;
+    void rebuild();
+    const Config::Lang& getRecognitionLanguage() const { return m_curLang; }
+    tesseract::PageSegMode getPageSegmentationMode() const;
+    Glib::ustring getCharacterWhitelist() const;
+    Glib::ustring getCharacterBlacklist() const;
 
-	sigc::signal<void, Config::Lang> signal_languageChanged() {
-		return m_signal_languageChanged;
-	}
+    sigc::signal<void, Config::Lang> signal_languageChanged() {
+        return m_signal_languageChanged;
+    }
 
 private:
-	class MultilingualMenuItem;
+    class MultilingualMenuItem;
 
-	ClassData m_classdata;
-	Config::Lang m_curLang;
-	Gtk::Menu* m_menuMultilanguage = nullptr;
-	Gtk::RadioButtonGroup m_langMenuRadioGroup;
-	Gtk::RadioButtonGroup m_psmRadioGroup;
-	std::map<Gtk::CheckMenuItem*, std::pair<Glib::ustring, gint64 >> m_langMenuCheckGroup;
-	MultilingualMenuItem* m_multilingualRadio = nullptr;
-	Ui::CharacterListDialog m_charListDialogUi;
+    ClassData m_classdata;
+    Config::Lang m_curLang;
+    Gtk::Menu* m_menuMultilanguage = nullptr;
+    Gtk::RadioButtonGroup m_langMenuRadioGroup;
+    Gtk::RadioButtonGroup m_psmRadioGroup;
+    std::map<Gtk::CheckMenuItem*, std::pair<Glib::ustring, gint64 >> m_langMenuCheckGroup;
+    MultilingualMenuItem* m_multilingualRadio = nullptr;
+    Ui::CharacterListDialog m_charListDialogUi;
 
-	sigc::signal<void, Config::Lang> m_signal_languageChanged;
+    sigc::signal<void, Config::Lang> m_signal_languageChanged;
 
-	void setLanguage(const Gtk::RadioMenuItem* item, const Config::Lang& lang);
-	void setMultiLanguage();
-	bool onMultilingualMenuButtonEvent(GdkEventButton* ev);
-	bool onMultilingualItemButtonEvent(GdkEventButton* ev, Gtk::CheckMenuItem* item);
-	void manageCharaterLists();
+    void setLanguage(const Gtk::RadioMenuItem* item, const Config::Lang& lang);
+    void setMultiLanguage();
+    bool onMultilingualMenuButtonEvent(GdkEventButton* ev);
+    bool onMultilingualItemButtonEvent(GdkEventButton* ev, Gtk::CheckMenuItem* item);
+    void manageCharaterLists();
 };
 
 #endif // RECOGNITIONMENU_HH

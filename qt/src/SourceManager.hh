@@ -33,79 +33,79 @@ class UI_MainWindow;
 
 class Source : public DataObject {
 public:
-	Source(const QString& _path, const QString& _displayname, const QByteArray& _password = "", bool _isTemp = false)
-		: path(_path), displayname(_displayname), password(_password), isTemp(_isTemp) {}
-	~Source();
-	QString path;
-	QString displayname;
-	QByteArray password;
-	bool isTemp;
-	int brightness = 0;
-	int contrast = 0;
-	int resolution = -1;
-	int page = 1;
-	QVector<double> angle;
-	bool invert = false;
+    Source(const QString& _path, const QString& _displayname, const QByteArray& _password = "", bool _isTemp = false)
+        : path(_path), displayname(_displayname), password(_password), isTemp(_isTemp) {}
+    ~Source();
+    QString path;
+    QString displayname;
+    QByteArray password;
+    bool isTemp;
+    int brightness = 0;
+    int contrast = 0;
+    int resolution = -1;
+    int page = 1;
+    QVector<double> angle;
+    bool invert = false;
 
-	//Additional info from original file
-	QString author, title, creator, producer, keywords, subject;
-	int pdfVersionMajor = -1, pdfVersionMinor = -1;
+    //Additional info from original file
+    QString author, title, creator, producer, keywords, subject;
+    int pdfVersionMajor = -1, pdfVersionMinor = -1;
 };
 
 class SourceManager : public QObject {
-	Q_OBJECT
+    Q_OBJECT
 public:
-	SourceManager(const UI_MainWindow& _ui);
-	~SourceManager();
-	QList<Source*> getSelectedSources() const;
-	void addSourceImage(const QImage& image);
+    SourceManager(const UI_MainWindow& _ui);
+    ~SourceManager();
+    QList<Source*> getSelectedSources() const;
+    void addSourceImage(const QImage& image);
 
-	int addSources(const QStringList& files, bool suppressWarnings = false);
+    int addSources(const QStringList& files, bool suppressWarnings = false);
 
 public slots:
-	bool addSource(const QString& file, bool suppressWarnings = false) {
-		return addSources(QStringList() << file, suppressWarnings) == 1;
-	}
+    bool addSource(const QString& file, bool suppressWarnings = false) {
+        return addSources(QStringList() << file, suppressWarnings) == 1;
+    }
 
 signals:
-	void sourceChanged();
+    void sourceChanged();
 
 private:
-	enum class PdfWithTextAction {Ask, Add, Skip};
-	const UI_MainWindow& ui;
+    enum class PdfWithTextAction {Ask, Add, Skip};
+    const UI_MainWindow& ui;
 
-	FileTreeModel* m_fileTreeModel = nullptr;
-	QMenu* m_recentMenu = nullptr;
-	QFileSystemWatcher m_fsWatcher;
-	QMap<QString, int> m_watchedDirectories;
+    FileTreeModel* m_fileTreeModel = nullptr;
+    QMenu* m_recentMenu = nullptr;
+    QFileSystemWatcher m_fsWatcher;
+    QMap<QString, int> m_watchedDirectories;
 
-	static constexpr int sMaxNumRecent = 15;
-	int m_screenshotCount = 0;
-	int m_pasteCount = 0;
-	bool m_inCurrentSourceChanged = false;
+    static constexpr int sMaxNumRecent = 15;
+    int m_screenshotCount = 0;
+    int m_pasteCount = 0;
+    bool m_inCurrentSourceChanged = false;
 
-	bool checkPdfSource(Source* source, PdfWithTextAction& textAction, QStringList& failed) const;
-	void savePixmap(const QPixmap& pixmap, const QString& displayname);
-	bool eventFilter(QObject* object, QEvent* event) override;
-	void selectRecursive(QItemSelection& parentsel, const QModelIndex& index);
+    bool checkPdfSource(Source* source, PdfWithTextAction& textAction, QStringList& failed) const;
+    void savePixmap(const QPixmap& pixmap, const QString& displayname);
+    bool eventFilter(QObject* object, QEvent* event) override;
+    void selectRecursive(QItemSelection& parentsel, const QModelIndex& index);
 
 private slots:
-	void clearSources();
-	void currentSourceChanged();
-	void indexClicked(const QModelIndex& index);
-	void deleteSource() {
-		removeSource(true);
-	}
-	void fileChanged(const QString& filename);
-	void directoryChanged(const QString& dir);
-	void addFolder();
-	void openRecentItem();
-	void openSources();
-	void pasteClipboard();
-	void prepareRecentMenu();
-	void removeSource(bool deleteFile = false);
-	void takeScreenshot();
-	void onScreenshotResponse(uint response, const QVariantMap &results);
+    void clearSources();
+    void currentSourceChanged();
+    void indexClicked(const QModelIndex& index);
+    void deleteSource() {
+        removeSource(true);
+    }
+    void fileChanged(const QString& filename);
+    void directoryChanged(const QString& dir);
+    void addFolder();
+    void openRecentItem();
+    void openSources();
+    void pasteClipboard();
+    void prepareRecentMenu();
+    void removeSource(bool deleteFile = false);
+    void takeScreenshot();
+    void onScreenshotResponse(uint response, const QVariantMap &results);
 };
 
 #endif // SOURCEMANAGER_HH

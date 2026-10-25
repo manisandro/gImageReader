@@ -33,50 +33,50 @@ class UI_MainWindow;
 namespace Utils { class TesseractHandle; }
 
 class Recognizer : public QObject {
-	Q_OBJECT
+    Q_OBJECT
 public:
-	enum class OutputDestination { Buffer, Clipboard };
+    enum class OutputDestination { Buffer, Clipboard };
 
-	Recognizer(const UI_MainWindow& _ui);
+    Recognizer(const UI_MainWindow& _ui);
 
 public slots:
-	void recognizeImage(const QImage& image, OutputDestination dest);
-	void setRecognizeMode(const QString& mode);
+    void recognizeImage(const QImage& image, OutputDestination dest);
+    void setRecognizeMode(const QString& mode);
 
 private:
-	class ProgressMonitor;
-	enum class PageSelection { Prompt, Current, Multiple, Batch };
-	enum class PageArea { EntirePage, Autodetect };
-	struct PageData {
-		bool success;
-		QList<QImage> ocrAreas;
-		OutputEditor::PageInfo pageInfo;
-	};
-	enum BatchExistingBehaviour { BatchOverwriteOutput, BatchSkipSource };
+    class ProgressMonitor;
+    enum class PageSelection { Prompt, Current, Multiple, Batch };
+    enum class PageArea { EntirePage, Autodetect };
+    struct PageData {
+        bool success;
+        QList<QImage> ocrAreas;
+        OutputEditor::PageInfo pageInfo;
+    };
+    enum BatchExistingBehaviour { BatchOverwriteOutput, BatchSkipSource };
 
-	const UI_MainWindow& ui;
-	QMenu* m_menuPages = nullptr;
-	QAction* m_actionBatchMode = nullptr;
-	QDialog* m_pagesDialog;
-	Ui::PageRangeDialog m_pagesDialogUi;
-	QDialog* m_batchDialog;
-	Ui::BatchModeDialog m_batchDialogUi;
-	QString m_modeLabel;
-	QString m_langLabel;
+    const UI_MainWindow& ui;
+    QMenu* m_menuPages = nullptr;
+    QAction* m_actionBatchMode = nullptr;
+    QDialog* m_pagesDialog;
+    Ui::PageRangeDialog m_pagesDialogUi;
+    QDialog* m_batchDialog;
+    Ui::BatchModeDialog m_batchDialogUi;
+    QString m_modeLabel;
+    QString m_langLabel;
 
-	QList<int> selectPages(bool& autodetectLayout);
-	std::unique_ptr<Utils::TesseractHandle> setupTesseract();
-	void recognize(const QList<int>& pages, bool autodetectLayout = false);
-	void showRecognitionErrorsDialog(const QStringList& errors);
+    QList<int> selectPages(bool& autodetectLayout);
+    std::unique_ptr<Utils::TesseractHandle> setupTesseract();
+    void recognize(const QList<int>& pages, bool autodetectLayout = false);
+    void showRecognitionErrorsDialog(const QStringList& errors);
 
 private slots:
-	void recognitionLanguageChanged(const Config::Lang& lang);
-	void clearLineEditPageRangeStyle();
-	void recognizeButtonClicked();
-	void recognizeCurrentPage();
-	void recognizeMultiplePages();
-	void recognizeBatch();
-	PageData setPage(int page, bool autodetectLayout);
+    void recognitionLanguageChanged(const Config::Lang& lang);
+    void clearLineEditPageRangeStyle();
+    void recognizeButtonClicked();
+    void recognizeCurrentPage();
+    void recognizeMultiplePages();
+    void recognizeBatch();
+    PageData setPage(int page, bool autodetectLayout);
 };
 
 #endif // RECOGNIZER_HPP

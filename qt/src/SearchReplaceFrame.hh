@@ -28,42 +28,42 @@
 class SubstitutionsManager;
 
 class SearchReplaceFrame : public QFrame {
-	Q_OBJECT
+    Q_OBJECT
 public:
-	explicit SearchReplaceFrame(QWidget* parent = nullptr, Qt::WindowFlags f = Qt::WindowFlags());
-	QToolButton* buttonReplaceAll() const { return ui.toolButtonReplaceAll; }
+    explicit SearchReplaceFrame(QWidget* parent = nullptr, Qt::WindowFlags f = Qt::WindowFlags());
+    QToolButton* buttonReplaceAll() const { return ui.toolButtonReplaceAll; }
 
 public slots:
-	void clear();
-	void clearErrorState();
-	void setErrorState();
-	void hideSubstitutionsManager();
+    void clear();
+    void clearErrorState();
+    void setErrorState();
+    void hideSubstitutionsManager();
 
 signals:
-	void findReplace(const QString& searchstr, const QString& replacestr, bool matchCase, bool backwards, bool replace);
-	void replaceAll(const QString& searchstr, const QString& replacestr, bool matchCase);
-	void applySubstitutions(const QMap<QString, QString>& substitutions, bool matchCase);
+    void findReplace(const QString& searchstr, const QString& replacestr, bool matchCase, bool backwards, bool replace);
+    void replaceAll(const QString& searchstr, const QString& replacestr, bool matchCase);
+    void applySubstitutions(const QMap<QString, QString>& substitutions, bool matchCase);
 
 private:
-	Ui::SearchReplaceFrame ui;
-	SubstitutionsManager* m_substitutionsManager;
+    Ui::SearchReplaceFrame ui;
+    SubstitutionsManager* m_substitutionsManager;
 
 private slots:
-	void findNext() {
-		emit findReplace(ui.lineEditSearch->text(), ui.lineEditReplace->text(), ui.checkBoxMatchCase->isChecked(), false, false);
-	}
-	void findPrev() {
-		emit findReplace(ui.lineEditSearch->text(), ui.lineEditReplace->text(), ui.checkBoxMatchCase->isChecked(), true, false);
-	}
-	void replaceNext() {
-		emit findReplace(ui.lineEditSearch->text(), ui.lineEditReplace->text(), ui.checkBoxMatchCase->isChecked(), false, true);
-	}
-	void emitReplaceAll() {
-		emit replaceAll(ui.lineEditSearch->text(), ui.lineEditReplace->text(), ui.checkBoxMatchCase->isChecked());
-	}
-	void emitApplySubstitutions(const QMap<QString, QString>& substitutions) {
-		emit applySubstitutions(substitutions, ui.checkBoxMatchCase->isChecked());
-	}
+    void findNext() {
+        emit findReplace(ui.lineEditSearch->text(), ui.lineEditReplace->text(), ui.checkBoxMatchCase->isChecked(), false, false);
+    }
+    void findPrev() {
+        emit findReplace(ui.lineEditSearch->text(), ui.lineEditReplace->text(), ui.checkBoxMatchCase->isChecked(), true, false);
+    }
+    void replaceNext() {
+        emit findReplace(ui.lineEditSearch->text(), ui.lineEditReplace->text(), ui.checkBoxMatchCase->isChecked(), false, true);
+    }
+    void emitReplaceAll() {
+        emit replaceAll(ui.lineEditSearch->text(), ui.lineEditReplace->text(), ui.checkBoxMatchCase->isChecked());
+    }
+    void emitApplySubstitutions(const QMap<QString, QString>& substitutions) {
+        emit applySubstitutions(substitutions, ui.checkBoxMatchCase->isChecked());
+    }
 };
 
 #endif // SEARCHREPLACEFRAME_HH

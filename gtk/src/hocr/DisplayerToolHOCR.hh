@@ -28,64 +28,64 @@ class Rectangle;
 
 class DisplayerToolHOCR : public DisplayerTool {
 public:
-	enum Action {ACTION_NONE, ACTION_DRAW_GRAPHIC_RECT, ACTION_DRAW_CAREA_RECT, ACTION_DRAW_PAR_RECT, ACTION_DRAW_LINE_RECT, ACTION_DRAW_WORD_RECT};
+    enum Action {ACTION_NONE, ACTION_DRAW_GRAPHIC_RECT, ACTION_DRAW_CAREA_RECT, ACTION_DRAW_PAR_RECT, ACTION_DRAW_LINE_RECT, ACTION_DRAW_WORD_RECT};
 
-	DisplayerToolHOCR(Displayer* displayer);
-	~DisplayerToolHOCR();
+    DisplayerToolHOCR(Displayer* displayer);
+    ~DisplayerToolHOCR();
 
-	std::vector<Cairo::RefPtr<Cairo::ImageSurface >> getOCRAreas() override;
-	void pageChanged() override {
-		m_signal_displayed_source_changed.emit();
-		reset();
-	}
-	void resolutionChanged(double /*factor*/) override {
-		reset();
-	}
-	void rotationChanged(double /*delta*/) override {
-		reset();
-	}
-	void reset() override {
-		setAction(ACTION_NONE, true);
-	}
+    std::vector<Cairo::RefPtr<Cairo::ImageSurface >> getOCRAreas() override;
+    void pageChanged() override {
+        m_signal_displayed_source_changed.emit();
+        reset();
+    }
+    void resolutionChanged(double /*factor*/) override {
+        reset();
+    }
+    void rotationChanged(double /*delta*/) override {
+        reset();
+    }
+    void reset() override {
+        setAction(ACTION_NONE, true);
+    }
 
-	bool mousePressEvent(GdkEventButton* event) override;
-	bool mouseMoveEvent(GdkEventMotion* event) override;
-	bool mouseReleaseEvent(GdkEventButton* event) override;
+    bool mousePressEvent(GdkEventButton* event) override;
+    bool mouseMoveEvent(GdkEventMotion* event) override;
+    bool mouseReleaseEvent(GdkEventButton* event) override;
 
-	void setAction(Action action, bool clearSel = true);
-	void setSelection(const Geometry::Rectangle& rect, const Geometry::Rectangle& minRect);
-	Cairo::RefPtr<Cairo::ImageSurface> getSelection(const Geometry::Rectangle& rect) const;
-	void clearSelection();
+    void setAction(Action action, bool clearSel = true);
+    void setSelection(const Geometry::Rectangle& rect, const Geometry::Rectangle& minRect);
+    Cairo::RefPtr<Cairo::ImageSurface> getSelection(const Geometry::Rectangle& rect) const;
+    void clearSelection();
 
-	sigc::signal<void> signal_displayed_source_changed() {
-		return m_signal_displayed_source_changed;
-	}
-	sigc::signal<void, Geometry::Rectangle, Action> signal_bbox_drawn() {
-		return m_signal_bbox_drawn;
-	}
-	sigc::signal<void, Geometry::Rectangle> signal_bbox_changed() {
-		return m_signal_bbox_changed;
-	}
-	sigc::signal<void, Geometry::Point> signal_position_picked() {
-		return m_signal_position_picked;
-	}
-	sigc::signal<void, Action> signal_action_changed() {
-		return m_signal_action_changed;
-	}
+    sigc::signal<void> signal_displayed_source_changed() {
+        return m_signal_displayed_source_changed;
+    }
+    sigc::signal<void, Geometry::Rectangle, Action> signal_bbox_drawn() {
+        return m_signal_bbox_drawn;
+    }
+    sigc::signal<void, Geometry::Rectangle> signal_bbox_changed() {
+        return m_signal_bbox_changed;
+    }
+    sigc::signal<void, Geometry::Point> signal_position_picked() {
+        return m_signal_position_picked;
+    }
+    sigc::signal<void, Action> signal_action_changed() {
+        return m_signal_action_changed;
+    }
 
 private:
-	ClassData m_classdata;
+    ClassData m_classdata;
 
-	DisplayerSelection* m_selection = nullptr;
-	Action m_currentAction = ACTION_NONE;
-	bool m_pressed = false;
-	sigc::signal<void> m_signal_displayed_source_changed;
-	sigc::signal<void, Geometry::Rectangle, Action> m_signal_bbox_drawn;
-	sigc::signal<void, Geometry::Rectangle> m_signal_bbox_changed;
-	sigc::signal<void, Geometry::Point> m_signal_position_picked;
-	sigc::signal<void, Action> m_signal_action_changed;
+    DisplayerSelection* m_selection = nullptr;
+    Action m_currentAction = ACTION_NONE;
+    bool m_pressed = false;
+    sigc::signal<void> m_signal_displayed_source_changed;
+    sigc::signal<void, Geometry::Rectangle, Action> m_signal_bbox_drawn;
+    sigc::signal<void, Geometry::Rectangle> m_signal_bbox_changed;
+    sigc::signal<void, Geometry::Point> m_signal_position_picked;
+    sigc::signal<void, Action> m_signal_action_changed;
 
-	void selectionChanged(const Geometry::Rectangle& rect);
+    void selectionChanged(const Geometry::Rectangle& rect);
 };
 
 #endif // DISPLAYERTOOLHOCR_HH

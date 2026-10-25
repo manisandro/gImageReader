@@ -26,12 +26,12 @@ class HOCRDocument;
 
 class HOCRExporter {
 public:
-	struct ExporterSettings {
-		virtual ~ExporterSettings() = default;
-	};
+    struct ExporterSettings {
+        virtual ~ExporterSettings() = default;
+    };
 
-	virtual ~HOCRExporter() = default;
-	virtual bool run(const HOCRDocument* hocrdocument, const std::string& outputname, const ExporterSettings* settings = nullptr) = 0;
+    virtual ~HOCRExporter() = default;
+    virtual bool run(const HOCRDocument* hocrdocument, const std::string& outputname, const ExporterSettings* settings = nullptr) = 0;
 };
 
 #endif // HOCREXPORTER_HH

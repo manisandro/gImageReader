@@ -37,224 +37,224 @@ class AbstractSetting;
 
 class ConfigSettings {
 public:
-	template<class T>
-	static T* get(const QString& key) {
-		auto it = s_settings.find(key);
-		return it == s_settings.end() ? nullptr : static_cast<T*> (it.value());
-	}
+    template<class T>
+    static T* get(const QString& key) {
+        auto it = s_settings.find(key);
+        return it == s_settings.end() ? nullptr : static_cast<T*> (it.value());
+    }
 
 private:
-	friend class AbstractSetting;
-	static QMap<QString, AbstractSetting*> s_settings;
+    friend class AbstractSetting;
+    static QMap<QString, AbstractSetting*> s_settings;
 
-	static void add(AbstractSetting* setting);
-	static void remove(const QString& key);
+    static void add(AbstractSetting* setting);
+    static void remove(const QString& key);
 };
 
 
 class AbstractSetting : public QObject {
-	Q_OBJECT
+    Q_OBJECT
 public:
-	AbstractSetting(const QString& key)
-		: m_key(key) {
-		ConfigSettings::add(this);
-	}
-	virtual ~AbstractSetting() {
-		ConfigSettings::remove(m_key);
-	}
-	const QString& key() const {
-		return m_key;
-	}
+    AbstractSetting(const QString& key)
+        : m_key(key) {
+        ConfigSettings::add(this);
+    }
+    virtual ~AbstractSetting() {
+        ConfigSettings::remove(m_key);
+    }
+    const QString& key() const {
+        return m_key;
+    }
 
 public slots:
-	virtual void serialize() {}
+    virtual void serialize() {}
 
 signals:
-	void changed();
+    void changed();
 
 protected:
-	QString m_key;
+    QString m_key;
 };
 
 template <class T>
 class VarSetting : public AbstractSetting {
 public:
-	VarSetting(const QString& key, const T& defaultValue = T())
-		: AbstractSetting(key), m_defaultValue(QVariant::fromValue(defaultValue)) {}
+    VarSetting(const QString& key, const T& defaultValue = T())
+        : AbstractSetting(key), m_defaultValue(QVariant::fromValue(defaultValue)) {}
 
-	T getValue() const {
-		return QSettings().value(m_key, m_defaultValue).template value<T>();
-	}
-	void setValue(const T& value) {
-		QSettings().setValue(m_key, QVariant::fromValue(value));
-		emit changed();
-	}
+    T getValue() const {
+        return QSettings().value(m_key, m_defaultValue).template value<T>();
+    }
+    void setValue(const T& value) {
+        QSettings().setValue(m_key, QVariant::fromValue(value));
+        emit changed();
+    }
 
 private:
-	QVariant m_defaultValue;
+    QVariant m_defaultValue;
 };
 
 class FontSetting : public AbstractSetting {
-	Q_OBJECT
+    Q_OBJECT
 public:
-	FontSetting(const QString& key, QFontDialog* dialog, const QString& defaultValue)
-		: AbstractSetting(key), m_dialog(dialog) {
-		QFont font;
-		if (font.fromString(QSettings().value(m_key, QVariant::fromValue(defaultValue)).toString())) {
-			m_dialog->setCurrentFont(font);
-		}
-		connect(dialog, &QFontDialog::fontSelected, this, &FontSetting::serialize);
-	}
-	QFont getValue() const {
-		return m_dialog->currentFont();
-	}
+    FontSetting(const QString& key, QFontDialog* dialog, const QString& defaultValue)
+        : AbstractSetting(key), m_dialog(dialog) {
+        QFont font;
+        if (font.fromString(QSettings().value(m_key, QVariant::fromValue(defaultValue)).toString())) {
+            m_dialog->setCurrentFont(font);
+        }
+        connect(dialog, &QFontDialog::fontSelected, this, &FontSetting::serialize);
+    }
+    QFont getValue() const {
+        return m_dialog->currentFont();
+    }
 
 public slots:
-	void serialize() override {
-		QSettings().setValue(m_key, QVariant::fromValue(m_dialog->selectedFont().toString()));
-		emit changed();
-	}
+    void serialize() override {
+        QSettings().setValue(m_key, QVariant::fromValue(m_dialog->selectedFont().toString()));
+        emit changed();
+    }
 
 private:
-	QFontDialog* m_dialog;
+    QFontDialog* m_dialog;
 };
 
 class SwitchSetting : public AbstractSetting {
-	Q_OBJECT
+    Q_OBJECT
 public:
-	SwitchSetting(const QString& key, QAbstractButton* button, bool defaultState = false)
-		: AbstractSetting(key), m_button(button) {
-		button->setChecked(QSettings().value(m_key, QVariant::fromValue(defaultState)).toBool());
-		connect(button, &QAbstractButton::toggled, this, &SwitchSetting::serialize);
-	}
-	void setValue(bool value) {
-		m_button->setChecked(value);
-	}
-	bool getValue() const {
-		return m_button->isChecked();
-	}
+    SwitchSetting(const QString& key, QAbstractButton* button, bool defaultState = false)
+        : AbstractSetting(key), m_button(button) {
+        button->setChecked(QSettings().value(m_key, QVariant::fromValue(defaultState)).toBool());
+        connect(button, &QAbstractButton::toggled, this, &SwitchSetting::serialize);
+    }
+    void setValue(bool value) {
+        m_button->setChecked(value);
+    }
+    bool getValue() const {
+        return m_button->isChecked();
+    }
 
 public slots:
-	void serialize() override {
-		QSettings().setValue(m_key, QVariant::fromValue(m_button->isChecked()));
-		emit changed();
-	}
+    void serialize() override {
+        QSettings().setValue(m_key, QVariant::fromValue(m_button->isChecked()));
+        emit changed();
+    }
 
 private:
-	QAbstractButton* m_button;
+    QAbstractButton* m_button;
 };
 
 class ActionSetting : public AbstractSetting {
-	Q_OBJECT
+    Q_OBJECT
 public:
-	ActionSetting(const QString& key, QAction* action, bool defaultState = false)
-		: AbstractSetting(key), m_action(action) {
-		action->setChecked(QSettings().value(m_key, QVariant::fromValue(defaultState)).toBool());
-		connect(action, &QAction::toggled, this, &ActionSetting::serialize);
-	}
-	void setValue(bool value) {
-		m_action->setChecked(value);
-	}
-	bool getValue() const {
-		return m_action->isChecked();
-	}
+    ActionSetting(const QString& key, QAction* action, bool defaultState = false)
+        : AbstractSetting(key), m_action(action) {
+        action->setChecked(QSettings().value(m_key, QVariant::fromValue(defaultState)).toBool());
+        connect(action, &QAction::toggled, this, &ActionSetting::serialize);
+    }
+    void setValue(bool value) {
+        m_action->setChecked(value);
+    }
+    bool getValue() const {
+        return m_action->isChecked();
+    }
 
 public slots:
-	void serialize() override {
-		QSettings().setValue(m_key, QVariant::fromValue(m_action->isChecked()));
-		emit changed();
-	}
+    void serialize() override {
+        QSettings().setValue(m_key, QVariant::fromValue(m_action->isChecked()));
+        emit changed();
+    }
 
 private:
-	QAction* m_action;
+    QAction* m_action;
 };
 
 class ComboSetting : public AbstractSetting {
-	Q_OBJECT
+    Q_OBJECT
 public:
-	ComboSetting(const QString& key, QComboBox* combo, int defaultIndex = 0)
-		: AbstractSetting(key), m_combo(combo) {
-		combo->setCurrentIndex(QSettings().value(m_key, QVariant::fromValue(defaultIndex)).toInt());
-		connect(combo, qOverload<int> (&QComboBox::currentIndexChanged), this, &ComboSetting::serialize);
-	}
+    ComboSetting(const QString& key, QComboBox* combo, int defaultIndex = 0)
+        : AbstractSetting(key), m_combo(combo) {
+        combo->setCurrentIndex(QSettings().value(m_key, QVariant::fromValue(defaultIndex)).toInt());
+        connect(combo, qOverload<int> (&QComboBox::currentIndexChanged), this, &ComboSetting::serialize);
+    }
 
 public slots:
-	void serialize() override {
-		QSettings().setValue(m_key, QVariant::fromValue(m_combo->currentIndex()));
-		emit changed();
-	}
+    void serialize() override {
+        QSettings().setValue(m_key, QVariant::fromValue(m_combo->currentIndex()));
+        emit changed();
+    }
 
 private:
-	QComboBox* m_combo;
+    QComboBox* m_combo;
 };
 
 class FontComboSetting : public AbstractSetting {
-	Q_OBJECT
+    Q_OBJECT
 public:
-	FontComboSetting(const QString& key, QFontComboBox* combo, const QFont defaultFont = QFont())
-		: AbstractSetting(key), m_combo(combo) {
-		combo->setCurrentFont(QFont(QSettings().value(m_key, defaultFont.family()).toString()));
-		connect(combo, &QFontComboBox::currentFontChanged, this, &FontComboSetting::serialize);
-	}
+    FontComboSetting(const QString& key, QFontComboBox* combo, const QFont defaultFont = QFont())
+        : AbstractSetting(key), m_combo(combo) {
+        combo->setCurrentFont(QFont(QSettings().value(m_key, defaultFont.family()).toString()));
+        connect(combo, &QFontComboBox::currentFontChanged, this, &FontComboSetting::serialize);
+    }
 
 public slots:
-	void serialize() override {
-		QSettings().setValue(m_key, m_combo->currentFont().family());
-		emit changed();
-	}
+    void serialize() override {
+        QSettings().setValue(m_key, m_combo->currentFont().family());
+        emit changed();
+    }
 
 private:
-	QFontComboBox* m_combo;
+    QFontComboBox* m_combo;
 };
 
 class SpinSetting : public AbstractSetting {
-	Q_OBJECT
+    Q_OBJECT
 public:
-	SpinSetting(const QString& key, QSpinBox* spin, int defaultValue = 0)
-		: AbstractSetting(key), m_spin(spin) {
-		spin->setValue(QSettings().value(m_key, QVariant::fromValue(defaultValue)).toInt());
-		connect(spin, qOverload<int> (&QSpinBox::valueChanged), this, &SpinSetting::serialize);
-	}
+    SpinSetting(const QString& key, QSpinBox* spin, int defaultValue = 0)
+        : AbstractSetting(key), m_spin(spin) {
+        spin->setValue(QSettings().value(m_key, QVariant::fromValue(defaultValue)).toInt());
+        connect(spin, qOverload<int> (&QSpinBox::valueChanged), this, &SpinSetting::serialize);
+    }
 
 public slots:
-	void serialize() override {
-		QSettings().setValue(m_key, QVariant::fromValue(m_spin->value()));
-		emit changed();
-	}
+    void serialize() override {
+        QSettings().setValue(m_key, QVariant::fromValue(m_spin->value()));
+        emit changed();
+    }
 
 private:
-	QSpinBox* m_spin;
+    QSpinBox* m_spin;
 };
 
 class TableSetting : public AbstractSetting {
-	Q_OBJECT
+    Q_OBJECT
 public:
-	TableSetting(const QString& key, QTableWidget* table);
+    TableSetting(const QString& key, QTableWidget* table);
 
 public slots:
-	void serialize() override;
+    void serialize() override;
 
 private:
-	QTableWidget* m_table;
+    QTableWidget* m_table;
 };
 
 class LineEditSetting : public AbstractSetting {
-	Q_OBJECT
+    Q_OBJECT
 public:
-	LineEditSetting(const QString& key, QLineEdit* lineEdit, const QString& defaultValue = "")
-		: AbstractSetting(key), m_lineEdit(lineEdit) {
-		lineEdit->setText(QSettings().value(m_key, QVariant::fromValue(defaultValue)).toString());
-		connect(lineEdit, &QLineEdit::textChanged, this, &LineEditSetting::serialize);
-	}
+    LineEditSetting(const QString& key, QLineEdit* lineEdit, const QString& defaultValue = "")
+        : AbstractSetting(key), m_lineEdit(lineEdit) {
+        lineEdit->setText(QSettings().value(m_key, QVariant::fromValue(defaultValue)).toString());
+        connect(lineEdit, &QLineEdit::textChanged, this, &LineEditSetting::serialize);
+    }
 
 public slots:
-	void serialize() override {
-		QSettings().setValue(m_key, QVariant::fromValue(m_lineEdit->text()));
-		emit changed();
-	}
+    void serialize() override {
+        QSettings().setValue(m_key, QVariant::fromValue(m_lineEdit->text()));
+        emit changed();
+    }
 
 private:
-	QLineEdit* m_lineEdit;
+    QLineEdit* m_lineEdit;
 };
 
 #endif // CONFIGSETTINGS_HH

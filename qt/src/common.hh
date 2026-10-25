@@ -25,7 +25,7 @@
 
 class DataObject {
 public:
-	virtual ~DataObject() = default;
+    virtual ~DataObject() = default;
 };
 
 #endif

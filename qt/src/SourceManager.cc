@@ -55,536 +55,536 @@
 #include "Utils.hh"
 
 Source::~Source() {
-	if (isTemp) {
-		QFile(path).remove();
-	}
+    if (isTemp) {
+        QFile(path).remove();
+    }
 }
 
 SourceManager::SourceManager(const UI_MainWindow& _ui)
-	: ui(_ui) {
-	m_recentMenu = new QMenu(MAIN);
-	ui.toolButtonSourceAdd->setMenu(m_recentMenu);
+    : ui(_ui) {
+    m_recentMenu = new QMenu(MAIN);
+    ui.toolButtonSourceAdd->setMenu(m_recentMenu);
 
-	m_fileTreeModel = new FileTreeModel(this);
+    m_fileTreeModel = new FileTreeModel(this);
 
-	ui.treeViewSources->setModel(m_fileTreeModel);
-	ui.treeViewSources->setAcceptDrops(true);
-	ui.treeViewSources->installEventFilter(this);
-	ui.treeViewSources->header()->setSectionResizeMode(0, QHeaderView::Stretch);
-	ui.treeViewSources->header()->setSectionResizeMode(1, QHeaderView::Fixed);
-	ui.treeViewSources->header()->resizeSection(1, 16);
+    ui.treeViewSources->setModel(m_fileTreeModel);
+    ui.treeViewSources->setAcceptDrops(true);
+    ui.treeViewSources->installEventFilter(this);
+    ui.treeViewSources->header()->setSectionResizeMode(0, QHeaderView::Stretch);
+    ui.treeViewSources->header()->setSectionResizeMode(1, QHeaderView::Fixed);
+    ui.treeViewSources->header()->resizeSection(1, 16);
 
-	ui.actionSourcePaste->setEnabled(!QApplication::clipboard()->pixmap().isNull());
+    ui.actionSourcePaste->setEnabled(!QApplication::clipboard()->pixmap().isNull());
 
-	connect(ui.actionSources, &QAction::toggled, ui.dockWidgetSources, &QDockWidget::setVisible);
-	connect(ui.toolButtonSourceAdd, &QToolButton::clicked, this, &SourceManager::openSources);
-	connect(m_recentMenu, &QMenu::aboutToShow, this, &SourceManager::prepareRecentMenu);
-	connect(ui.actionSourceFolder, &QAction::triggered, this, &SourceManager::addFolder);
-	connect(ui.actionSourcePaste, &QAction::triggered, this, &SourceManager::pasteClipboard);
-	connect(ui.actionSourceScreenshot, &QAction::triggered, this, &SourceManager::takeScreenshot);
-	connect(ui.actionSourceRemove, &QAction::triggered, this, &SourceManager::removeSource);
-	connect(ui.actionSourceDelete, &QAction::triggered, this, &SourceManager::deleteSource);
-	connect(ui.actionSourceClear, &QAction::triggered, this, &SourceManager::clearSources);
-	connect(ui.treeViewSources->selectionModel(), &QItemSelectionModel::selectionChanged, this, [this](const QItemSelection&, const QItemSelection&) { currentSourceChanged(); });
-	connect(ui.treeViewSources, &QTreeView::clicked, this, &SourceManager::indexClicked);
-	connect(&m_fsWatcher, &QFileSystemWatcher::fileChanged, this, &SourceManager::fileChanged);
-	connect(&m_fsWatcher, &QFileSystemWatcher::directoryChanged, this, &SourceManager::directoryChanged);
-	connect(QApplication::clipboard(), &QClipboard::dataChanged, this, [this] { ui.actionSourcePaste->setEnabled(!QApplication::clipboard()->pixmap().isNull()); });
-	connect(m_fileTreeModel, &FileTreeModel::rowsInserted, [this] { ui.actionSourceClear->setEnabled(m_fileTreeModel->rowCount() > 0); });
-	connect(m_fileTreeModel, &FileTreeModel::rowsRemoved, [this] { ui.actionSourceClear->setEnabled(m_fileTreeModel->rowCount() > 0); });
+    connect(ui.actionSources, &QAction::toggled, ui.dockWidgetSources, &QDockWidget::setVisible);
+    connect(ui.toolButtonSourceAdd, &QToolButton::clicked, this, &SourceManager::openSources);
+    connect(m_recentMenu, &QMenu::aboutToShow, this, &SourceManager::prepareRecentMenu);
+    connect(ui.actionSourceFolder, &QAction::triggered, this, &SourceManager::addFolder);
+    connect(ui.actionSourcePaste, &QAction::triggered, this, &SourceManager::pasteClipboard);
+    connect(ui.actionSourceScreenshot, &QAction::triggered, this, &SourceManager::takeScreenshot);
+    connect(ui.actionSourceRemove, &QAction::triggered, this, &SourceManager::removeSource);
+    connect(ui.actionSourceDelete, &QAction::triggered, this, &SourceManager::deleteSource);
+    connect(ui.actionSourceClear, &QAction::triggered, this, &SourceManager::clearSources);
+    connect(ui.treeViewSources->selectionModel(), &QItemSelectionModel::selectionChanged, this, [this](const QItemSelection&, const QItemSelection&) { currentSourceChanged(); });
+    connect(ui.treeViewSources, &QTreeView::clicked, this, &SourceManager::indexClicked);
+    connect(&m_fsWatcher, &QFileSystemWatcher::fileChanged, this, &SourceManager::fileChanged);
+    connect(&m_fsWatcher, &QFileSystemWatcher::directoryChanged, this, &SourceManager::directoryChanged);
+    connect(QApplication::clipboard(), &QClipboard::dataChanged, this, [this] { ui.actionSourcePaste->setEnabled(!QApplication::clipboard()->pixmap().isNull()); });
+    connect(m_fileTreeModel, &FileTreeModel::rowsInserted, [this] { ui.actionSourceClear->setEnabled(m_fileTreeModel->rowCount() > 0); });
+    connect(m_fileTreeModel, &FileTreeModel::rowsRemoved, [this] { ui.actionSourceClear->setEnabled(m_fileTreeModel->rowCount() > 0); });
 
-	ADD_SETTING(VarSetting<QStringList> ("recentitems"));
+    ADD_SETTING(VarSetting<QStringList> ("recentitems"));
 }
 
 SourceManager::~SourceManager() {
-	clearSources();
+    clearSources();
 }
 
 int SourceManager::addSources(const QStringList& files, bool suppressWarnings) {
-	QStringList failed;
-	QItemSelection sel;
-	QModelIndex index;
-	QStringList recentItems = ConfigSettings::get<VarSetting<QStringList >> ("recentitems")->getValue();
-	PdfWithTextAction textAction = suppressWarnings ? PdfWithTextAction::Add : PdfWithTextAction::Ask;
+    QStringList failed;
+    QItemSelection sel;
+    QModelIndex index;
+    QStringList recentItems = ConfigSettings::get<VarSetting<QStringList >> ("recentitems")->getValue();
+    PdfWithTextAction textAction = suppressWarnings ? PdfWithTextAction::Add : PdfWithTextAction::Ask;
 
-	ui.treeViewSources->selectionModel()->blockSignals(true);
-	ui.treeViewSources->setUpdatesEnabled(false);
-	for (const QString& filename : files) {
-		if (!QFile(filename).exists()) {
-			failed.append(filename);
-			continue;
-		}
-		index = m_fileTreeModel->findFile(filename);
-		if (index.isValid()) {
-			sel.select(index, index);
-			continue;
-		}
-		QFileInfo finfo(filename);
+    ui.treeViewSources->selectionModel()->blockSignals(true);
+    ui.treeViewSources->setUpdatesEnabled(false);
+    for (const QString& filename : files) {
+        if (!QFile(filename).exists()) {
+            failed.append(filename);
+            continue;
+        }
+        index = m_fileTreeModel->findFile(filename);
+        if (index.isValid()) {
+            sel.select(index, index);
+            continue;
+        }
+        QFileInfo finfo(filename);
 
-		Source* source = new Source(filename, finfo.fileName());
-		if (source->path.endsWith(".pdf", Qt::CaseInsensitive) && !checkPdfSource(source, textAction, failed)) {
-			delete source;
-			continue;
-		}
+        Source* source = new Source(filename, finfo.fileName());
+        if (source->path.endsWith(".pdf", Qt::CaseInsensitive) && !checkPdfSource(source, textAction, failed)) {
+            delete source;
+            continue;
+        }
 
-		index = m_fileTreeModel->insertFile(filename, source);
-		QString base = finfo.absoluteDir().absoluteFilePath(finfo.baseName());
-		m_watchedDirectories[finfo.absolutePath()] += 1;
-		if (m_watchedDirectories[finfo.absolutePath()] == 1) {
-			m_fsWatcher.addPath(finfo.absolutePath());
-		}
-		if (QFile(base + ".txt").exists() || QFile(base + ".html").exists()) {
-			m_fileTreeModel->setFileEditable(index, true);
-		}
-		sel.select(index, index);
-		m_fsWatcher.addPath(filename);
-		recentItems.removeAll(filename);
-		recentItems.prepend(filename);
-	}
-	ConfigSettings::get<VarSetting<QStringList >> ("recentitems")->setValue(recentItems.mid(0, sMaxNumRecent));
-	ui.treeViewSources->selectionModel()->blockSignals(true);
-	ui.treeViewSources->setUpdatesEnabled(false);
-	if (!sel.isEmpty()) {
-		ui.treeViewSources->selectionModel()->select(sel, QItemSelectionModel::ClearAndSelect | QItemSelectionModel::Select | QItemSelectionModel::Rows);
-		QModelIndex parent = sel.indexes().front().parent();
-		while (parent.isValid()) {
-			ui.treeViewSources->expand(parent);
-			parent = parent.parent();
-		}
-		ui.treeViewSources->selectionModel()->setCurrentIndex(sel.indexes().front(), QItemSelectionModel::Select);
-	}
-	ui.treeViewSources->selectionModel()->blockSignals(false);
-	ui.treeViewSources->setUpdatesEnabled(true);
-	currentSourceChanged();
-	if (!failed.isEmpty() && !suppressWarnings) {
-		QMessageBox::critical(MAIN, _("Unable to open files"), _("The following files could not be opened:\n%1").arg(failed.join("\n")));
-	}
-	return !sel.isEmpty();
+        index = m_fileTreeModel->insertFile(filename, source);
+        QString base = finfo.absoluteDir().absoluteFilePath(finfo.baseName());
+        m_watchedDirectories[finfo.absolutePath()] += 1;
+        if (m_watchedDirectories[finfo.absolutePath()] == 1) {
+            m_fsWatcher.addPath(finfo.absolutePath());
+        }
+        if (QFile(base + ".txt").exists() || QFile(base + ".html").exists()) {
+            m_fileTreeModel->setFileEditable(index, true);
+        }
+        sel.select(index, index);
+        m_fsWatcher.addPath(filename);
+        recentItems.removeAll(filename);
+        recentItems.prepend(filename);
+    }
+    ConfigSettings::get<VarSetting<QStringList >> ("recentitems")->setValue(recentItems.mid(0, sMaxNumRecent));
+    ui.treeViewSources->selectionModel()->blockSignals(true);
+    ui.treeViewSources->setUpdatesEnabled(false);
+    if (!sel.isEmpty()) {
+        ui.treeViewSources->selectionModel()->select(sel, QItemSelectionModel::ClearAndSelect | QItemSelectionModel::Select | QItemSelectionModel::Rows);
+        QModelIndex parent = sel.indexes().front().parent();
+        while (parent.isValid()) {
+            ui.treeViewSources->expand(parent);
+            parent = parent.parent();
+        }
+        ui.treeViewSources->selectionModel()->setCurrentIndex(sel.indexes().front(), QItemSelectionModel::Select);
+    }
+    ui.treeViewSources->selectionModel()->blockSignals(false);
+    ui.treeViewSources->setUpdatesEnabled(true);
+    currentSourceChanged();
+    if (!failed.isEmpty() && !suppressWarnings) {
+        QMessageBox::critical(MAIN, _("Unable to open files"), _("The following files could not be opened:\n%1").arg(failed.join("\n")));
+    }
+    return !sel.isEmpty();
 }
 
 bool SourceManager::checkPdfSource(Source* source, PdfWithTextAction& textAction, QStringList& failed) const {
-	std::unique_ptr<Poppler::Document> document(Poppler::Document::load(source->path));
-	if (!document) {
-		failed.append(source->path);
-		return false;
-	}
+    std::unique_ptr<Poppler::Document> document(Poppler::Document::load(source->path));
+    if (!document) {
+        failed.append(source->path);
+        return false;
+    }
 
-	// Unlock if necessary
-	if (document->isLocked()) {
-		bool ok = false;
-		QString message = QString(_("Enter password for file '%1':")).arg(QFileInfo(source->path).fileName());
-		QString text;
-		while (true) {
-			text = QInputDialog::getText(MAIN, _("Protected PDF"), message, QLineEdit::Password, text, &ok);
-			if (!ok) {
-				failed.append(source->path);
-				return false;
-			}
-			if (!document->unlock(text.toLocal8Bit(), text.toLocal8Bit())) {
-				source->password = text.toLocal8Bit();
-				break;
-			}
-		}
-	}
+    // Unlock if necessary
+    if (document->isLocked()) {
+        bool ok = false;
+        QString message = QString(_("Enter password for file '%1':")).arg(QFileInfo(source->path).fileName());
+        QString text;
+        while (true) {
+            text = QInputDialog::getText(MAIN, _("Protected PDF"), message, QLineEdit::Password, text, &ok);
+            if (!ok) {
+                failed.append(source->path);
+                return false;
+            }
+            if (!document->unlock(text.toLocal8Bit(), text.toLocal8Bit())) {
+                source->password = text.toLocal8Bit();
+                break;
+            }
+        }
+    }
 
-	// Check whether the PDF already contains text
-	if (textAction != PdfWithTextAction::Add) {
-		bool haveText = false;
-		for (int i = 0, n = document->numPages(); i < n; ++i) {
-			if (!document->page(i)->text(QRectF()).isEmpty()) {
-				haveText = true;
-				break;
-			}
-		}
-		if (haveText) {
-			if (textAction == PdfWithTextAction::Skip) {
-				return false;
-			}
-			int response = QMessageBox::question(MAIN->getInstance(), _("PDF with text"), _("The PDF file already contains text:\n%1\nOpen it regardless?").arg(source->path), QMessageBox::Yes | QMessageBox::YesAll | QMessageBox::No | QMessageBox::NoAll);
-			if (response == QMessageBox::No) {
-				return false;
-			} else if (response == QMessageBox::NoAll) {
-				textAction = PdfWithTextAction::Skip;
-				return false;
-			} else if (response == QMessageBox::YesAll) {
-				textAction = PdfWithTextAction::Add;
-			}
-		}
-	}
+    // Check whether the PDF already contains text
+    if (textAction != PdfWithTextAction::Add) {
+        bool haveText = false;
+        for (int i = 0, n = document->numPages(); i < n; ++i) {
+            if (!document->page(i)->text(QRectF()).isEmpty()) {
+                haveText = true;
+                break;
+            }
+        }
+        if (haveText) {
+            if (textAction == PdfWithTextAction::Skip) {
+                return false;
+            }
+            int response = QMessageBox::question(MAIN->getInstance(), _("PDF with text"), _("The PDF file already contains text:\n%1\nOpen it regardless?").arg(source->path), QMessageBox::Yes | QMessageBox::YesAll | QMessageBox::No | QMessageBox::NoAll);
+            if (response == QMessageBox::No) {
+                return false;
+            } else if (response == QMessageBox::NoAll) {
+                textAction = PdfWithTextAction::Skip;
+                return false;
+            } else if (response == QMessageBox::YesAll) {
+                textAction = PdfWithTextAction::Add;
+            }
+        }
+    }
 
-	// Extract document metadata
-	source->author = document->author();
-	source->creator = document->creator();
-	source->keywords = document->keywords();
-	source->producer = document->producer();
-	source->title = document->title();
-	source->subject = document->subject();
+    // Extract document metadata
+    source->author = document->author();
+    source->creator = document->creator();
+    source->keywords = document->keywords();
+    source->producer = document->producer();
+    source->title = document->title();
+    source->subject = document->subject();
 #if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
-	Poppler::Document::PdfVersion pdfVersion = document->getPdfVersion();
-	source->pdfVersionMajor = pdfVersion.major;
-	source->pdfVersionMinor = pdfVersion.minor;
+    Poppler::Document::PdfVersion pdfVersion = document->getPdfVersion();
+    source->pdfVersionMajor = pdfVersion.major;
+    source->pdfVersionMinor = pdfVersion.minor;
 #else
-	document->getPdfVersion(&source->pdfVersionMajor, &source->pdfVersionMinor);
+    document->getPdfVersion(&source->pdfVersionMajor, &source->pdfVersionMinor);
 #endif
 
-	return true;
+    return true;
 }
 
 QList<Source*> SourceManager::getSelectedSources() const {
-	QList<Source*> selectedSources;
-	for (QModelIndex index : ui.treeViewSources->selectionModel()->selectedRows()) {
-		Source* source = m_fileTreeModel->fileData<Source*> (index);
-		if (source) {
-			selectedSources.append(source);
-		}
-	}
-	return selectedSources;
+    QList<Source*> selectedSources;
+    for (QModelIndex index : ui.treeViewSources->selectionModel()->selectedRows()) {
+        Source* source = m_fileTreeModel->fileData<Source*> (index);
+        if (source) {
+            selectedSources.append(source);
+        }
+    }
+    return selectedSources;
 }
 
 void SourceManager::prepareRecentMenu() {
-	// Build recent menu
-	m_recentMenu->clear();
-	int count = 0;
-	for (const QString& filename : ConfigSettings::get<VarSetting<QStringList >> ("recentitems")->getValue()) {
-		if (QFile(filename).exists()) {
-			QAction* action = new QAction(QFileInfo(filename).fileName(), m_recentMenu);
-			action->setToolTip(filename);
-			connect(action, &QAction::triggered, this, &SourceManager::openRecentItem);
-			m_recentMenu->addAction(action);
-			if (++count >= sMaxNumRecent) {
-				break;
-			}
-		}
-	}
-	if (m_recentMenu->isEmpty()) {
-		m_recentMenu->addAction(_("No recent files"))->setEnabled(false);
-	}
+    // Build recent menu
+    m_recentMenu->clear();
+    int count = 0;
+    for (const QString& filename : ConfigSettings::get<VarSetting<QStringList >> ("recentitems")->getValue()) {
+        if (QFile(filename).exists()) {
+            QAction* action = new QAction(QFileInfo(filename).fileName(), m_recentMenu);
+            action->setToolTip(filename);
+            connect(action, &QAction::triggered, this, &SourceManager::openRecentItem);
+            m_recentMenu->addAction(action);
+            if (++count >= sMaxNumRecent) {
+                break;
+            }
+        }
+    }
+    if (m_recentMenu->isEmpty()) {
+        m_recentMenu->addAction(_("No recent files"))->setEnabled(false);
+    }
 }
 
 void SourceManager::openSources() {
-	QList<Source*> current = getSelectedSources();
-	QString initialFolder = Utils::documentsFolder();
-	if (!current.isEmpty() && !current.front()->isTemp) {
-		initialFolder = QFileInfo(current.front()->path).absolutePath();
-	}
-	QSet<QString> formats;
-	for (const QByteArray& format : QImageReader::supportedImageFormats()) {
-		formats.insert(QString("*.%1").arg(QString(format).toLower()));
-	}
-	formats.insert("*.pdf");
-	formats.insert("*.djvu");
-	QString filter = QString("%1 (%2)").arg(_("Images and PDFs")).arg(QStringList(formats.values()).join(" "));
-	addSources(FileDialogs::openDialog(_("Select Files"), initialFolder, "sourcedir", filter, true));
+    QList<Source*> current = getSelectedSources();
+    QString initialFolder = Utils::documentsFolder();
+    if (!current.isEmpty() && !current.front()->isTemp) {
+        initialFolder = QFileInfo(current.front()->path).absolutePath();
+    }
+    QSet<QString> formats;
+    for (const QByteArray& format : QImageReader::supportedImageFormats()) {
+        formats.insert(QString("*.%1").arg(QString(format).toLower()));
+    }
+    formats.insert("*.pdf");
+    formats.insert("*.djvu");
+    QString filter = QString("%1 (%2)").arg(_("Images and PDFs")).arg(QStringList(formats.values()).join(" "));
+    addSources(FileDialogs::openDialog(_("Select Files"), initialFolder, "sourcedir", filter, true));
 }
 
 void SourceManager::addFolder() {
-	QList<Source*> current = getSelectedSources();
-	QString initialFolder = Utils::documentsFolder();
-	if (!current.isEmpty() && !current.front()->isTemp) {
-		initialFolder = QFileInfo(current.front()->path).absolutePath();
-	}
+    QList<Source*> current = getSelectedSources();
+    QString initialFolder = Utils::documentsFolder();
+    if (!current.isEmpty() && !current.front()->isTemp) {
+        initialFolder = QFileInfo(current.front()->path).absolutePath();
+    }
 
-	QString dir = QFileDialog::getExistingDirectory(MAIN, _("Select folder..."), initialFolder);
-	if (dir.isEmpty()) {
-		return;
-	}
-	QStringList nameFilters;
-	QSet<QString> formats;
-	for (const QByteArray& format : QImageReader::supportedImageFormats()) {
-		formats.insert(QString("*.%1").arg(QString(format).toLower()));
-	}
-	formats.insert("*.pdf");
-	formats.insert("*.djvu");
-	nameFilters = formats.values();
+    QString dir = QFileDialog::getExistingDirectory(MAIN, _("Select folder..."), initialFolder);
+    if (dir.isEmpty()) {
+        return;
+    }
+    QStringList nameFilters;
+    QSet<QString> formats;
+    for (const QByteArray& format : QImageReader::supportedImageFormats()) {
+        formats.insert(QString("*.%1").arg(QString(format).toLower()));
+    }
+    formats.insert("*.pdf");
+    formats.insert("*.djvu");
+    nameFilters = formats.values();
 
-	QDirIterator it(dir, nameFilters, QDir::Files, QDirIterator::Subdirectories);
+    QDirIterator it(dir, nameFilters, QDir::Files, QDirIterator::Subdirectories);
 
-	QStringList filenames;
-	while (it.hasNext()) {
-		filenames.append(it.next());
-	}
-	if (!filenames.isEmpty()) {
-		addSources(filenames);
-	}
+    QStringList filenames;
+    while (it.hasNext()) {
+        filenames.append(it.next());
+    }
+    if (!filenames.isEmpty()) {
+        addSources(filenames);
+    }
 }
 
 void SourceManager::openRecentItem() {
-	const QString& filename = qobject_cast<QAction*> (QObject::sender())->toolTip();
-	addSources(QStringList() << filename);
+    const QString& filename = qobject_cast<QAction*> (QObject::sender())->toolTip();
+    addSources(QStringList() << filename);
 }
 
 void SourceManager::pasteClipboard() {
-	QPixmap pixmap = QApplication::clipboard()->pixmap();
-	if (pixmap.isNull()) {
-		QMessageBox::critical(MAIN, _("Clipboard Error"),  _("Failed to read the clipboard."));
-		return;
-	}
-	++m_pasteCount;
-	QString displayname = _("Pasted %1").arg(m_pasteCount);
-	savePixmap(pixmap, displayname);
+    QPixmap pixmap = QApplication::clipboard()->pixmap();
+    if (pixmap.isNull()) {
+        QMessageBox::critical(MAIN, _("Clipboard Error"),  _("Failed to read the clipboard."));
+        return;
+    }
+    ++m_pasteCount;
+    QString displayname = _("Pasted %1").arg(m_pasteCount);
+    savePixmap(pixmap, displayname);
 }
 
 void SourceManager::addSourceImage(const QImage& image) {
-	++m_pasteCount;
-	QString displayname = _("Pasted %1").arg(m_pasteCount);
-	savePixmap(QPixmap::fromImage(image), displayname);
+    ++m_pasteCount;
+    QString displayname = _("Pasted %1").arg(m_pasteCount);
+    savePixmap(QPixmap::fromImage(image), displayname);
 }
 
 void SourceManager::takeScreenshot() {
-	const QString platform = QGuiApplication::platformName();
-	if (platform.startsWith("wayland", Qt::CaseInsensitive)) {
-		QDBusInterface portal(
-		    "org.freedesktop.portal.Desktop",
-		    "/org/freedesktop/portal/desktop",
-		    "org.freedesktop.portal.Screenshot",
-		    QDBusConnection::sessionBus()
-		);
+    const QString platform = QGuiApplication::platformName();
+    if (platform.startsWith("wayland", Qt::CaseInsensitive)) {
+        QDBusInterface portal(
+            "org.freedesktop.portal.Desktop",
+            "/org/freedesktop/portal/desktop",
+            "org.freedesktop.portal.Screenshot",
+            QDBusConnection::sessionBus()
+        );
 
-		if (!portal.isValid()) {
-			QMessageBox::critical(MAIN, _("Screenshot Error"),  _("Failed to take screenshot: %1").arg(_("xdg-desktop-portal not available")));
-			return;
-		}
+        if (!portal.isValid()) {
+            QMessageBox::critical(MAIN, _("Screenshot Error"),  _("Failed to take screenshot: %1").arg(_("xdg-desktop-portal not available")));
+            return;
+        }
 
-		QVariantMap options;
-		options["interactive"] = true;
+        QVariantMap options;
+        options["interactive"] = true;
 
-		QDBusReply<QDBusObjectPath> reply = portal.call("Screenshot", QString(), options);
+        QDBusReply<QDBusObjectPath> reply = portal.call("Screenshot", QString(), options);
 
-		QDBusObjectPath requestPath = reply.value();
+        QDBusObjectPath requestPath = reply.value();
 
-		MAIN->pushState(MainWindow::State::Busy, _("Grabbing screenshot..."));
-		QDBusConnection::sessionBus().connect(
-		    "org.freedesktop.portal.Desktop",
-		    requestPath.path(),
-		    "org.freedesktop.portal.Request",
-		    "Response",
-		    this,
-		    SLOT(onScreenshotResponse(uint, QVariantMap))
-		);
-	} else {
-		MAIN->hide();
-		QApplication::processEvents();
-		QTimer* timer = new QTimer();
-		connect(timer, &QTimer::timeout, [this, timer] {
-			timer->deleteLater();
+        MAIN->pushState(MainWindow::State::Busy, _("Grabbing screenshot..."));
+        QDBusConnection::sessionBus().connect(
+            "org.freedesktop.portal.Desktop",
+            requestPath.path(),
+            "org.freedesktop.portal.Request",
+            "Response",
+            this,
+            SLOT(onScreenshotResponse(uint, QVariantMap))
+        );
+    } else {
+        MAIN->hide();
+        QApplication::processEvents();
+        QTimer* timer = new QTimer();
+        connect(timer, &QTimer::timeout, [this, timer] {
+            timer->deleteLater();
 #if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
-			QScreen* screen = QGuiApplication::primaryScreen();
-			QPixmap pixmap = screen ? screen->grabWindow() : QPixmap();
+            QScreen* screen = QGuiApplication::primaryScreen();
+            QPixmap pixmap = screen ? screen->grabWindow() : QPixmap();
 #else
-			QPixmap pixmap = QGuiApplication::primaryScreen()->grabWindow(QApplication::desktop()->winId());
+            QPixmap pixmap = QGuiApplication::primaryScreen()->grabWindow(QApplication::desktop()->winId());
 #endif
-			MAIN->show();
-			if (pixmap.isNull()) {
-				QMessageBox::critical(MAIN, _("Screenshot Error"),  _("Failed to take screenshot."));
-				return;
-			}
-			++m_screenshotCount;
-			QString displayname = _("Screenshot %1").arg(m_screenshotCount);
-			savePixmap(pixmap, displayname);
-		});
-		timer->start(250);
-	}
+            MAIN->show();
+            if (pixmap.isNull()) {
+                QMessageBox::critical(MAIN, _("Screenshot Error"),  _("Failed to take screenshot."));
+                return;
+            }
+            ++m_screenshotCount;
+            QString displayname = _("Screenshot %1").arg(m_screenshotCount);
+            savePixmap(pixmap, displayname);
+        });
+        timer->start(250);
+    }
 }
 
 void SourceManager::onScreenshotResponse(uint response, const QVariantMap &results) {
-	MAIN->popState();
-	if (response != 0) {
-		QMessageBox::critical(MAIN, _("Screenshot Error"),  _("Failed to take screenshot: %1").arg(_("Cancelled or denied")));
-		return;
-	}
+    MAIN->popState();
+    if (response != 0) {
+        QMessageBox::critical(MAIN, _("Screenshot Error"),  _("Failed to take screenshot: %1").arg(_("Cancelled or denied")));
+        return;
+    }
 
-	const QUrl uri(results.value("uri").toString());
-	if (!uri.isValid()) {
-		QMessageBox::critical(MAIN, _("Screenshot Error"),  _("Failed to take screenshot: %1").arg(_("Invalid screenshot URI")));
-		return;
-	}
-	QPixmap pixmap(uri.toLocalFile());
-	++m_screenshotCount;
-	QString displayname = _("Screenshot %1").arg(m_screenshotCount);
-	savePixmap(pixmap, displayname);
-	QFile(uri.toLocalFile()).remove();
+    const QUrl uri(results.value("uri").toString());
+    if (!uri.isValid()) {
+        QMessageBox::critical(MAIN, _("Screenshot Error"),  _("Failed to take screenshot: %1").arg(_("Invalid screenshot URI")));
+        return;
+    }
+    QPixmap pixmap(uri.toLocalFile());
+    ++m_screenshotCount;
+    QString displayname = _("Screenshot %1").arg(m_screenshotCount);
+    savePixmap(pixmap, displayname);
+    QFile(uri.toLocalFile()).remove();
 }
 
 void SourceManager::savePixmap(const QPixmap& pixmap, const QString& displayname) {
-	MAIN->pushState(MainWindow::State::Busy, _("Saving image..."));
-	QString filename;
-	bool success = true;
-	QTemporaryFile tmpfile(QDir::temp().absoluteFilePath("gimagereader_XXXXXX.png"));
-	if (!tmpfile.open()) {
-		success = false;
-	} else {
-		tmpfile.setAutoRemove(false);
-		filename = tmpfile.fileName();
-		success = pixmap.save(filename);
-	}
-	MAIN->popState();
-	if (!success) {
-		QMessageBox::critical(MAIN, _("Cannot Write File"),  _("Could not write to %1.").arg(filename));
-	} else {
-		Source* source = new Source(filename, displayname, QByteArray(), true);
-		QModelIndex index = m_fileTreeModel->insertFile(filename, source, displayname);
-		m_fsWatcher.addPath(filename);
-		QFileInfo finfo(filename);
-		m_watchedDirectories[finfo.absolutePath()] += 1;
-		if (m_watchedDirectories[finfo.absolutePath()] == 1) {
-			m_fsWatcher.addPath(finfo.absolutePath());
-		}
-		ui.treeViewSources->selectionModel()->blockSignals(true);
-		ui.treeViewSources->clearSelection();
-		ui.treeViewSources->selectionModel()->blockSignals(false);
-		ui.treeViewSources->setCurrentIndex(index);
-	}
+    MAIN->pushState(MainWindow::State::Busy, _("Saving image..."));
+    QString filename;
+    bool success = true;
+    QTemporaryFile tmpfile(QDir::temp().absoluteFilePath("gimagereader_XXXXXX.png"));
+    if (!tmpfile.open()) {
+        success = false;
+    } else {
+        tmpfile.setAutoRemove(false);
+        filename = tmpfile.fileName();
+        success = pixmap.save(filename);
+    }
+    MAIN->popState();
+    if (!success) {
+        QMessageBox::critical(MAIN, _("Cannot Write File"),  _("Could not write to %1.").arg(filename));
+    } else {
+        Source* source = new Source(filename, displayname, QByteArray(), true);
+        QModelIndex index = m_fileTreeModel->insertFile(filename, source, displayname);
+        m_fsWatcher.addPath(filename);
+        QFileInfo finfo(filename);
+        m_watchedDirectories[finfo.absolutePath()] += 1;
+        if (m_watchedDirectories[finfo.absolutePath()] == 1) {
+            m_fsWatcher.addPath(finfo.absolutePath());
+        }
+        ui.treeViewSources->selectionModel()->blockSignals(true);
+        ui.treeViewSources->clearSelection();
+        ui.treeViewSources->selectionModel()->blockSignals(false);
+        ui.treeViewSources->setCurrentIndex(index);
+    }
 }
 
 void SourceManager::removeSource(bool deleteFile) {
-	QStringList paths;
-	for (const QModelIndex& index : ui.treeViewSources->selectionModel()->selectedRows()) {
-		Source* source = m_fileTreeModel->fileData<Source*> (index);
-		if (source) {
-			paths.append(source->path);
-		}
-	}
-	if (paths.isEmpty()) {
-		return;
-	}
-	if (deleteFile && QDialogButtonBox::Yes != Utils::messageBox(MAIN, _("Delete Files"), _("Delete the following files?"), paths.join("\n"), QMessageBox::Question, QDialogButtonBox::Yes | QDialogButtonBox::No)) {
-		return;
-	}
-	// Avoid multiple sourceChanged emissions when removing items
-	ui.treeViewSources->selectionModel()->blockSignals(true);
-	ui.treeViewSources->setUpdatesEnabled(false);
-	while (ui.treeViewSources->selectionModel()->hasSelection()) {
-		QModelIndex index = ui.treeViewSources->selectionModel()->selectedRows().front();
-		if (deleteFile && m_fileTreeModel->isDir(index)) {
-			// Skip directories (they are pruned from the tree automatically if empty), otherwise descendant selected file indices are possibly removed without the files getting deleted
-			ui.treeViewSources->selectionModel()->select(index, QItemSelectionModel::Deselect);
-		} else {
-			Source* source = m_fileTreeModel->fileData<Source*> (index);
-			if (source) {
-				m_fsWatcher.removePath(source->path);
-				QString dir = QFileInfo(source->path).absolutePath();
-				m_watchedDirectories[dir] -= 1;
-				if (m_watchedDirectories[dir] == 0) {
-					m_fsWatcher.removePath(dir);
-					m_watchedDirectories.remove(dir);
-				}
-				if (deleteFile) {
-					QFile(source->path).remove();
-				}
-			}
-			m_fileTreeModel->removeIndex(index);
-		}
-	}
-	ui.treeViewSources->selectionModel()->clear();
-	ui.treeViewSources->selectionModel()->select(ui.treeViewSources->currentIndex(), QItemSelectionModel::Select);
-	ui.treeViewSources->selectionModel()->blockSignals(false);
-	ui.treeViewSources->setUpdatesEnabled(true);
-	currentSourceChanged();
+    QStringList paths;
+    for (const QModelIndex& index : ui.treeViewSources->selectionModel()->selectedRows()) {
+        Source* source = m_fileTreeModel->fileData<Source*> (index);
+        if (source) {
+            paths.append(source->path);
+        }
+    }
+    if (paths.isEmpty()) {
+        return;
+    }
+    if (deleteFile && QDialogButtonBox::Yes != Utils::messageBox(MAIN, _("Delete Files"), _("Delete the following files?"), paths.join("\n"), QMessageBox::Question, QDialogButtonBox::Yes | QDialogButtonBox::No)) {
+        return;
+    }
+    // Avoid multiple sourceChanged emissions when removing items
+    ui.treeViewSources->selectionModel()->blockSignals(true);
+    ui.treeViewSources->setUpdatesEnabled(false);
+    while (ui.treeViewSources->selectionModel()->hasSelection()) {
+        QModelIndex index = ui.treeViewSources->selectionModel()->selectedRows().front();
+        if (deleteFile && m_fileTreeModel->isDir(index)) {
+            // Skip directories (they are pruned from the tree automatically if empty), otherwise descendant selected file indices are possibly removed without the files getting deleted
+            ui.treeViewSources->selectionModel()->select(index, QItemSelectionModel::Deselect);
+        } else {
+            Source* source = m_fileTreeModel->fileData<Source*> (index);
+            if (source) {
+                m_fsWatcher.removePath(source->path);
+                QString dir = QFileInfo(source->path).absolutePath();
+                m_watchedDirectories[dir] -= 1;
+                if (m_watchedDirectories[dir] == 0) {
+                    m_fsWatcher.removePath(dir);
+                    m_watchedDirectories.remove(dir);
+                }
+                if (deleteFile) {
+                    QFile(source->path).remove();
+                }
+            }
+            m_fileTreeModel->removeIndex(index);
+        }
+    }
+    ui.treeViewSources->selectionModel()->clear();
+    ui.treeViewSources->selectionModel()->select(ui.treeViewSources->currentIndex(), QItemSelectionModel::Select);
+    ui.treeViewSources->selectionModel()->blockSignals(false);
+    ui.treeViewSources->setUpdatesEnabled(true);
+    currentSourceChanged();
 }
 
 
 void SourceManager::clearSources() {
-	if (!m_fsWatcher.files().isEmpty()) {
-		m_fsWatcher.removePaths(m_fsWatcher.files());
-	}
-	if (!m_fsWatcher.directories().isEmpty()) {
-		m_fsWatcher.removePaths(m_fsWatcher.directories());
-	}
-	m_fileTreeModel->clear();
+    if (!m_fsWatcher.files().isEmpty()) {
+        m_fsWatcher.removePaths(m_fsWatcher.files());
+    }
+    if (!m_fsWatcher.directories().isEmpty()) {
+        m_fsWatcher.removePaths(m_fsWatcher.directories());
+    }
+    m_fileTreeModel->clear();
 }
 
 void SourceManager::currentSourceChanged() {
-	if (m_inCurrentSourceChanged) {
-		return;
-	}
-	m_inCurrentSourceChanged = true;
+    if (m_inCurrentSourceChanged) {
+        return;
+    }
+    m_inCurrentSourceChanged = true;
 
-	// Merge selection of all children of selected items
-	QItemSelection selection = ui.treeViewSources->selectionModel()->selection();
-	QItemSelection extendedSel;
-	for (const QModelIndex& index : selection.indexes()) {
-		selectRecursive(extendedSel, index);
-	}
-	extendedSel.merge(selection, QItemSelectionModel::Select);
-	ui.treeViewSources->selectionModel()->select(extendedSel, QItemSelectionModel::Select | QItemSelectionModel::Rows);
+    // Merge selection of all children of selected items
+    QItemSelection selection = ui.treeViewSources->selectionModel()->selection();
+    QItemSelection extendedSel;
+    for (const QModelIndex& index : selection.indexes()) {
+        selectRecursive(extendedSel, index);
+    }
+    extendedSel.merge(selection, QItemSelectionModel::Select);
+    ui.treeViewSources->selectionModel()->select(extendedSel, QItemSelectionModel::Select | QItemSelectionModel::Rows);
 
-	bool enabled = !ui.treeViewSources->selectionModel()->selectedRows().isEmpty();
-	ui.actionSourceRemove->setEnabled(enabled);
-	ui.actionSourceDelete->setEnabled(enabled);
+    bool enabled = !ui.treeViewSources->selectionModel()->selectedRows().isEmpty();
+    ui.actionSourceRemove->setEnabled(enabled);
+    ui.actionSourceDelete->setEnabled(enabled);
 
-	emit sourceChanged();
-	m_inCurrentSourceChanged = false;
+    emit sourceChanged();
+    m_inCurrentSourceChanged = false;
 }
 
 void SourceManager::indexClicked(const QModelIndex& index) {
-	Source* source = m_fileTreeModel->fileData<Source*> (index);
-	if (index.column() == 1 && source && m_fileTreeModel->isFileEditable(index)) {
-		QFileInfo finfo(source->path);
-		QString base = finfo.absoluteDir().absoluteFilePath(finfo.baseName());
-		bool hasTxt = QFile(base + ".txt").exists();
-		bool hasHtml = QFile(base + ".html").exists();
-		if (hasTxt && hasHtml) {
-			QMessageBox box(QMessageBox::Question, _("Open output"), _("Both a text and a hOCR output were found. Which one do you want to open?"), QMessageBox::Cancel);
-			QAbstractButton* textButton = box.addButton(_("Text"), QMessageBox::AcceptRole);
-			QAbstractButton* hocrButton = box.addButton(_("hOCR"), QMessageBox::AcceptRole);
-			connect(textButton, &QAbstractButton::clicked, this, [base] { MAIN->openOutput(base + ".txt"); });
-			connect(hocrButton, &QAbstractButton::clicked, this, [base] { MAIN->openOutput(base + ".html"); });
-			box.exec();
-		} else if (hasTxt) {
-			MAIN->openOutput(base + ".txt");
-		} else if (hasHtml) {
-			MAIN->openOutput(base + ".html");
-		}
-	}
+    Source* source = m_fileTreeModel->fileData<Source*> (index);
+    if (index.column() == 1 && source && m_fileTreeModel->isFileEditable(index)) {
+        QFileInfo finfo(source->path);
+        QString base = finfo.absoluteDir().absoluteFilePath(finfo.baseName());
+        bool hasTxt = QFile(base + ".txt").exists();
+        bool hasHtml = QFile(base + ".html").exists();
+        if (hasTxt && hasHtml) {
+            QMessageBox box(QMessageBox::Question, _("Open output"), _("Both a text and a hOCR output were found. Which one do you want to open?"), QMessageBox::Cancel);
+            QAbstractButton* textButton = box.addButton(_("Text"), QMessageBox::AcceptRole);
+            QAbstractButton* hocrButton = box.addButton(_("hOCR"), QMessageBox::AcceptRole);
+            connect(textButton, &QAbstractButton::clicked, this, [base] { MAIN->openOutput(base + ".txt"); });
+            connect(hocrButton, &QAbstractButton::clicked, this, [base] { MAIN->openOutput(base + ".html"); });
+            box.exec();
+        } else if (hasTxt) {
+            MAIN->openOutput(base + ".txt");
+        } else if (hasHtml) {
+            MAIN->openOutput(base + ".html");
+        }
+    }
 }
 
 void SourceManager::selectRecursive(QItemSelection& parentsel, const QModelIndex& index) {
-	int rows = m_fileTreeModel->rowCount(index);
-	for (int row = 0; row < rows; ++row) {
-		QModelIndex child = m_fileTreeModel->index(row, 0, index);
-		selectRecursive(parentsel, child);
-	}
-	QItemSelection sel(m_fileTreeModel->index(0, 0, index), m_fileTreeModel->index(rows - 1, 0, index));
-	parentsel.merge(sel, QItemSelectionModel::Select | QItemSelectionModel::Rows);
+    int rows = m_fileTreeModel->rowCount(index);
+    for (int row = 0; row < rows; ++row) {
+        QModelIndex child = m_fileTreeModel->index(row, 0, index);
+        selectRecursive(parentsel, child);
+    }
+    QItemSelection sel(m_fileTreeModel->index(0, 0, index), m_fileTreeModel->index(rows - 1, 0, index));
+    parentsel.merge(sel, QItemSelectionModel::Select | QItemSelectionModel::Rows);
 }
 
 void SourceManager::fileChanged(const QString& filename) {
-	if (!QFile(filename).exists()) {
-		QModelIndex index = m_fileTreeModel->findFile(filename);
-		if (index.isValid()) {
-			QMessageBox::warning(MAIN, _("Missing File"), _("The following file has been deleted or moved:\n%1").arg(filename));
-			m_fileTreeModel->removeIndex(index);
-		}
-	}
-	m_fsWatcher.removePath(filename);
-	m_watchedDirectories.remove(filename);  // In case it was a directory
+    if (!QFile(filename).exists()) {
+        QModelIndex index = m_fileTreeModel->findFile(filename);
+        if (index.isValid()) {
+            QMessageBox::warning(MAIN, _("Missing File"), _("The following file has been deleted or moved:\n%1").arg(filename));
+            m_fileTreeModel->removeIndex(index);
+        }
+    }
+    m_fsWatcher.removePath(filename);
+    m_watchedDirectories.remove(filename);  // In case it was a directory
 }
 
 void SourceManager::directoryChanged(const QString& dir) {
-	// Update editable status of files in directory
-	QModelIndex index = m_fileTreeModel->findFile(dir, false);
-	for (int row = 0, n = m_fileTreeModel->rowCount(index); row < n; ++row) {
-		QModelIndex child = m_fileTreeModel->index(row, 0, index);
-		Source* source = m_fileTreeModel->fileData<Source*> (child);
-		if (source) {
-			QFileInfo finfo(source->path);
-			QString base = finfo.absoluteDir().absoluteFilePath(finfo.baseName());
-			m_fileTreeModel->setFileEditable(child, QFile(base + ".txt").exists() || QFile(base + ".html").exists());
-		}
-	}
+    // Update editable status of files in directory
+    QModelIndex index = m_fileTreeModel->findFile(dir, false);
+    for (int row = 0, n = m_fileTreeModel->rowCount(index); row < n; ++row) {
+        QModelIndex child = m_fileTreeModel->index(row, 0, index);
+        Source* source = m_fileTreeModel->fileData<Source*> (child);
+        if (source) {
+            QFileInfo finfo(source->path);
+            QString base = finfo.absoluteDir().absoluteFilePath(finfo.baseName());
+            m_fileTreeModel->setFileEditable(child, QFile(base + ".txt").exists() || QFile(base + ".html").exists());
+        }
+    }
 }
 
 bool SourceManager::eventFilter(QObject* object, QEvent* event) {
-	if (event->type() == QEvent::DragEnter) {
-		QDragEnterEvent* dragEnterEvent = static_cast<QDragEnterEvent*> (event);
-		if (Utils::handleSourceDragEvent(dragEnterEvent->mimeData())) {
-			dragEnterEvent->acceptProposedAction();
-		}
-		return true;
-	} else if (event->type() == QEvent::Drop) {
-		QDropEvent* dropEvent = static_cast<QDropEvent*> (event);
-		Utils::handleSourceDropEvent(dropEvent->mimeData());
-		return true;
-	}
-	return QObject::eventFilter(object, event);
+    if (event->type() == QEvent::DragEnter) {
+        QDragEnterEvent* dragEnterEvent = static_cast<QDragEnterEvent*> (event);
+        if (Utils::handleSourceDragEvent(dragEnterEvent->mimeData())) {
+            dragEnterEvent->acceptProposedAction();
+        }
+        return true;
+    } else if (event->type() == QEvent::Drop) {
+        QDropEvent* dropEvent = static_cast<QDropEvent*> (event);
+        Utils::handleSourceDropEvent(dropEvent->mimeData());
+        return true;
+    }
+    return QObject::eventFilter(object, event);
 }

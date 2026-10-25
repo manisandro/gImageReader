@@ -36,25 +36,25 @@
 
 class CCITTFax4Encoder {
 public:
-	CCITTFax4Encoder();
-	~CCITTFax4Encoder();
-	uint8_t* encode(const uint8_t* buffer, uint32_t width, uint32_t height, uint32_t rowbytes, uint32_t& outputSize);
+    CCITTFax4Encoder();
+    ~CCITTFax4Encoder();
+    uint8_t* encode(const uint8_t* buffer, uint32_t width, uint32_t height, uint32_t rowbytes, uint32_t& outputSize);
 
 private:
-	struct EncoderState;
-	struct TableEntry;
-	EncoderState* m_state;
+    struct EncoderState;
+    struct TableEntry;
+    EncoderState* m_state;
 
-	void encode2DRow(const uint8_t* codeline, const uint8_t* refline, uint32_t linebits);
-	inline void putspan(int32_t span, const TableEntry* tab);
-	inline void putbits(uint16_t bits, uint16_t length);
-	inline void flushbits();
+    void encode2DRow(const uint8_t* codeline, const uint8_t* refline, uint32_t linebits);
+    inline void putspan(int32_t span, const TableEntry* tab);
+    inline void putbits(uint16_t bits, uint16_t length);
+    inline void flushbits();
 
-	static const TableEntry whiteCodes[];
-	static const TableEntry blackCodes[];
-	static const TableEntry horizcode;
-	static const TableEntry passcode;
-	static const TableEntry vcodes[];
+    static const TableEntry whiteCodes[];
+    static const TableEntry blackCodes[];
+    static const TableEntry horizcode;
+    static const TableEntry passcode;
+    static const TableEntry vcodes[];
 };
 
 #endif // CCITT_HH

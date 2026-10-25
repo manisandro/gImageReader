@@ -28,70 +28,70 @@
 #include "Ui_OutputEditorText.hh"
 
 class OutputEditorText : public OutputEditor {
-	Q_OBJECT
+    Q_OBJECT
 public:
-	class TextBatchProcessor : public BatchProcessor {
-	public:
-		TextBatchProcessor(bool prependPage) : m_prependPage(prependPage) {}
-		QString fileSuffix() const override { return QString(".txt"); }
-		void appendOutput(QIODevice* dev, tesseract::TessBaseAPI* tess, const PageInfo& pageInfo, bool firstArea) const override;
-	private:
-		bool m_prependPage = false;
-	};
+    class TextBatchProcessor : public BatchProcessor {
+    public:
+        TextBatchProcessor(bool prependPage) : m_prependPage(prependPage) {}
+        QString fileSuffix() const override { return QString(".txt"); }
+        void appendOutput(QIODevice* dev, tesseract::TessBaseAPI* tess, const PageInfo& pageInfo, bool firstArea) const override;
+    private:
+        bool m_prependPage = false;
+    };
 
-	OutputEditorText();
-	~OutputEditorText();
+    OutputEditorText();
+    ~OutputEditorText();
 
-	QWidget* getUI() override {
-		return m_widget;
-	}
-	ReadSessionData* initRead(tesseract::TessBaseAPI& /*tess*/) override {
-		return new TextReadSessionData;
-	}
-	void read(tesseract::TessBaseAPI& tess, ReadSessionData* data) override;
-	void readError(const QString& errorMsg, ReadSessionData* data) override;
-	BatchProcessor* createBatchProcessor(const QMap<QString, QVariant>& options) const override { return new TextBatchProcessor(options["prependPage"].toBool()); }
-	QString crashSave(const QString& filename) const override;
+    QWidget* getUI() override {
+        return m_widget;
+    }
+    ReadSessionData* initRead(tesseract::TessBaseAPI& /*tess*/) override {
+        return new TextReadSessionData;
+    }
+    void read(tesseract::TessBaseAPI& tess, ReadSessionData* data) override;
+    void readError(const QString& errorMsg, ReadSessionData* data) override;
+    BatchProcessor* createBatchProcessor(const QMap<QString, QVariant>& options) const override { return new TextBatchProcessor(options["prependPage"].toBool()); }
+    QString crashSave(const QString& filename) const override;
 
 public slots:
-	bool open(const QString& filename = QString()) override;
-	void onVisibilityChanged(bool visible) override;
-	bool clear(bool hide = true) override;
-	bool save(int page = -1, const QString& filename = "");
-	void setLanguage(const Config::Lang& lang) override;
+    bool open(const QString& filename = QString()) override;
+    void onVisibilityChanged(bool visible) override;
+    bool clear(bool hide = true) override;
+    bool save(int page = -1, const QString& filename = "");
+    void setLanguage(const Config::Lang& lang) override;
 
 private:
-	struct TextReadSessionData : ReadSessionData {
-		bool insertText = false;
-	};
+    struct TextReadSessionData : ReadSessionData {
+        bool insertText = false;
+    };
 
-	enum class InsertMode { Append, Cursor, Replace };
+    enum class InsertMode { Append, Cursor, Replace };
 
-	static constexpr int sMaxNumRecent = 15;
+    static constexpr int sMaxNumRecent = 15;
 
-	QWidget* m_widget = nullptr;
-	QMenu* m_recentMenu = nullptr;
-	UI_OutputEditorText ui;
-	InsertMode m_insertMode;
-	QtSpell::TextEditChecker m_spell;
-	int m_tabCounter = 0;
+    QWidget* m_widget = nullptr;
+    QMenu* m_recentMenu = nullptr;
+    UI_OutputEditorText ui;
+    InsertMode m_insertMode;
+    QtSpell::TextEditChecker m_spell;
+    int m_tabCounter = 0;
 
-	int addTab(const QString& title = QString());
-	QString tabName(int page) const;
-	void setTabName(int page, const QString& title);
-	OutputTextEdit* textEdit(int page = -1) const;
+    int addTab(const QString& title = QString());
+    QString tabName(int page) const;
+    void setTabName(int page, const QString& title);
+    OutputTextEdit* textEdit(int page = -1) const;
 
 private slots:
-	void addText(const QString& text, bool insert);
-	void filterBuffer();
-	void findReplace(const QString& searchstr, const QString& replacestr, bool matchCase, bool backwards, bool replace);
-	void replaceAll(const QString& searchstr, const QString& replacestr, bool matchCase);
-	void applySubstitutions(const QMap<QString, QString>& substitutions, bool matchCase);
-	void setFont();
-	void setInsertMode(QAction* action);
-	void tabChanged(int);
-	void closeTab(int);
-	void prepareRecentMenu();
+    void addText(const QString& text, bool insert);
+    void filterBuffer();
+    void findReplace(const QString& searchstr, const QString& replacestr, bool matchCase, bool backwards, bool replace);
+    void replaceAll(const QString& searchstr, const QString& replacestr, bool matchCase);
+    void applySubstitutions(const QMap<QString, QString>& substitutions, bool matchCase);
+    void setFont();
+    void setInsertMode(QAction* action);
+    void tabChanged(int);
+    void closeTab(int);
+    void prepareRecentMenu();
 };
 
 #endif // OUTPUTEDITORTEXT_HH

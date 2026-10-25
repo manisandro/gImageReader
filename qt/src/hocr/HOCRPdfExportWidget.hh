@@ -34,33 +34,33 @@ class HOCRPage;
 
 
 class HOCRPdfExportWidget : public QWidget {
-	Q_OBJECT
+    Q_OBJECT
 public:
-	HOCRPdfExportWidget(DisplayerToolHOCR* displayerTool, const HOCRDocument* hocrdocument = nullptr, const HOCRPage* hocrpage = nullptr, QWidget* parent = nullptr);
-	~HOCRPdfExportWidget();
-	void setPreviewPage(const HOCRDocument* hocrdocument, const HOCRPage* hocrpage);
-	HOCRPdfExporter::PDFSettings getPdfSettings() const;
+    HOCRPdfExportWidget(DisplayerToolHOCR* displayerTool, const HOCRDocument* hocrdocument = nullptr, const HOCRPage* hocrpage = nullptr, QWidget* parent = nullptr);
+    ~HOCRPdfExportWidget();
+    void setPreviewPage(const HOCRDocument* hocrdocument, const HOCRPage* hocrpage);
+    HOCRPdfExporter::PDFSettings getPdfSettings() const;
 
 signals:
-	void validChanged(bool valid);
+    void validChanged(bool valid);
 
 private:
-	Ui::PdfExportWidget ui;
-	QGraphicsPixmapItem* m_preview = nullptr;
-	DisplayerToolHOCR* m_displayerTool;
-	const HOCRDocument* m_document = nullptr;
-	const HOCRPage* m_previewPage;
+    Ui::PdfExportWidget ui;
+    QGraphicsPixmapItem* m_preview = nullptr;
+    DisplayerToolHOCR* m_displayerTool;
+    const HOCRDocument* m_document = nullptr;
+    const HOCRPage* m_previewPage;
 
 
 private slots:
-	void backendChanged();
-	void toggleBackendHint();
-	void importMetadataFromSource();
-	void imageFormatChanged();
-	void imageCompressionChanged();
-	void paperSizeChanged();
-	void updatePreview();
-	void updateValid();
+    void backendChanged();
+    void toggleBackendHint();
+    void importMetadataFromSource();
+    void imageFormatChanged();
+    void imageCompressionChanged();
+    void paperSizeChanged();
+    void updatePreview();
+    void updateValid();
 };
 
 #endif // HOCRPDFEXPORTWIDGET_HH

@@ -1,13 +1,14 @@
 --preserve-date
 --style=java
---indent=tab#4
+--indent=spaces=4
+--convert-tabs
 --suffix=none
---pad-oper
+#--pad-oper
 --align-pointer=type
 --align-reference=type
 --add-braces
 --keep-one-line-blocks
 --unpad-paren
 --pad-header
-
+--indent-after-parens
 

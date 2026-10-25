@@ -25,27 +25,27 @@
 
 class OutputBuffer : public Gsv::Buffer {
 public:
-	void save_region_bounds(bool viewSelected);
-	void get_region_bounds(Gtk::TextIter& start, Gtk::TextIter& stop);
-	Gtk::TextIter replace_range(const Glib::ustring& text, const Gtk::TextIter& start, const Gtk::TextIter& end);
-	bool findReplace(bool backwards, bool replace, bool matchCase, const Glib::ustring& searchstr, const Glib::ustring& replacestr, Gtk::TextView* view);
-	int replaceAll(const Glib::ustring& searchstr, const Glib::ustring& replacestr, bool matchCase);
-	void setHightlightLanguage(const std::string& lang_id);
-	const std::string getFilename() const { return m_filename; }
-	void setFilename(const std::string& filename) { m_filename = filename; }
+    void save_region_bounds(bool viewSelected);
+    void get_region_bounds(Gtk::TextIter& start, Gtk::TextIter& stop);
+    Gtk::TextIter replace_range(const Glib::ustring& text, const Gtk::TextIter& start, const Gtk::TextIter& end);
+    bool findReplace(bool backwards, bool replace, bool matchCase, const Glib::ustring& searchstr, const Glib::ustring& replacestr, Gtk::TextView* view);
+    int replaceAll(const Glib::ustring& searchstr, const Glib::ustring& replacestr, bool matchCase);
+    void setHightlightLanguage(const std::string& lang_id);
+    const std::string getFilename() const { return m_filename; }
+    void setFilename(const std::string& filename) { m_filename = filename; }
 
-	static Glib::RefPtr<OutputBuffer> create() {
-		return Glib::RefPtr<OutputBuffer> (new OutputBuffer());
-	}
+    static Glib::RefPtr<OutputBuffer> create() {
+        return Glib::RefPtr<OutputBuffer> (new OutputBuffer());
+    }
 
 
 private:
-	OutputBuffer();
+    OutputBuffer();
 
-	Glib::RefPtr<Gtk::TextTag> m_regionTag;
-	Glib::RefPtr<Gtk::TextMark> m_regionBeginMark;
-	Glib::RefPtr<Gtk::TextMark> m_regionEndMark;
-	std::string m_filename;
+    Glib::RefPtr<Gtk::TextTag> m_regionTag;
+    Glib::RefPtr<Gtk::TextMark> m_regionBeginMark;
+    Glib::RefPtr<Gtk::TextMark> m_regionEndMark;
+    std::string m_filename;
 };
 
 #endif // OUTPUTBUFFER_HH

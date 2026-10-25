@@ -23,43 +23,43 @@
 #include "Utils.hh"
 
 SearchReplaceFrame::SearchReplaceFrame() {
-	ui.setupUi();
+    ui.setupUi();
 
-	m_substitutionsManager = new SubstitutionsManager();
+    m_substitutionsManager = new SubstitutionsManager();
 
-	CONNECT(ui.checkbuttonMatchcase, toggled, [this] { clearErrorState(); });
-	CONNECT(ui.entrySearch, changed, [this] { clearErrorState(); });
-	CONNECT(ui.entrySearch, activate, [this] { findNext(); });
-	CONNECT(ui.entryReplace, activate, [this] { replaceNext(); });
-	CONNECT(ui.buttonSearchnext, clicked, [this] { findNext(); });
-	CONNECT(ui.buttonSearchprev, clicked, [this] { findPrev(); });
-	CONNECT(ui.buttonReplace, clicked, [this] { replaceNext(); });
-	CONNECT(ui.buttonReplaceall, clicked, [this] { emitReplaceAll(); });
-	CONNECT(ui.buttonSubstitutions, clicked, [this] { m_substitutionsManager->set_visible(true); });
-	CONNECT(m_substitutionsManager, apply_substitutions, [this](const std::map<Glib::ustring, Glib::ustring>& substitutions) {
-		emitApplySubstitutions(substitutions);
-	});
+    CONNECT(ui.checkbuttonMatchcase, toggled, [this] { clearErrorState(); });
+    CONNECT(ui.entrySearch, changed, [this] { clearErrorState(); });
+    CONNECT(ui.entrySearch, activate, [this] { findNext(); });
+    CONNECT(ui.entryReplace, activate, [this] { replaceNext(); });
+    CONNECT(ui.buttonSearchnext, clicked, [this] { findNext(); });
+    CONNECT(ui.buttonSearchprev, clicked, [this] { findPrev(); });
+    CONNECT(ui.buttonReplace, clicked, [this] { replaceNext(); });
+    CONNECT(ui.buttonReplaceall, clicked, [this] { emitReplaceAll(); });
+    CONNECT(ui.buttonSubstitutions, clicked, [this] { m_substitutionsManager->set_visible(true); });
+    CONNECT(m_substitutionsManager, apply_substitutions, [this](const std::map<Glib::ustring, Glib::ustring>& substitutions) {
+        emitApplySubstitutions(substitutions);
+    });
 
-	ADD_SETTING(SwitchSettingT<Gtk::CheckButton> ("searchmatchcase", ui.checkbuttonMatchcase));
+    ADD_SETTING(SwitchSettingT<Gtk::CheckButton> ("searchmatchcase", ui.checkbuttonMatchcase));
 }
 
 SearchReplaceFrame::~SearchReplaceFrame() {
-	delete m_substitutionsManager;
+    delete m_substitutionsManager;
 }
 
 void SearchReplaceFrame::clear() {
-	ui.entrySearch->set_text("");
-	ui.entryReplace->set_text("");
+    ui.entrySearch->set_text("");
+    ui.entryReplace->set_text("");
 }
 
 void SearchReplaceFrame::clearErrorState() {
-	Utils::clear_error_state(ui.entrySearch);
+    Utils::clear_error_state(ui.entrySearch);
 }
 
 void SearchReplaceFrame::setErrorState() {
-	Utils::set_error_state(ui.entrySearch);
+    Utils::set_error_state(ui.entrySearch);
 }
 
 void SearchReplaceFrame::hideSubstitutionsManager() {
-	m_substitutionsManager->set_visible(false);
+    m_substitutionsManager->set_visible(false);
 }

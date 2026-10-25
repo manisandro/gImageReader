@@ -29,54 +29,54 @@
 namespace FileDialogs {
 
 QStringList openDialog(const QString& title, const QString& initialDirectory, const QString& initialDirSetting, const QString& filter, bool multiple, QWidget* parent) {
-	parent = parent == nullptr ? MAIN : parent;
-	QString initialDir = initialDirectory;
-	if (initialDir.isEmpty()) {
-		initialDir = ConfigSettings::get<VarSetting<QString >> (initialDirSetting)->getValue();
-		if (initialDir.isEmpty()) {
-			initialDir = Utils::documentsFolder();
-		}
-	}
-	QStringList filenames;
-	if (multiple) {
-		filenames.append(QFileDialog::getOpenFileNames(parent, title, initialDir, filter));
-	} else {
-		QString filename = QFileDialog::getOpenFileName(parent, title, initialDir, filter);
-		if (!filename.isEmpty()) {
-			filenames.append(filename);
-		}
-	}
-	if (!filenames.isEmpty()) {
-		ConfigSettings::get<VarSetting<QString >> (initialDirSetting)->setValue(QFileInfo(filenames.first()).absolutePath());
-	}
-	return filenames;
+    parent = parent == nullptr ? MAIN : parent;
+    QString initialDir = initialDirectory;
+    if (initialDir.isEmpty()) {
+        initialDir = ConfigSettings::get<VarSetting<QString >> (initialDirSetting)->getValue();
+        if (initialDir.isEmpty()) {
+            initialDir = Utils::documentsFolder();
+        }
+    }
+    QStringList filenames;
+    if (multiple) {
+        filenames.append(QFileDialog::getOpenFileNames(parent, title, initialDir, filter));
+    } else {
+        QString filename = QFileDialog::getOpenFileName(parent, title, initialDir, filter);
+        if (!filename.isEmpty()) {
+            filenames.append(filename);
+        }
+    }
+    if (!filenames.isEmpty()) {
+        ConfigSettings::get<VarSetting<QString >> (initialDirSetting)->setValue(QFileInfo(filenames.first()).absolutePath());
+    }
+    return filenames;
 }
 
 QString saveDialog(const QString& title, const QString& initialFilename, const QString& initialDirSetting, const QString& filter, bool generateUniqueName, QWidget* parent) {
-	parent = parent == nullptr ? MAIN : parent;
-	QString suggestedFile;
-	if (!initialFilename.isEmpty() && QFileInfo(initialFilename).isAbsolute()) {
-		suggestedFile = initialFilename;
-	} else {
-		QString initialDir = ConfigSettings::get<VarSetting<QString >> (initialDirSetting)->getValue();
-		if (initialDir.isEmpty()) {
-			initialDir = Utils::documentsFolder();
-		}
-		suggestedFile = QDir(initialDir).absoluteFilePath(initialFilename);
-		if (generateUniqueName) {
-			suggestedFile = Utils::makeOutputFilename(suggestedFile);
-		}
-	}
-	QString filename = QFileDialog::getSaveFileName(parent, title, suggestedFile, filter);
-	if (!filename.isEmpty()) {
-		QString sext = QFileInfo(suggestedFile).completeSuffix();
-		QString ext = QFileInfo(filename).completeSuffix();
-		if (ext.isEmpty()) {
-			filename += "." + sext;
-		}
-		ConfigSettings::get<VarSetting<QString >> (initialDirSetting)->setValue(QFileInfo(filename).absolutePath());
-	}
-	return filename;
+    parent = parent == nullptr ? MAIN : parent;
+    QString suggestedFile;
+    if (!initialFilename.isEmpty() && QFileInfo(initialFilename).isAbsolute()) {
+        suggestedFile = initialFilename;
+    } else {
+        QString initialDir = ConfigSettings::get<VarSetting<QString >> (initialDirSetting)->getValue();
+        if (initialDir.isEmpty()) {
+            initialDir = Utils::documentsFolder();
+        }
+        suggestedFile = QDir(initialDir).absoluteFilePath(initialFilename);
+        if (generateUniqueName) {
+            suggestedFile = Utils::makeOutputFilename(suggestedFile);
+        }
+    }
+    QString filename = QFileDialog::getSaveFileName(parent, title, suggestedFile, filter);
+    if (!filename.isEmpty()) {
+        QString sext = QFileInfo(suggestedFile).completeSuffix();
+        QString ext = QFileInfo(filename).completeSuffix();
+        if (ext.isEmpty()) {
+            filename += "." + sext;
+        }
+        ConfigSettings::get<VarSetting<QString >> (initialDirSetting)->setValue(QFileInfo(filename).absolutePath());
+    }
+    return filename;
 }
 
 } // FileDialogs

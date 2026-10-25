@@ -26,23 +26,23 @@
 #include <QProcess>
 
 class CrashHandler : public QDialog {
-	Q_OBJECT
+    Q_OBJECT
 
 public:
-	explicit CrashHandler(int pid, int tesseractCrash, const QString& savefile, QWidget* parent = 0);
+    explicit CrashHandler(int pid, int tesseractCrash, const QString& savefile, QWidget* parent = 0);
 
 private:
-	Ui::CrashHandler ui;
-	int m_pid;
-	QProcess m_gdbProcess;
-	QPushButton* m_refreshButton = nullptr;
+    Ui::CrashHandler ui;
+    int m_pid;
+    QProcess m_gdbProcess;
+    QPushButton* m_refreshButton = nullptr;
 
-	void closeEvent(QCloseEvent*) override;
+    void closeEvent(QCloseEvent*) override;
 
 private slots:
-	void appendGdbOutput();
-	void handleGdbFinished(int exitCode, QProcess::ExitStatus exitStatus);
-	void regenerateBacktrace();
+    void appendGdbOutput();
+    void handleGdbFinished(int exitCode, QProcess::ExitStatus exitStatus);
+    void regenerateBacktrace();
 };
 
 #endif // CRASHHANDLER_HH

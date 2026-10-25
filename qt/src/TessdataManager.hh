@@ -26,25 +26,25 @@
 class QListWidget;
 
 class TessdataManager : public QDialog {
-	Q_OBJECT
+    Q_OBJECT
 public:
-	TessdataManager(QWidget* parent = 0);
-	bool setup();
+    TessdataManager(QWidget* parent = 0);
+    bool setup();
 
 private:
-	struct LangFile {
-		QString name;
-		QString url;
-	};
+    struct LangFile {
+        QString name;
+        QString url;
+    };
 
-	QListWidget* m_languageList;
-	QMap<QString, QList<LangFile >> m_languageFiles;
+    QListWidget* m_languageList;
+    QMap<QString, QList<LangFile >> m_languageFiles;
 
-	bool fetchLanguageList(QString& messages);
+    bool fetchLanguageList(QString& messages);
 
 private slots:
-	void applyChanges();
-	void refresh();
+    void applyChanges();
+    void refresh();
 };
 
 #endif // TESSDATAMANAGER_HH

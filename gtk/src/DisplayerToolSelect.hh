@@ -26,58 +26,58 @@ class NumberedDisplayerSelection;
 
 class DisplayerToolSelect : public DisplayerTool {
 public:
-	DisplayerToolSelect(Displayer* displayer);
-	~DisplayerToolSelect();
-	bool mousePressEvent(GdkEventButton* event) override;
-	bool mouseMoveEvent(GdkEventMotion* event) override;
-	bool mouseReleaseEvent(GdkEventButton* event) override;
-	void resolutionChanged(double factor) override;
-	void rotationChanged(double delta) override;
+    DisplayerToolSelect(Displayer* displayer);
+    ~DisplayerToolSelect();
+    bool mousePressEvent(GdkEventButton* event) override;
+    bool mouseMoveEvent(GdkEventMotion* event) override;
+    bool mouseReleaseEvent(GdkEventButton* event) override;
+    void resolutionChanged(double factor) override;
+    void rotationChanged(double delta) override;
 
-	std::vector<Cairo::RefPtr<Cairo::ImageSurface >> getOCRAreas() override;
-	bool hasMultipleOCRAreas() const override {
-		return !m_selections.empty();
-	}
-	bool allowAutodetectOCRAreas() const override {
-		return true;
-	}
-	void autodetectOCRAreas() override {
-		autodetectLayout();
-	}
-	void reset() override {
-		clearSelections();
-	}
+    std::vector<Cairo::RefPtr<Cairo::ImageSurface >> getOCRAreas() override;
+    bool hasMultipleOCRAreas() const override {
+        return !m_selections.empty();
+    }
+    bool allowAutodetectOCRAreas() const override {
+        return true;
+    }
+    void autodetectOCRAreas() override {
+        autodetectLayout();
+    }
+    void reset() override {
+        clearSelections();
+    }
 
 private:
-	friend class NumberedDisplayerSelection;
-	NumberedDisplayerSelection* m_curSel = nullptr;
-	std::vector<NumberedDisplayerSelection*> m_selections;
+    friend class NumberedDisplayerSelection;
+    NumberedDisplayerSelection* m_curSel = nullptr;
+    std::vector<NumberedDisplayerSelection*> m_selections;
 
-	void clearSelections();
-	void removeSelection(int num);
-	void reorderSelection(int oldNum, int newNum);
-	void saveSelection(NumberedDisplayerSelection* selection);
-	void updateRecognitionModeLabel();
-	void autodetectLayout(bool noDeskew = false);
+    void clearSelections();
+    void removeSelection(int num);
+    void reorderSelection(int oldNum, int newNum);
+    void saveSelection(NumberedDisplayerSelection* selection);
+    void updateRecognitionModeLabel();
+    void autodetectLayout(bool noDeskew = false);
 };
 
 class NumberedDisplayerSelection : public DisplayerSelection {
 public:
-	NumberedDisplayerSelection(DisplayerToolSelect* selectTool, int number, const Geometry::Point& anchor)
-		: DisplayerSelection(selectTool, anchor), m_number(number) {
-	}
-	void setNumber(int number) {
-		m_number = number;
-	}
+    NumberedDisplayerSelection(DisplayerToolSelect* selectTool, int number, const Geometry::Point& anchor)
+        : DisplayerSelection(selectTool, anchor), m_number(number) {
+    }
+    void setNumber(int number) {
+        m_number = number;
+    }
 
-	void reorderSelection(int newNumber);
+    void reorderSelection(int newNumber);
 
-	void draw(Cairo::RefPtr<Cairo::Context> ctx) const override;
+    void draw(Cairo::RefPtr<Cairo::Context> ctx) const override;
 
 private:
-	int m_number;
+    int m_number;
 
-	void showContextMenu(GdkEventButton* event) override;
+    void showContextMenu(GdkEventButton* event) override;
 };
 
 #endif // DISPLAYERTOOLSELECT_HH

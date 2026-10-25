@@ -39,29 +39,29 @@ std::vector<std::string> languageIds();
 
 class Buffer : public Gtk::TextBuffer {
 public:
-	// Returns a new source buffer with syntax highlighting enabled for the given
-	// language, or disabled if the language is unknown or empty.
-	static Glib::RefPtr<Buffer> create(const std::string& languageId = std::string());
+    // Returns a new source buffer with syntax highlighting enabled for the given
+    // language, or disabled if the language is unknown or empty.
+    static Glib::RefPtr<Buffer> create(const std::string& languageId = std::string());
 
-	void undo();
-	void redo();
-	bool can_undo();
-	bool can_redo();
-	void begin_not_undoable_action();
-	void end_not_undoable_action();
-	Glib::PropertyProxy<bool> property_can_undo() { return Glib::PropertyProxy<bool>(this, "can-undo"); }
-	Glib::PropertyProxy<bool> property_can_redo() { return Glib::PropertyProxy<bool>(this, "can-redo"); }
+    void undo();
+    void redo();
+    bool can_undo();
+    bool can_redo();
+    void begin_not_undoable_action();
+    void end_not_undoable_action();
+    Glib::PropertyProxy<bool> property_can_undo() { return Glib::PropertyProxy<bool>(this, "can-undo"); }
+    Glib::PropertyProxy<bool> property_can_redo() { return Glib::PropertyProxy<bool>(this, "can-redo"); }
 
-	// Enables syntax highlighting for the given language, or disables
-	// highlighting if the language is unknown or empty.
-	void set_language(const std::string& languageId);
-	// Returns the id of the language currently set on the buffer, empty if none is set.
-	std::string get_language_id();
-	bool get_highlight_syntax();
-	void set_highlight_matching_brackets(bool enable);
+    // Enables syntax highlighting for the given language, or disables
+    // highlighting if the language is unknown or empty.
+    void set_language(const std::string& languageId);
+    // Returns the id of the language currently set on the buffer, empty if none is set.
+    std::string get_language_id();
+    bool get_highlight_syntax();
+    void set_highlight_matching_brackets(bool enable);
 
 protected:
-	explicit Buffer(const std::string& languageId = std::string());
+    explicit Buffer(const std::string& languageId = std::string());
 };
 
 // Returns a new source view showing the given buffer.

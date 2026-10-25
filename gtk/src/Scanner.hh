@@ -24,56 +24,56 @@
 
 class Scanner {
 public:
-	enum class State { IDLE = 0, OPEN, SET_OPTIONS, START, GET_PARAMETERS, READ };
-	enum class ScanMode { DEFAULT = 0, COLOR, GRAY, LINEART };
-	enum class ScanType { SINGLE = 0, ADF_FRONT, ADF_BACK, ADF_BOTH };
+    enum class State { IDLE = 0, OPEN, SET_OPTIONS, START, GET_PARAMETERS, READ };
+    enum class ScanMode { DEFAULT = 0, COLOR, GRAY, LINEART };
+    enum class ScanType { SINGLE = 0, ADF_FRONT, ADF_BACK, ADF_BOTH };
 
-	struct Device {
-		std::string name;
-		std::string label;
-	};
+    struct Device {
+        std::string name;
+        std::string label;
+    };
 
-	struct Params {
-		std::string device;
-		std::string filename;
-		double dpi;
-		ScanMode scan_mode;
-		int depth;
-		ScanType type;
-		int page_width;
-		int page_height;
-	};
+    struct Params {
+        std::string device;
+        std::string filename;
+        double dpi;
+        ScanMode scan_mode;
+        int depth;
+        ScanType type;
+        int page_width;
+        int page_height;
+    };
 
-	virtual ~Scanner() { }
+    virtual ~Scanner() { }
 
-	virtual void init() = 0;
-	virtual void redetect() = 0;
-	virtual void scan(const Params& params) = 0;
-	virtual void cancel() = 0;
-	virtual void close() = 0;
+    virtual void init() = 0;
+    virtual void redetect() = 0;
+    virtual void scan(const Params& params) = 0;
+    virtual void cancel() = 0;
+    virtual void close() = 0;
 
-	sigc::signal<void> signal_initFailed() const {
-		return m_signal_initFailed;
-	}
-	sigc::signal<void, std::vector<Scanner::Device >> signal_devicesDetected() const {
-		return m_signal_devicesDetected;
-	}
-	sigc::signal<void, Glib::ustring> signal_scanFailed() const {
-		return m_signal_scanFailed;
-	}
-	sigc::signal<void, Scanner::State> signal_scanStateChanged() const {
-		return m_signal_scanStateChanged;
-	}
-	sigc::signal<void, std::string> signal_pageAvailable() const {
-		return m_signal_pageAvailable;
-	}
+    sigc::signal<void> signal_initFailed() const {
+        return m_signal_initFailed;
+    }
+    sigc::signal<void, std::vector<Scanner::Device >> signal_devicesDetected() const {
+        return m_signal_devicesDetected;
+    }
+    sigc::signal<void, Glib::ustring> signal_scanFailed() const {
+        return m_signal_scanFailed;
+    }
+    sigc::signal<void, Scanner::State> signal_scanStateChanged() const {
+        return m_signal_scanStateChanged;
+    }
+    sigc::signal<void, std::string> signal_pageAvailable() const {
+        return m_signal_pageAvailable;
+    }
 
 protected:
-	sigc::signal<void> m_signal_initFailed;
-	sigc::signal<void, std::vector<Scanner::Device >> m_signal_devicesDetected;
-	sigc::signal<void, Glib::ustring> m_signal_scanFailed;
-	sigc::signal<void, Scanner::State> m_signal_scanStateChanged;
-	sigc::signal<void, std::string> m_signal_pageAvailable;
+    sigc::signal<void> m_signal_initFailed;
+    sigc::signal<void, std::vector<Scanner::Device >> m_signal_devicesDetected;
+    sigc::signal<void, Glib::ustring> m_signal_scanFailed;
+    sigc::signal<void, Scanner::State> m_signal_scanStateChanged;
+    sigc::signal<void, std::string> m_signal_pageAvailable;
 };
 
 

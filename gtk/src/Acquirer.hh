@@ -29,43 +29,43 @@ class MainWindow;
 
 class Acquirer {
 public:
-	Acquirer(const Ui::MainWindow& _ui);
-	~Acquirer();
+    Acquirer(const Ui::MainWindow& _ui);
+    ~Acquirer();
 
-	sigc::signal<void, std::string> signal_scanPageAvailable() const {
-		return m_signal_scanPageAvailable;
-	}
+    sigc::signal<void, std::string> signal_scanPageAvailable() const {
+        return m_signal_scanPageAvailable;
+    }
 
 private:
-	class DevicesComboColumns : public Gtk::TreeModel::ColumnRecord {
-	public:
-		Gtk::TreeModelColumn<std::string> label;
-		Gtk::TreeModelColumn<std::string> name;
-		DevicesComboColumns() {
-			add(label);
-			add(name);
-		}
-	} m_devComboCols;
+    class DevicesComboColumns : public Gtk::TreeModel::ColumnRecord {
+    public:
+        Gtk::TreeModelColumn<std::string> label;
+        Gtk::TreeModelColumn<std::string> name;
+        DevicesComboColumns() {
+            add(label);
+            add(name);
+        }
+    } m_devComboCols;
 
-	const Ui::MainWindow& ui;
-	ClassData m_classdata;
+    const Ui::MainWindow& ui;
+    ClassData m_classdata;
 
-	Gtk::Button* m_cancelButton;
-	std::string m_outputPath;
-	sigc::signal<void, std::string> m_signal_scanPageAvailable;
-	Scanner* m_scanner = nullptr;
+    Gtk::Button* m_cancelButton;
+    std::string m_outputPath;
+    sigc::signal<void, std::string> m_signal_scanPageAvailable;
+    Scanner* m_scanner = nullptr;
 
-	void genOutputPath();
-	void cancelScan();
-	void doneDetectDevices(const std::vector<Scanner::Device>& devices);
-	void doneScan();
-	void scanInitFailed();
-	void scanFailed(const Glib::ustring& msg);
-	void selectOutputPath();
-	void setDeviceComboTooltip();
-	void setScanState(Scanner::State state);
-	void startDetectDevices();
-	void startScan();
+    void genOutputPath();
+    void cancelScan();
+    void doneDetectDevices(const std::vector<Scanner::Device>& devices);
+    void doneScan();
+    void scanInitFailed();
+    void scanFailed(const Glib::ustring& msg);
+    void selectOutputPath();
+    void setDeviceComboTooltip();
+    void setScanState(Scanner::State state);
+    void startDetectDevices();
+    void startScan();
 };
 
 #endif // ACQUIRER_HH

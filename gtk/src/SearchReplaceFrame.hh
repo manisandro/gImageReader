@@ -27,55 +27,55 @@ class SubstitutionsManager;
 
 class SearchReplaceFrame {
 public:
-	explicit SearchReplaceFrame();
-	~SearchReplaceFrame();
+    explicit SearchReplaceFrame();
+    ~SearchReplaceFrame();
 
-	Gtk::Box* getWidget() const {
-		return ui.boxSearchreplace;
-	}
-	Gtk::Button* replaceAllButton() const {
-		return ui.buttonReplaceall;
-	}
-	void clear();
-	void clearErrorState();
-	void setErrorState();
-	void hideSubstitutionsManager();
+    Gtk::Box* getWidget() const {
+        return ui.boxSearchreplace;
+    }
+    Gtk::Button* replaceAllButton() const {
+        return ui.buttonReplaceall;
+    }
+    void clear();
+    void clearErrorState();
+    void setErrorState();
+    void hideSubstitutionsManager();
 
-	sigc::signal<void, const Glib::ustring&, const Glib::ustring&, bool, bool, bool> signal_find_replace() {
-		return m_signal_find_replace;
-	}
-	sigc::signal<void, const Glib::ustring&, const Glib::ustring&, bool> signal_replace_all() {
-		return m_signal_replace_all;
-	}
-	sigc::signal<void, const std::map<Glib::ustring, Glib::ustring>&, bool> signal_apply_substitutions() {
-		return m_signal_apply_substitutions;
-	}
-
-private:
-	sigc::signal<void, const Glib::ustring&, const Glib::ustring&, bool, bool, bool> m_signal_find_replace;
-	sigc::signal<void, const Glib::ustring&, const Glib::ustring&, bool> m_signal_replace_all;
-	sigc::signal<void, const std::map<Glib::ustring, Glib::ustring>&, bool> m_signal_apply_substitutions;
-
-	Ui::SearchReplaceFrame ui;
-	ClassData m_classdata;
-	SubstitutionsManager* m_substitutionsManager;
+    sigc::signal<void, const Glib::ustring&, const Glib::ustring&, bool, bool, bool> signal_find_replace() {
+        return m_signal_find_replace;
+    }
+    sigc::signal<void, const Glib::ustring&, const Glib::ustring&, bool> signal_replace_all() {
+        return m_signal_replace_all;
+    }
+    sigc::signal<void, const std::map<Glib::ustring, Glib::ustring>&, bool> signal_apply_substitutions() {
+        return m_signal_apply_substitutions;
+    }
 
 private:
-	void findNext() {
-		m_signal_find_replace.emit(ui.entrySearch->get_text(), ui.entryReplace->get_text(), ui.checkbuttonMatchcase->get_active(), false, false);
-	}
-	void findPrev() {
-		m_signal_find_replace.emit(ui.entrySearch->get_text(), ui.entryReplace->get_text(), ui.checkbuttonMatchcase->get_active(), true, false);
-	}
-	void replaceNext() {
-		m_signal_find_replace.emit(ui.entrySearch->get_text(), ui.entryReplace->get_text(), ui.checkbuttonMatchcase->get_active(), false, true);
-	}
-	void emitReplaceAll() {
-		m_signal_replace_all.emit(ui.entrySearch->get_text(), ui.entryReplace->get_text(), ui.checkbuttonMatchcase->get_active());
-	}
-	void emitApplySubstitutions(const std::map<Glib::ustring, Glib::ustring>& substitutions) {
-		m_signal_apply_substitutions.emit(substitutions, ui.checkbuttonMatchcase->get_active());
-	}
+    sigc::signal<void, const Glib::ustring&, const Glib::ustring&, bool, bool, bool> m_signal_find_replace;
+    sigc::signal<void, const Glib::ustring&, const Glib::ustring&, bool> m_signal_replace_all;
+    sigc::signal<void, const std::map<Glib::ustring, Glib::ustring>&, bool> m_signal_apply_substitutions;
+
+    Ui::SearchReplaceFrame ui;
+    ClassData m_classdata;
+    SubstitutionsManager* m_substitutionsManager;
+
+private:
+    void findNext() {
+        m_signal_find_replace.emit(ui.entrySearch->get_text(), ui.entryReplace->get_text(), ui.checkbuttonMatchcase->get_active(), false, false);
+    }
+    void findPrev() {
+        m_signal_find_replace.emit(ui.entrySearch->get_text(), ui.entryReplace->get_text(), ui.checkbuttonMatchcase->get_active(), true, false);
+    }
+    void replaceNext() {
+        m_signal_find_replace.emit(ui.entrySearch->get_text(), ui.entryReplace->get_text(), ui.checkbuttonMatchcase->get_active(), false, true);
+    }
+    void emitReplaceAll() {
+        m_signal_replace_all.emit(ui.entrySearch->get_text(), ui.entryReplace->get_text(), ui.checkbuttonMatchcase->get_active());
+    }
+    void emitApplySubstitutions(const std::map<Glib::ustring, Glib::ustring>& substitutions) {
+        m_signal_apply_substitutions.emit(substitutions, ui.checkbuttonMatchcase->get_active());
+    }
 };
 
 #endif // SEARCHREPLACEFRAME_HH

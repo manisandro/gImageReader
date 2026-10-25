@@ -42,27 +42,27 @@ namespace Utils {
 void popup_positioner(int& x, int& y, bool& push_in, Gtk::Widget* ref, Gtk::Menu* menu, bool alignRight, bool alignBottom);
 
 struct Button {
-	enum Type {
-		Ok = 1,
-		Yes = 2,
-		YesAll = 4,
-		Save = 8,
-		No = 16,
-		NoAll = 32,
-		Discard = 64,
-		DiscardAll = 128,
-		Text = 256,
-		HOCR = 512,
-		Cancel = 1024
-	};
+    enum Type {
+        Ok = 1,
+        Yes = 2,
+        YesAll = 4,
+        Save = 8,
+        No = 16,
+        NoAll = 32,
+        Discard = 64,
+        DiscardAll = 128,
+        Text = 256,
+        HOCR = 512,
+        Cancel = 1024
+    };
 };
 Button::Type messageBox(Gtk::MessageType type,
-                        const Glib::ustring& title,
-                        const Glib::ustring& text,
-                        const Glib::ustring& body = "",
-                        int buttons = Button::Ok,
-                        Gtk::Window* parent = nullptr,
-                        Gtk::Widget* bodyWidget = nullptr);
+    const Glib::ustring& title,
+    const Glib::ustring& text,
+    const Glib::ustring& body = "",
+    int buttons = Button::Ok,
+    Gtk::Window* parent = nullptr,
+    Gtk::Widget* bodyWidget = nullptr);
 
 void set_spin_blocked(Gtk::SpinButton* spin, double value, sigc::connection& conn);
 void set_error_state(Gtk::Entry* entry);
@@ -103,41 +103,41 @@ void openUri(const std::string& uri);
 
 template<typename T, typename = typename std::enable_if<std::is_floating_point<T>::value>::type>
 T round(T x) {
-	return std::floor(x + T(0.5));
+    return std::floor(x + T(0.5));
 }
 
 template<class It>
 struct rev_iters {
-	It _begin, _end;
-	It begin() {
-		return _begin;
-	}
-	It end() {
-		return _end;
-	}
+    It _begin, _end;
+    It begin() {
+        return _begin;
+    }
+    It end() {
+        return _end;
+    }
 };
 
 template<class T>
 std::vector<T> vector_slice(const std::vector<T>& vector, int start, int count = -1) {
-	std::vector<T> result;
-	result.insert(result.end(), vector.begin() + start, count >= 0 ? vector.begin() + start + count : vector.end());
-	return result;
+    std::vector<T> result;
+    result.insert(result.end(), vector.begin() + start, count >= 0 ? vector.begin() + start + count : vector.end());
+    return result;
 }
 
 template<class T, class It = std::reverse_iterator<typename T::iterator >>
 rev_iters<It> reverse(T& t) {
-	return { t.rbegin(), t.rend() };
+    return { t.rbegin(), t.rend() };
 }
 
 template<class T, class It = std::reverse_iterator<typename T::const_iterator >>
 rev_iters<It> reverse(const T& t) {
-	return { t.crbegin(), t.crend() };
+    return { t.crbegin(), t.crend() };
 }
 
 template <template<class, class, class...> class C, typename K, typename V, typename... Args>
 V get_default(const C<K, V, Args...>& m, K const& key, const V& defval) {
-	typename C<K, V, Args...>::const_iterator it = m.find(key);
-	return it == m.end() ? defval : it->second;
+    typename C<K, V, Args...>::const_iterator it = m.find(key);
+    return it == m.end() ? defval : it->second;
 }
 
 bool busyTask(const std::function<bool() >& f, const Glib::ustring& msg);
@@ -145,38 +145,38 @@ void runInMainThreadBlocking(const std::function<void() >& f);
 
 class TesseractHandle {
 public:
-	TesseractHandle(const char* language = nullptr);
-	~TesseractHandle();
-	tesseract::TessBaseAPI* get() const { return m_tess; }
+    TesseractHandle(const char* language = nullptr);
+    ~TesseractHandle();
+    tesseract::TessBaseAPI* get() const { return m_tess; }
 private:
-	tesseract::TessBaseAPI* m_tess;
+    tesseract::TessBaseAPI* m_tess;
 };
 
 template<typename T, typename S = std::deque<T >>
 class AsyncQueue {
-	std::queue<T, S> m_queue;
-	std::mutex m_mutex;
-	std::condition_variable m_cond;
+    std::queue<T, S> m_queue;
+    std::mutex m_mutex;
+    std::condition_variable m_cond;
 public:
-	bool empty() {
-		std::unique_lock<std::mutex> lock(m_mutex);
-		return m_queue.empty();
-	}
-	void enqueue(const T & item) {
-		std::unique_lock<std::mutex> lock(m_mutex);
-		m_queue.push(item);
-		lock.unlock();
-		m_cond.notify_one();
-	}
-	T dequeue() {
-		std::unique_lock<std::mutex> lock(m_mutex);
-		while (m_queue.empty()) {
-			m_cond.wait(lock);
-		}
-		T result(m_queue.front());
-		m_queue.pop();
-		return result;
-	}
+    bool empty() {
+        std::unique_lock<std::mutex> lock(m_mutex);
+        return m_queue.empty();
+    }
+    void enqueue(const T & item) {
+        std::unique_lock<std::mutex> lock(m_mutex);
+        m_queue.push(item);
+        lock.unlock();
+        m_cond.notify_one();
+    }
+    T dequeue() {
+        std::unique_lock<std::mutex> lock(m_mutex);
+        while (m_queue.empty()) {
+            m_cond.wait(lock);
+        }
+        T result(m_queue.front());
+        m_queue.pop();
+        return result;
+    }
 };
 
 bool isWaylandSession();

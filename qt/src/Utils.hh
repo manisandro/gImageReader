@@ -60,11 +60,11 @@ QString getSpellingLanguage(const QString& lang = QString(), const QString& defa
 
 class TesseractHandle {
 public:
-	TesseractHandle(const char* language = nullptr);
-	~TesseractHandle();
-	tesseract::TessBaseAPI* get() const { return m_tess; }
+    TesseractHandle(const char* language = nullptr);
+    ~TesseractHandle();
+    tesseract::TessBaseAPI* get() const { return m_tess; }
 private:
-	tesseract::TessBaseAPI* m_tess;
+    tesseract::TessBaseAPI* m_tess;
 };
 
 QDialogButtonBox::StandardButton messageBox(QWidget* parent, const QString& title, const QString& text, const QString& body, QMessageBox::Icon icon, QDialogButtonBox::StandardButtons buttons);
@@ -74,29 +74,29 @@ QString removeDiacritics(const QString& string);
 template<typename T>
 class AsyncQueue {
 public:
-	bool empty() {
-		QMutexLocker locker(&m_mutex);
-		return m_queue.isEmpty();
-	}
-	void enqueue(const T& item) {
-		QMutexLocker locker(&m_mutex);
-		m_queue.enqueue(item);
-		m_cond.wakeOne();
-	}
-	T dequeue() {
-		QMutexLocker locker(&m_mutex);
-		if (m_queue.isEmpty()) {
-			while (m_queue.isEmpty()) {
-				m_cond.wait(&m_mutex);
-			}
-		}
-		return m_queue.dequeue();
-	}
+    bool empty() {
+        QMutexLocker locker(&m_mutex);
+        return m_queue.isEmpty();
+    }
+    void enqueue(const T& item) {
+        QMutexLocker locker(&m_mutex);
+        m_queue.enqueue(item);
+        m_cond.wakeOne();
+    }
+    T dequeue() {
+        QMutexLocker locker(&m_mutex);
+        if (m_queue.isEmpty()) {
+            while (m_queue.isEmpty()) {
+                m_cond.wait(&m_mutex);
+            }
+        }
+        return m_queue.dequeue();
+    }
 
 private:
-	QQueue<T> m_queue;
-	QMutex m_mutex;
-	QWaitCondition m_cond;
+    QQueue<T> m_queue;
+    QMutex m_mutex;
+    QWaitCondition m_cond;
 };
 }
 

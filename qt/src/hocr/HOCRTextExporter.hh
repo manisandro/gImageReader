@@ -31,10 +31,10 @@ class QTextStream;
 
 class HOCRTextExporter : public HOCRExporter {
 public:
-	bool run(const HOCRDocument* hocrdocument, const QString& outname, const ExporterSettings* settings = nullptr) override;
+    bool run(const HOCRDocument* hocrdocument, const QString& outname, const ExporterSettings* settings = nullptr) override;
 
 private:
-	void printItem(QTextStream& outputStream, const HOCRItem* item, bool lastChild = false);
+    void printItem(QTextStream& outputStream, const HOCRItem* item, bool lastChild = false);
 };
 
 #endif // HOCRTEXTEXPORTER_HH

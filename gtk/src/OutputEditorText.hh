@@ -32,67 +32,67 @@ class SearchReplaceFrame;
 
 class OutputEditorText : public OutputEditor {
 public:
-	class TextBatchProcessor : public BatchProcessor {
-	public:
-		TextBatchProcessor(bool prependPage) : m_prependPage(prependPage) {}
-		std::string fileSuffix() const override { return std::string(".txt"); }
-		void appendOutput(std::ostream& dev, tesseract::TessBaseAPI* tess, const PageInfo& pageInfo, bool firstArea) const override;
-	private:
-		bool m_prependPage = false;
-	};
+    class TextBatchProcessor : public BatchProcessor {
+    public:
+        TextBatchProcessor(bool prependPage) : m_prependPage(prependPage) {}
+        std::string fileSuffix() const override { return std::string(".txt"); }
+        void appendOutput(std::ostream& dev, tesseract::TessBaseAPI* tess, const PageInfo& pageInfo, bool firstArea) const override;
+    private:
+        bool m_prependPage = false;
+    };
 
-	OutputEditorText();
-	~OutputEditorText();
+    OutputEditorText();
+    ~OutputEditorText();
 
-	Gtk::Box* getUI() const override {
-		return ui.boxEditorText;
-	}
-	ReadSessionData* initRead(tesseract::TessBaseAPI& /*tess*/) override {
-		return new TextReadSessionData;
-	}
-	bool clear(bool hide = true) override;
-	void read(tesseract::TessBaseAPI& tess, ReadSessionData* data) override;
-	void readError(const Glib::ustring& errorMsg, ReadSessionData* data) override;
-	BatchProcessor* createBatchProcessor(const std::map<Glib::ustring, Glib::ustring>& options) const override;
-	void onVisibilityChanged(bool visible) override;
-	void setLanguage(const Config::Lang& lang) override;
-	bool open(const std::string& filename = "") override;
-	std::string crashSave(const std::string& filename) const override;
-	bool save(int page = -1, const std::string& filename = "");
+    Gtk::Box* getUI() const override {
+        return ui.boxEditorText;
+    }
+    ReadSessionData* initRead(tesseract::TessBaseAPI& /*tess*/) override {
+        return new TextReadSessionData;
+    }
+    bool clear(bool hide = true) override;
+    void read(tesseract::TessBaseAPI& tess, ReadSessionData* data) override;
+    void readError(const Glib::ustring& errorMsg, ReadSessionData* data) override;
+    BatchProcessor* createBatchProcessor(const std::map<Glib::ustring, Glib::ustring>& options) const override;
+    void onVisibilityChanged(bool visible) override;
+    void setLanguage(const Config::Lang& lang) override;
+    bool open(const std::string& filename = "") override;
+    std::string crashSave(const std::string& filename) const override;
+    bool save(int page = -1, const std::string& filename = "");
 
 private:
-	struct TextReadSessionData : ReadSessionData {
-		bool insertText = false;
-	};
+    struct TextReadSessionData : ReadSessionData {
+        bool insertText = false;
+    };
 
-	enum class InsertMode { Append, Cursor, Replace };
+    enum class InsertMode { Append, Cursor, Replace };
 
-	Ui::OutputEditorText ui;
-	ClassData m_classdata;
-	SearchReplaceFrame* m_searchFrame;
-	InsertMode m_insertMode;
-	GtkSpell::Checker m_spell;
-	bool m_spellHaveLang = false;
-	int m_tabCounter = 0;
+    Ui::OutputEditorText ui;
+    ClassData m_classdata;
+    SearchReplaceFrame* m_searchFrame;
+    InsertMode m_insertMode;
+    GtkSpell::Checker m_spell;
+    bool m_spellHaveLang = false;
+    int m_tabCounter = 0;
 
-	int addTab(const Glib::ustring& title = Glib::ustring());
-	void tabChanged();
-	void closeTab(Gtk::Widget* pageWidget);
-	Glib::ustring tabName(int page) const;
-	void setTabName(int page, const Glib::ustring& title);
-	Gtk::TextView* textView(int page = -1) const;
-	OutputBuffer* textBuffer(int page = -1) const;
+    int addTab(const Glib::ustring& title = Glib::ustring());
+    void tabChanged();
+    void closeTab(Gtk::Widget* pageWidget);
+    Glib::ustring tabName(int page) const;
+    void setTabName(int page, const Glib::ustring& title);
+    Gtk::TextView* textView(int page = -1) const;
+    OutputBuffer* textBuffer(int page = -1) const;
 
-	void addText(const Glib::ustring& text, bool insert);
-	void completeTextViewMenu(Gtk::Menu* menu);
-	void filterBuffer();
-	void findReplace(const Glib::ustring& searchstr, const Glib::ustring& replacestr, bool matchCase, bool backwards, bool replace);
-	void replaceAll(const Glib::ustring& searchstr, const Glib::ustring& replacestr, bool matchCase);
-	void applySubstitutions(const std::map<Glib::ustring, Glib::ustring>& substitutions, bool matchCase);
-	void scrollCursorIntoView();
-	void setFont();
-	void setInsertMode(InsertMode mode, const std::string& iconName);
-	void setDrawWhitspace(bool enable);
+    void addText(const Glib::ustring& text, bool insert);
+    void completeTextViewMenu(Gtk::Menu* menu);
+    void filterBuffer();
+    void findReplace(const Glib::ustring& searchstr, const Glib::ustring& replacestr, bool matchCase, bool backwards, bool replace);
+    void replaceAll(const Glib::ustring& searchstr, const Glib::ustring& replacestr, bool matchCase);
+    void applySubstitutions(const std::map<Glib::ustring, Glib::ustring>& substitutions, bool matchCase);
+    void scrollCursorIntoView();
+    void setFont();
+    void setInsertMode(InsertMode mode, const std::string& iconName);
+    void setDrawWhitspace(bool enable);
 };
 
 #endif // OUTPUTEDITORTEXT_HH

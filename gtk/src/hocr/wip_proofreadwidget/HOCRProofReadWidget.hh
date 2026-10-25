@@ -28,38 +28,38 @@ class HOCRItem;
 
 class HOCRProofReadWidget : public Gtk::Window {
 public:
-	HOCRProofReadWidget(Gtk::TreeView* treeView);
-	~HOCRProofReadWidget();
-	void clear();
-	Gtk::TreeView* documentTree() const { return m_treeView; }
-	void setConfidenceLabel(int wconf);
-	Glib::ustring confidenceStyle(int wconf) const;
-	void adjustFontSize(int diff);
+    HOCRProofReadWidget(Gtk::TreeView* treeView);
+    ~HOCRProofReadWidget();
+    void clear();
+    Gtk::TreeView* documentTree() const { return m_treeView; }
+    void setConfidenceLabel(int wconf);
+    Glib::ustring confidenceStyle(int wconf) const;
+    void adjustFontSize(int diff);
 
 private:
-	class LineEdit;
-	ClassData m_classdata;
+    class LineEdit;
+    ClassData m_classdata;
 
-	Gtk::Box* m_mainLayout = nullptr;
-	Gtk::TreeView* m_treeView = nullptr;
-	Gtk::Box* m_linesLayout = nullptr;
-	const HOCRItem* m_currentLine = nullptr;
-	Gtk::Box* m_controlsWidget = nullptr;
-	Gtk::Label* m_confidenceLabel = nullptr;
-	std::map<const HOCRItem*, Gtk::Box*> m_currentLines;
-	Gtk::Window* m_settingsMenu = nullptr;
-	Gtk::SpinButton* m_spinLinesBefore = nullptr;
-	Gtk::SpinButton* m_spinLinesAfter = nullptr;
-	Gtk::Button* m_settingsButton = nullptr;
-	int m_fontSizeDiff = 0;
+    Gtk::Box* m_mainLayout = nullptr;
+    Gtk::TreeView* m_treeView = nullptr;
+    Gtk::Box* m_linesLayout = nullptr;
+    const HOCRItem* m_currentLine = nullptr;
+    Gtk::Box* m_controlsWidget = nullptr;
+    Gtk::Label* m_confidenceLabel = nullptr;
+    std::map<const HOCRItem*, Gtk::Box*> m_currentLines;
+    Gtk::Window* m_settingsMenu = nullptr;
+    Gtk::SpinButton* m_spinLinesBefore = nullptr;
+    Gtk::SpinButton* m_spinLinesAfter = nullptr;
+    Gtk::Button* m_settingsButton = nullptr;
+    int m_fontSizeDiff = 0;
 
-	// TODO: Disable auto tab handling
-//	bool focusNextPrevChild(bool) override { return false; }
+    // TODO: Disable auto tab handling
+//  bool focusNextPrevChild(bool) override { return false; }
 
-	void showSettingsMenu();
-	void repositionWidget();
-	void updateWidget(bool force = false);
-	void showShortcutsDialog();
+    void showSettingsMenu();
+    void repositionWidget();
+    void updateWidget(bool force = false);
+    void showShortcutsDialog();
 };
 
 #endif // HOCRPROOFREADWIDGET_HH

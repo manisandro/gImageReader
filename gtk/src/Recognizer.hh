@@ -33,37 +33,37 @@ namespace Utils { class TesseractHandle; }
 
 class Recognizer {
 public:
-	enum class OutputDestination { Buffer, Clipboard };
+    enum class OutputDestination { Buffer, Clipboard };
 
-	Recognizer(const Ui::MainWindow& _ui);
+    Recognizer(const Ui::MainWindow& _ui);
 
-	void setRecognizeMode(const Glib::ustring& mode);
-	void recognizeImage(const Cairo::RefPtr<Cairo::ImageSurface>& img, OutputDestination dest);
+    void setRecognizeMode(const Glib::ustring& mode);
+    void recognizeImage(const Cairo::RefPtr<Cairo::ImageSurface>& img, OutputDestination dest);
 
 private:
-	class ProgressMonitor;
+    class ProgressMonitor;
 
-	enum class PageArea { EntirePage, Autodetect };
-	enum class TaskState { Waiting, Succeeded, Failed };
-	struct PageData {
-		bool success;
-		std::vector<Cairo::RefPtr<Cairo::ImageSurface >> ocrAreas;
-		OutputEditor::PageInfo pageInfo;
-	};
+    enum class PageArea { EntirePage, Autodetect };
+    enum class TaskState { Waiting, Succeeded, Failed };
+    struct PageData {
+        bool success;
+        std::vector<Cairo::RefPtr<Cairo::ImageSurface >> ocrAreas;
+        OutputEditor::PageInfo pageInfo;
+    };
 
-	const Ui::MainWindow& ui;
-	ClassData m_classdata;
+    const Ui::MainWindow& ui;
+    ClassData m_classdata;
 
-	void recognitionLanguageChanged(const Config::Lang& lang);
-	void recognizeButtonClicked();
-	void recognizeCurrentPage();
-	void recognizeMultiplePages();
-	void recognizeBatch();
-	std::unique_ptr<Utils::TesseractHandle> setupTesseract();
-	void recognize(const std::vector<int>& pages, bool autodetectLayout = false);
-	std::vector<int> selectPages(bool& autodetectLayout);
-	PageData setPage(int page, bool autodetectLayout);
-	void showRecognitionErrorsDialog(const std::vector<Glib::ustring>& errors);
+    void recognitionLanguageChanged(const Config::Lang& lang);
+    void recognizeButtonClicked();
+    void recognizeCurrentPage();
+    void recognizeMultiplePages();
+    void recognizeBatch();
+    std::unique_ptr<Utils::TesseractHandle> setupTesseract();
+    void recognize(const std::vector<int>& pages, bool autodetectLayout = false);
+    std::vector<int> selectPages(bool& autodetectLayout);
+    PageData setPage(int page, bool autodetectLayout);
+    void showRecognitionErrorsDialog(const std::vector<Glib::ustring>& errors);
 };
 
 #endif // RECOGNIZER_HH

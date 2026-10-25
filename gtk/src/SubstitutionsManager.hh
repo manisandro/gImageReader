@@ -27,39 +27,39 @@ class OutputBuffer;
 
 class SubstitutionsManager {
 public:
-	SubstitutionsManager();
-	~SubstitutionsManager();
-	void set_visible(bool visible);
+    SubstitutionsManager();
+    ~SubstitutionsManager();
+    void set_visible(bool visible);
 
-	sigc::signal<void, const std::map<Glib::ustring, Glib::ustring>&> signal_apply_substitutions() {
-		return m_signal_apply_substitutions;
-	}
+    sigc::signal<void, const std::map<Glib::ustring, Glib::ustring>&> signal_apply_substitutions() {
+        return m_signal_apply_substitutions;
+    }
 
 private:
-	struct ReplaceListColumns : public Gtk::TreeModel::ColumnRecord {
-		Gtk::TreeModelColumn<Glib::ustring> search;
-		Gtk::TreeModelColumn<Glib::ustring> replace;
-		ReplaceListColumns() {
-			add(search);
-			add(replace);
-		}
-	};
+    struct ReplaceListColumns : public Gtk::TreeModel::ColumnRecord {
+        Gtk::TreeModelColumn<Glib::ustring> search;
+        Gtk::TreeModelColumn<Glib::ustring> replace;
+        ReplaceListColumns() {
+            add(search);
+            add(replace);
+        }
+    };
 
-	sigc::signal<void, const std::map<Glib::ustring, Glib::ustring>&> m_signal_apply_substitutions;
+    sigc::signal<void, const std::map<Glib::ustring, Glib::ustring>&> m_signal_apply_substitutions;
 
-	Ui::SubstitutionsManager ui;
-	ClassData m_classdata;
+    Ui::SubstitutionsManager ui;
+    ClassData m_classdata;
 
-	std::string m_currentFile;
-	ReplaceListColumns m_viewCols;
-	Glib::RefPtr<Gtk::ListStore> m_listStore;
+    std::string m_currentFile;
+    ReplaceListColumns m_viewCols;
+    Glib::RefPtr<Gtk::ListStore> m_listStore;
 
-	void addRow();
-	void applySubstitutions();
-	bool clearList();
-	void openList();
-	void removeRows();
-	bool saveList();
+    void addRow();
+    void applySubstitutions();
+    bool clearList();
+    void openList();
+    void removeRows();
+    bool saveList();
 };
 
 #endif // SUBSTITUTIONS_MANAGER_HH

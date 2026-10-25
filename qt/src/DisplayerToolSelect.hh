@@ -29,60 +29,60 @@
 class NumberedDisplayerSelection;
 
 class DisplayerToolSelect : public DisplayerTool {
-	Q_OBJECT
+    Q_OBJECT
 public:
-	DisplayerToolSelect(Displayer* displayer, QObject* parent = 0);
-	~DisplayerToolSelect();
-	void mousePressEvent(QMouseEvent* event) override;
-	void mouseMoveEvent(QMouseEvent* event) override;
-	void mouseReleaseEvent(QMouseEvent* event) override;
-	void resolutionChanged(double factor) override;
-	void rotationChanged(double delta) override;
+    DisplayerToolSelect(Displayer* displayer, QObject* parent = 0);
+    ~DisplayerToolSelect();
+    void mousePressEvent(QMouseEvent* event) override;
+    void mouseMoveEvent(QMouseEvent* event) override;
+    void mouseReleaseEvent(QMouseEvent* event) override;
+    void resolutionChanged(double factor) override;
+    void rotationChanged(double delta) override;
 
-	QList<QImage> getOCRAreas() override;
-	bool hasMultipleOCRAreas() const override {
-		return !m_selections.isEmpty();
-	}
-	bool allowAutodetectOCRAreas() const override {
-		return true;
-	}
-	void autodetectOCRAreas() override {
-		autodetectLayout();
-	}
-	void reset() override {
-		clearSelections();
-	}
+    QList<QImage> getOCRAreas() override;
+    bool hasMultipleOCRAreas() const override {
+        return !m_selections.isEmpty();
+    }
+    bool allowAutodetectOCRAreas() const override {
+        return true;
+    }
+    void autodetectOCRAreas() override {
+        autodetectLayout();
+    }
+    void reset() override {
+        clearSelections();
+    }
 
 private:
-	friend class NumberedDisplayerSelection;
-	NumberedDisplayerSelection* m_curSel = nullptr;
-	QList<NumberedDisplayerSelection*> m_selections;
+    friend class NumberedDisplayerSelection;
+    NumberedDisplayerSelection* m_curSel = nullptr;
+    QList<NumberedDisplayerSelection*> m_selections;
 
-	void clearSelections();
-	void removeSelection(int num);
-	void reorderSelection(int oldNum, int newNum);
-	void saveSelection(NumberedDisplayerSelection* selection);
-	void updateRecognitionModeLabel();
-	void autodetectLayout(bool noDeskew = false);
+    void clearSelections();
+    void removeSelection(int num);
+    void reorderSelection(int oldNum, int newNum);
+    void saveSelection(NumberedDisplayerSelection* selection);
+    void updateRecognitionModeLabel();
+    void autodetectLayout(bool noDeskew = false);
 };
 
 class NumberedDisplayerSelection : public DisplayerSelection {
-	Q_OBJECT
+    Q_OBJECT
 public:
-	NumberedDisplayerSelection(DisplayerToolSelect* selectTool, int number, const QPointF& anchor)
-		: DisplayerSelection(selectTool, anchor), m_number(number) {
-	}
-	void setNumber(int number) {
-		m_number = number;
-	}
+    NumberedDisplayerSelection(DisplayerToolSelect* selectTool, int number, const QPointF& anchor)
+        : DisplayerSelection(selectTool, anchor), m_number(number) {
+    }
+    void setNumber(int number) {
+        m_number = number;
+    }
 
 private slots:
-	void reorderSelection(int newNumber);
+    void reorderSelection(int newNumber);
 
 private:
-	int m_number;
-	void contextMenuEvent(QGraphicsSceneContextMenuEvent* event) override;
-	void paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget) override;
+    int m_number;
+    void contextMenuEvent(QGraphicsSceneContextMenuEvent* event) override;
+    void paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget) override;
 };
 
 #endif // DISPLAYERTOOLSELECT_HH

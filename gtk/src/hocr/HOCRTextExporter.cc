@@ -26,43 +26,43 @@
 #include <fstream>
 
 bool HOCRTextExporter::run(const HOCRDocument* hocrdocument, const std::string& outname, const ExporterSettings* /*settings*/) {
-	std::ofstream file(outname);
-	if (!file.is_open()) {
-		Utils::messageBox(Gtk::MESSAGE_ERROR, _("Export failed"), _("The text export failed: unable to write output file."));
-		return false;
-	}
+    std::ofstream file(outname);
+    if (!file.is_open()) {
+        Utils::messageBox(Gtk::MESSAGE_ERROR, _("Export failed"), _("The text export failed: unable to write output file."));
+        return false;
+    }
 
-	for (int i = 0, n = hocrdocument->pageCount(); i < n; ++i) {
-		const HOCRPage* page = hocrdocument->page(i);
-		if (!page->isEnabled()) {
-			continue;
-		}
-		printItem(file, page);
-	}
-	file.close();
-	bool openAfterExport = ConfigSettings::get<SwitchSettingT<Gtk::CheckButton >> ("openafterexport")->getValue();
-	if (openAfterExport) {
-		Utils::openUri(Glib::filename_to_uri(outname));
-	}
-	return true;
+    for (int i = 0, n = hocrdocument->pageCount(); i < n; ++i) {
+        const HOCRPage* page = hocrdocument->page(i);
+        if (!page->isEnabled()) {
+            continue;
+        }
+        printItem(file, page);
+    }
+    file.close();
+    bool openAfterExport = ConfigSettings::get<SwitchSettingT<Gtk::CheckButton >> ("openafterexport")->getValue();
+    if (openAfterExport) {
+        Utils::openUri(Glib::filename_to_uri(outname));
+    }
+    return true;
 }
 
 void HOCRTextExporter::printItem(std::ofstream& outputStream, const HOCRItem* item, bool lastChild) {
-	if (!item->isEnabled()) {
-		return;
-	}
-	Glib::ustring itemClass = item->itemClass();
-	if (itemClass == "ocrx_word") {
-		outputStream << item->text();
-		if (!lastChild) {
-			outputStream << " ";
-		}
-	} else {
-		for (int i = 0, n = item->children().size(); i < n; ++i) {
-			printItem(outputStream, item->children() [i], i == n - 1);
-		}
-	}
-	if (itemClass == "ocr_line" || itemClass == "ocr_par") {
-		outputStream << "\n";
-	}
+    if (!item->isEnabled()) {
+        return;
+    }
+    Glib::ustring itemClass = item->itemClass();
+    if (itemClass == "ocrx_word") {
+        outputStream << item->text();
+        if (!lastChild) {
+            outputStream << " ";
+        }
+    } else {
+        for (int i = 0, n = item->children().size(); i < n; ++i) {
+            printItem(outputStream, item->children() [i], i == n - 1);
+        }
+    }
+    if (itemClass == "ocr_line" || itemClass == "ocr_par") {
+        outputStream << "\n";
+    }
 }

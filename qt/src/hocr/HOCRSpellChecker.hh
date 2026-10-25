@@ -25,18 +25,18 @@
 class HOCRSpellChecker : public QtSpell::Checker {
 public:
 
-	using QtSpell::Checker::Checker;
+    using QtSpell::Checker::Checker;
 
-	bool checkSpelling(const QString& word, QStringList* suggestions = nullptr, int limit = -1) const;
+    bool checkSpelling(const QString& word, QStringList* suggestions = nullptr, int limit = -1) const;
 
-	// Unused interface, no-op
-	void checkSpelling(int /*start*/ = 0, int /*end*/ = -1) override { }
-	QString getWord(int /*pos*/, int* /*start*/ = 0, int* /*end*/ = 0) const override { return QString(); }
-	void insertWord(int /*start*/, int /*end*/, const QString& /*word*/) override { }
-	bool isAttached() const override { return true; }
+    // Unused interface, no-op
+    void checkSpelling(int /*start*/ = 0, int /*end*/ = -1) override { }
+    QString getWord(int /*pos*/, int* /*start*/ = 0, int* /*end*/ = 0) const override { return QString(); }
+    void insertWord(int /*start*/, int /*end*/, const QString& /*word*/) override { }
+    bool isAttached() const override { return true; }
 
 private:
-	void generateCombinations(const QList<QList<QString >>& lists, QList<QList<QString >>& results, int depth, const QList<QString>& c) const;
+    void generateCombinations(const QList<QList<QString >>& lists, QList<QList<QString >>& results, int depth, const QList<QString>& c) const;
 };
 
 #endif // HOCRSPELLCHECKER_HH

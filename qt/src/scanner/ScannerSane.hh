@@ -31,64 +31,64 @@
 #include <sane/sane.h>
 
 class ScannerSane : public Scanner {
-	Q_OBJECT
+    Q_OBJECT
 public:
-	void init() override;
-	void redetect() override;
-	void scan(const Params& params) override;
-	void cancel() override;
-	void close() override;
+    void init() override;
+    void redetect() override;
+    void scan(const Params& params) override;
+    void cancel() override;
+    void close() override;
 
 private:
-	struct ScanJob {
-		ScanJob(const Params& _params) : params(_params) {}
-		Params params;
-		SANE_Handle handle = nullptr;
-		SANE_Parameters parameters;
-		QVector<uint8_t> lineBuffer;
-		QVector<uint8_t> imgbuf;
-		int nUsed = 0;		// Number of used bytes in the line buffer
-		int lineCount = 0;	// Number of read lines
-		int height = 0;
-		int rowstride = 0;
-		int pageNumber = 0;
-	};
+    struct ScanJob {
+        ScanJob(const Params& _params) : params(_params) {}
+        Params params;
+        SANE_Handle handle = nullptr;
+        SANE_Parameters parameters;
+        QVector<uint8_t> lineBuffer;
+        QVector<uint8_t> imgbuf;
+        int nUsed = 0;      // Number of used bytes in the line buffer
+        int lineCount = 0;  // Number of read lines
+        int height = 0;
+        int rowstride = 0;
+        int pageNumber = 0;
+    };
 
-	struct Request {
-		enum class Type { Redetect, StartScan, Cancel, Quit } type;
-		ScanJob* job;
-	};
+    struct Request {
+        enum class Type { Redetect, StartScan, Cancel, Quit } type;
+        ScanJob* job;
+    };
 
-	QThread m_thread;
-	State m_state = State::IDLE;
-	Utils::AsyncQueue<Request> m_requestQueue;
-	ScanJob* m_job = nullptr;
+    QThread m_thread;
+    State m_state = State::IDLE;
+    Utils::AsyncQueue<Request> m_requestQueue;
+    ScanJob* m_job = nullptr;
 
-	void doRedetect();
-	void doOpen();
-	void doSetOptions();
-	void doStart();
-	void doGetParameters();
-	void doRead();
-	void doCompletePage();
-	void doStop();
-	void setState(State state);
-	void failScan(const QString& errorString);
+    void doRedetect();
+    void doOpen();
+    void doSetOptions();
+    void doStart();
+    void doGetParameters();
+    void doRead();
+    void doCompletePage();
+    void doStop();
+    void setState(State state);
+    void failScan(const QString& errorString);
 
-	const SANE_Option_Descriptor* getOptionByName(const QMap<QString, int>& options, SANE_Handle, const QString& name, int& index);
-	bool setDefaultOption(SANE_Handle m_handle, const SANE_Option_Descriptor* option, SANE_Int option_index);
-	void setBoolOption(SANE_Handle m_handle, const SANE_Option_Descriptor* option, SANE_Int option_index, bool value, bool* result);
-	void setIntOption(SANE_Handle m_handle, const SANE_Option_Descriptor* option, SANE_Int option_index, int value, int* result);
-	void setFixedOption(SANE_Handle m_handle, const SANE_Option_Descriptor* option, SANE_Int option_index, double value, double* result);
-	bool setStringOption(SANE_Handle m_handle, const SANE_Option_Descriptor* option, SANE_Int option_index, const QString& value, QString* result);
-	bool setConstrainedStringOption(SANE_Handle m_handle, const SANE_Option_Descriptor* option, SANE_Int option_index, const QStringList& values, QString* result);
-	void logOption(SANE_Int index, const SANE_Option_Descriptor* option);
+    const SANE_Option_Descriptor* getOptionByName(const QMap<QString, int>& options, SANE_Handle, const QString& name, int& index);
+    bool setDefaultOption(SANE_Handle m_handle, const SANE_Option_Descriptor* option, SANE_Int option_index);
+    void setBoolOption(SANE_Handle m_handle, const SANE_Option_Descriptor* option, SANE_Int option_index, bool value, bool* result);
+    void setIntOption(SANE_Handle m_handle, const SANE_Option_Descriptor* option, SANE_Int option_index, int value, int* result);
+    void setFixedOption(SANE_Handle m_handle, const SANE_Option_Descriptor* option, SANE_Int option_index, double value, double* result);
+    bool setStringOption(SANE_Handle m_handle, const SANE_Option_Descriptor* option, SANE_Int option_index, const QString& value, QString* result);
+    bool setConstrainedStringOption(SANE_Handle m_handle, const SANE_Option_Descriptor* option, SANE_Int option_index, const QStringList& values, QString* result);
+    void logOption(SANE_Int index, const SANE_Option_Descriptor* option);
 
-	static QString getFrameModeString(SANE_Frame frame);
-	static QString getErrorMessage(SANE_Status status, const QString& defaultMessage);
+    static QString getFrameModeString(SANE_Frame frame);
+    static QString getErrorMessage(SANE_Status status, const QString& defaultMessage);
 
 private slots:
-	void run();
+    void run();
 };
 
 typedef ScannerSane ScannerImpl;

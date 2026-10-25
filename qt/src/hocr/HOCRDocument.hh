@@ -30,239 +30,239 @@ class HOCRPage;
 class HOCRSpellChecker;
 
 class HOCRDocument : public QAbstractItemModel {
-	Q_OBJECT
+    Q_OBJECT
 
 public:
-	HOCRDocument(QObject* parent = nullptr);
-	~HOCRDocument();
+    HOCRDocument(QObject* parent = nullptr);
+    ~HOCRDocument();
 
-	void clear();
+    void clear();
 
-	void setDefaultLanguage(const QString& language) {
-		m_defaultLanguage = language;
-	}
-	const QString& defaultLanguage() const {
-		return m_defaultLanguage;
-	}
-	void addSpellingActions(QMenu* menu, const QModelIndex& index);
-	void addWordToDictionary(const QModelIndex& index);
+    void setDefaultLanguage(const QString& language) {
+        m_defaultLanguage = language;
+    }
+    const QString& defaultLanguage() const {
+        return m_defaultLanguage;
+    }
+    void addSpellingActions(QMenu* menu, const QModelIndex& index);
+    void addWordToDictionary(const QModelIndex& index);
 
-	QString toHTML() const;
+    QString toHTML() const;
 
-	QModelIndex insertPage(int beforeIdx, const QDomElement& pageElement, bool cleanGraphics, const QString& sourceBasePath = QString());
-	const HOCRPage* page(int i) const {
-		return m_pages.value(i);
-	}
-	int pageCount() const {
-		return m_pages.size();
-	}
+    QModelIndex insertPage(int beforeIdx, const QDomElement& pageElement, bool cleanGraphics, const QString& sourceBasePath = QString());
+    const HOCRPage* page(int i) const {
+        return m_pages.value(i);
+    }
+    int pageCount() const {
+        return m_pages.size();
+    }
 
-	const HOCRItem* itemAtIndex(const QModelIndex& index) const {
-		return index.isValid() ? static_cast<HOCRItem*> (index.internalPointer()) : nullptr;
-	}
-	QModelIndex indexAtItem(const HOCRItem* item) const;
-	bool editItemAttribute(const QModelIndex& index, const QString& name, const QString& value, const QString& attrItemClass = QString());
-	QModelIndex moveItem(const QModelIndex& itemIndex, const QModelIndex& newParent, int newRow);
-	QModelIndex swapItems(const QModelIndex& parent, int firstRow, int secondRow);
-	QModelIndex mergeItems(const QModelIndex& parent, int startRow, int endRow);
-	QModelIndex splitItem(const QModelIndex& itemIndex, int startRow, int endRow);
-	QModelIndex splitItemText(const QModelIndex& itemIndex, int pos);
-	QModelIndex mergeItemText(const QModelIndex& itemIndex, bool mergeNext);
-	QModelIndex addItem(const QModelIndex& parent, const QDomElement& element);
-	bool removeItem(const QModelIndex& index);
+    const HOCRItem* itemAtIndex(const QModelIndex& index) const {
+        return index.isValid() ? static_cast<HOCRItem*> (index.internalPointer()) : nullptr;
+    }
+    QModelIndex indexAtItem(const HOCRItem* item) const;
+    bool editItemAttribute(const QModelIndex& index, const QString& name, const QString& value, const QString& attrItemClass = QString());
+    QModelIndex moveItem(const QModelIndex& itemIndex, const QModelIndex& newParent, int newRow);
+    QModelIndex swapItems(const QModelIndex& parent, int firstRow, int secondRow);
+    QModelIndex mergeItems(const QModelIndex& parent, int startRow, int endRow);
+    QModelIndex splitItem(const QModelIndex& itemIndex, int startRow, int endRow);
+    QModelIndex splitItemText(const QModelIndex& itemIndex, int pos);
+    QModelIndex mergeItemText(const QModelIndex& itemIndex, bool mergeNext);
+    QModelIndex addItem(const QModelIndex& parent, const QDomElement& element);
+    bool removeItem(const QModelIndex& index);
 
-	QModelIndex nextIndex(const QModelIndex& current) const;
-	QModelIndex prevIndex(const QModelIndex& current) const;
-	QModelIndex prevOrNextIndex(bool next, const QModelIndex& current, const QString& ocrClass, bool misspelled = false, bool lowconf = false) const;
-	bool indexIsMisspelledWord(const QModelIndex& index) const;
-	bool getItemSpellingSuggestions(const QModelIndex& index, QString& trimmedWord, QStringList& suggestions, int limit) const;
+    QModelIndex nextIndex(const QModelIndex& current) const;
+    QModelIndex prevIndex(const QModelIndex& current) const;
+    QModelIndex prevOrNextIndex(bool next, const QModelIndex& current, const QString& ocrClass, bool misspelled = false, bool lowconf = false) const;
+    bool indexIsMisspelledWord(const QModelIndex& index) const;
+    bool getItemSpellingSuggestions(const QModelIndex& index, QString& trimmedWord, QStringList& suggestions, int limit) const;
 
-	bool referencesSource(const QString& filename) const;
-	QModelIndex searchPage(const QString& filename, int pageNr) const;
-	QModelIndex searchAtCanvasPos(const QModelIndex& pageIndex, const QPoint& pos) const;
-	void convertSourcePaths(const QString& basepath, bool absolute);
+    bool referencesSource(const QString& filename) const;
+    QModelIndex searchPage(const QString& filename, int pageNr) const;
+    QModelIndex searchAtCanvasPos(const QModelIndex& pageIndex, const QPoint& pos) const;
+    void convertSourcePaths(const QString& basepath, bool absolute);
 
-	QVariant data(const QModelIndex& index, int role) const override;
-	bool setData(const QModelIndex& index, const QVariant& value, int role) override;
-	Qt::ItemFlags flags(const QModelIndex& index) const override;
-	QModelIndex index(int row, int column, const QModelIndex& parent = QModelIndex()) const override;
-	QModelIndex parent(const QModelIndex& child) const override;
-	int rowCount(const QModelIndex& parent = QModelIndex()) const override;
-	int columnCount(const QModelIndex& parent = QModelIndex()) const override;
+    QVariant data(const QModelIndex& index, int role) const override;
+    bool setData(const QModelIndex& index, const QVariant& value, int role) override;
+    Qt::ItemFlags flags(const QModelIndex& index) const override;
+    QModelIndex index(int row, int column, const QModelIndex& parent = QModelIndex()) const override;
+    QModelIndex parent(const QModelIndex& child) const override;
+    int rowCount(const QModelIndex& parent = QModelIndex()) const override;
+    int columnCount(const QModelIndex& parent = QModelIndex()) const override;
 
 signals:
-	void itemAttributeChanged(const QModelIndex& itemIndex, const QString& name, const QString& value);
+    void itemAttributeChanged(const QModelIndex& itemIndex, const QString& name, const QString& value);
 
 private:
-	int m_pageIdCounter = 0;
-	QString m_defaultLanguage = "en_US";
-	HOCRSpellChecker* m_spell;
+    int m_pageIdCounter = 0;
+    QString m_defaultLanguage = "en_US";
+    HOCRSpellChecker* m_spell;
 
-	QVector<HOCRPage*> m_pages;
+    QVector<HOCRPage*> m_pages;
 
-	QString displayRoleForItem(const HOCRItem* item) const;
-	QIcon decorationRoleForItem(const HOCRItem* item) const;
-	QString tooltipRoleForItem(const HOCRItem* item) const;
+    QString displayRoleForItem(const HOCRItem* item) const;
+    QIcon decorationRoleForItem(const HOCRItem* item) const;
+    QString tooltipRoleForItem(const HOCRItem* item) const;
 
-	void insertItem(HOCRItem* parent, HOCRItem* item, int i);
-	void deleteItem(HOCRItem* item);
-	void takeItem(HOCRItem* item);
-	void resetMisspelled(const QModelIndex& index);
-	QList<QModelIndex> recheckItemSpelling(const QModelIndex& index) const;
-	void recomputeBBoxes(HOCRItem* item);
-	HOCRItem* mutableItemAtIndex(const QModelIndex& index) const {
-		return index.isValid() ? static_cast<HOCRItem*> (index.internalPointer()) : nullptr;
-	}
+    void insertItem(HOCRItem* parent, HOCRItem* item, int i);
+    void deleteItem(HOCRItem* item);
+    void takeItem(HOCRItem* item);
+    void resetMisspelled(const QModelIndex& index);
+    QList<QModelIndex> recheckItemSpelling(const QModelIndex& index) const;
+    void recomputeBBoxes(HOCRItem* item);
+    HOCRItem* mutableItemAtIndex(const QModelIndex& index) const {
+        return index.isValid() ? static_cast<HOCRItem*> (index.internalPointer()) : nullptr;
+    }
 };
 
 
 class HOCRItem {
 public:
-	// attrname : attrvalue : occurrences
-	typedef QMap<QString, QMap<QString, int >> AttrOccurenceMap_t;
+    // attrname : attrvalue : occurrences
+    typedef QMap<QString, QMap<QString, int >> AttrOccurenceMap_t;
 
-	HOCRItem(const QDomElement& element, HOCRPage* page, HOCRItem* parent, int index = -1);
-	virtual ~HOCRItem();
-	HOCRPage* page() const {
-		return m_pageItem;
-	}
-	const QVector<HOCRItem*>& children() const {
-		return m_childItems;
-	}
-	HOCRItem* parent() const {
-		return m_parentItem;
-	}
-	int index() const {
-		return m_index;
-	}
-	bool isEnabled() const {
-		return m_enabled;
-	}
+    HOCRItem(const QDomElement& element, HOCRPage* page, HOCRItem* parent, int index = -1);
+    virtual ~HOCRItem();
+    HOCRPage* page() const {
+        return m_pageItem;
+    }
+    const QVector<HOCRItem*>& children() const {
+        return m_childItems;
+    }
+    HOCRItem* parent() const {
+        return m_parentItem;
+    }
+    int index() const {
+        return m_index;
+    }
+    bool isEnabled() const {
+        return m_enabled;
+    }
 
-	// HOCR specific convenience getters
-	QString itemClass() const {
-		return m_attrs["class"];
-	}
-	const QRect& bbox() const {
-		return m_bbox;
-	}
-	QString text() const {
-		return m_text;
-	}
-	QString lang() const {
-		return m_attrs["lang"];
-	}
-	QString spellingLang() const {
-		QString l = lang();
-		QString code = Config::lookupLangCode(l);
-		return code.isEmpty() ? l : code;
-	}
-	const QMap<QString, QString> getAttributes() const {
-		return m_attrs;
-	}
-	const QMap<QString, QString> getTitleAttributes() const {
-		return m_titleAttrs;
-	}
-	QMap<QString, QString> getAllAttributes() const;
-	QMap<QString, QString> getAttributes(const QList<QString>& names) const;
-	void getPropagatableAttributes(QMap<QString, QMap<QString, QSet<QString >>>& occurrences) const;
-	QString toHtml(int indent = 0) const;
-	QPair<double, double> baseLine() const;
-	QString fontFamily() const {
-		return m_titleAttrs["x_font"];
-	}
-	double fontSize() const {
-		return m_titleAttrs["x_fsize"].toDouble();
-	}
-	bool fontBold() const {
-		return m_bold;
-	}
-	bool fontItalic() const {
-		return m_italic;
-	}
+    // HOCR specific convenience getters
+    QString itemClass() const {
+        return m_attrs["class"];
+    }
+    const QRect& bbox() const {
+        return m_bbox;
+    }
+    QString text() const {
+        return m_text;
+    }
+    QString lang() const {
+        return m_attrs["lang"];
+    }
+    QString spellingLang() const {
+        QString l = lang();
+        QString code = Config::lookupLangCode(l);
+        return code.isEmpty() ? l : code;
+    }
+    const QMap<QString, QString> getAttributes() const {
+        return m_attrs;
+    }
+    const QMap<QString, QString> getTitleAttributes() const {
+        return m_titleAttrs;
+    }
+    QMap<QString, QString> getAllAttributes() const;
+    QMap<QString, QString> getAttributes(const QList<QString>& names) const;
+    void getPropagatableAttributes(QMap<QString, QMap<QString, QSet<QString >>>& occurrences) const;
+    QString toHtml(int indent = 0) const;
+    QPair<double, double> baseLine() const;
+    QString fontFamily() const {
+        return m_titleAttrs["x_font"];
+    }
+    double fontSize() const {
+        return m_titleAttrs["x_fsize"].toDouble();
+    }
+    bool fontBold() const {
+        return m_bold;
+    }
+    bool fontItalic() const {
+        return m_italic;
+    }
 
-	static QMap<QString, QString> deserializeAttrGroup(const QString& string);
-	static QString serializeAttrGroup(const QMap<QString, QString>& attrs);
-	static QString trimmedWord(const QString& word, QString* prefix = nullptr, QString* suffix = nullptr);
+    static QMap<QString, QString> deserializeAttrGroup(const QString& string);
+    static QString serializeAttrGroup(const QMap<QString, QString>& attrs);
+    static QString trimmedWord(const QString& word, QString* prefix = nullptr, QString* suffix = nullptr);
 
 protected:
-	friend class HOCRDocument;
-	friend class HOCRPage;
+    friend class HOCRDocument;
+    friend class HOCRPage;
 
-	static QMap<QString, QString> s_langCache;
+    static QMap<QString, QString> s_langCache;
 
-	QString m_text;
-	int m_misspelled = -1;
-	bool m_bold;
-	bool m_italic;
+    QString m_text;
+    int m_misspelled = -1;
+    bool m_bold;
+    bool m_italic;
 
-	QMap<QString, QString> m_attrs;
-	QMap<QString, QString> m_titleAttrs;
-	QVector<HOCRItem*> m_childItems;
-	HOCRPage* m_pageItem = nullptr;
-	HOCRItem* m_parentItem = nullptr;
-	int m_index;
-	bool m_enabled = true;
+    QMap<QString, QString> m_attrs;
+    QMap<QString, QString> m_titleAttrs;
+    QVector<HOCRItem*> m_childItems;
+    HOCRPage* m_pageItem = nullptr;
+    HOCRItem* m_parentItem = nullptr;
+    int m_index;
+    bool m_enabled = true;
 
-	QRect m_bbox;
+    QRect m_bbox;
 
-	// All mutations must be done through methods of HOCRDocument
-	void addChild(HOCRItem* child);
-	void insertChild(HOCRItem* child, int i);
-	void removeChild(HOCRItem* child);
-	void takeChild(const HOCRItem* child);
-	QVector<HOCRItem*> takeChildren();
-	void setEnabled(bool enabled) {
-		m_enabled = enabled;
-	}
-	void setText(const QString& newText) {
-		m_text = newText;
-	}
-	void setMisspelled(int misspelled) {
-		m_misspelled = misspelled;
-	}
-	int isMisspelled() const {
-		return m_misspelled;
-	}
-	void setAttribute(const QString& name, const QString& value, const QString& attrItemClass = QString());
-	bool parseChildren(const QDomElement& element, QString language, const QString& defaultLanguage);
+    // All mutations must be done through methods of HOCRDocument
+    void addChild(HOCRItem* child);
+    void insertChild(HOCRItem* child, int i);
+    void removeChild(HOCRItem* child);
+    void takeChild(const HOCRItem* child);
+    QVector<HOCRItem*> takeChildren();
+    void setEnabled(bool enabled) {
+        m_enabled = enabled;
+    }
+    void setText(const QString& newText) {
+        m_text = newText;
+    }
+    void setMisspelled(int misspelled) {
+        m_misspelled = misspelled;
+    }
+    int isMisspelled() const {
+        return m_misspelled;
+    }
+    void setAttribute(const QString& name, const QString& value, const QString& attrItemClass = QString());
+    bool parseChildren(const QDomElement& element, QString language, const QString& defaultLanguage);
 };
 
 
 class HOCRPage : public HOCRItem {
 public:
-	HOCRPage(const QDomElement& element, int pageId, const QString& defaultLanguage, bool cleanGraphics, int index);
+    HOCRPage(const QDomElement& element, int pageId, const QString& defaultLanguage, bool cleanGraphics, int index);
 
-	const QString& sourceFile() const {
-		return m_sourceFile;
-	}
-	// const-refs here to avoid taking reference from temporaries
-	const int& pageNr() const {
-		return m_pageNr;
-	}
-	const double& angle() const {
-		return m_angle;
-	}
-	const int& resolution() const {
-		return m_resolution;
-	}
-	int pageId() const {
-		return m_pageId;
-	}
-	QString title() const;
+    const QString& sourceFile() const {
+        return m_sourceFile;
+    }
+    // const-refs here to avoid taking reference from temporaries
+    const int& pageNr() const {
+        return m_pageNr;
+    }
+    const double& angle() const {
+        return m_angle;
+    }
+    const int& resolution() const {
+        return m_resolution;
+    }
+    int pageId() const {
+        return m_pageId;
+    }
+    QString title() const;
 
 private:
-	friend class HOCRItem;
-	friend class HOCRDocument;
+    friend class HOCRItem;
+    friend class HOCRDocument;
 
-	int m_pageId;
-	QMap<QString, int> m_idCounters;
-	QString m_sourceFile;
-	int m_pageNr;
-	double m_angle;
-	int m_resolution;
+    int m_pageId;
+    QMap<QString, int> m_idCounters;
+    QString m_sourceFile;
+    int m_pageNr;
+    double m_angle;
+    int m_resolution;
 
-	void convertSourcePath(const QString& basepath, bool absolute);
+    void convertSourcePath(const QString& basepath, bool absolute);
 };
 
 

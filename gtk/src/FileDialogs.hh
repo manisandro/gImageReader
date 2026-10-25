@@ -25,16 +25,16 @@
 namespace FileDialogs {
 
 struct FileFilter {
-	std::string name;
-	std::vector<Glib::ustring> mime_types;
-	std::vector<Glib::ustring> patterns;
+    std::string name;
+    std::vector<Glib::ustring> mime_types;
+    std::vector<Glib::ustring> patterns;
 
 #ifdef G_OS_WIN32
-	std::wstring to_win32_filter() const;
+    std::wstring to_win32_filter() const;
 #endif
-	Glib::RefPtr<Gtk::FileFilter> to_gnome_filter() const;
-	Glib::ustring to_kde_filter() const;
-	static FileFilter pixbuf_formats();
+    Glib::RefPtr<Gtk::FileFilter> to_gnome_filter() const;
+    Glib::ustring to_kde_filter() const;
+    static FileFilter pixbuf_formats();
 };
 
 std::vector<Glib::RefPtr<Gio::File >> open_dialog(const Glib::ustring& title, const std::string& initialDirectory, const std::string& initialDirSetting, const FileFilter& filter, bool multiple, Gtk::Window* parent = nullptr);

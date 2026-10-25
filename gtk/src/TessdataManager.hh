@@ -24,35 +24,35 @@
 
 class TessdataManager {
 public:
-	static void exec();
+    static void exec();
 
 private:
-	TessdataManager();
-	void run();
-	struct LangFile {
-		Glib::ustring name;
-		Glib::ustring url;
-	};
+    TessdataManager();
+    void run();
+    struct LangFile {
+        Glib::ustring name;
+        Glib::ustring url;
+    };
 
-	struct ViewColumns : public Gtk::TreeModel::ColumnRecord {
-		Gtk::TreeModelColumn<bool> selected;
-		Gtk::TreeModelColumn<Glib::ustring> label;
-		Gtk::TreeModelColumn<Glib::ustring> prefix;
-		ViewColumns() {
-			add(selected);
-			add(label);
-			add(prefix);
-		}
-	} m_viewCols;
+    struct ViewColumns : public Gtk::TreeModel::ColumnRecord {
+        Gtk::TreeModelColumn<bool> selected;
+        Gtk::TreeModelColumn<Glib::ustring> label;
+        Gtk::TreeModelColumn<Glib::ustring> prefix;
+        ViewColumns() {
+            add(selected);
+            add(label);
+            add(prefix);
+        }
+    } m_viewCols;
 
-	Ui::TessdataManager ui;
-	Glib::RefPtr<Gtk::ListStore> m_languageListStore;
-	std::map<Glib::ustring, std::vector<LangFile >> m_languageFiles;
-	Glib::RefPtr<Gio::DBus::Proxy> m_dbusProxy;
+    Ui::TessdataManager ui;
+    Glib::RefPtr<Gtk::ListStore> m_languageListStore;
+    std::map<Glib::ustring, std::vector<LangFile >> m_languageFiles;
+    Glib::RefPtr<Gio::DBus::Proxy> m_dbusProxy;
 
-	bool fetchLanguageList(Glib::ustring& messages);
-	void applyChanges();
-	void refresh();
+    bool fetchLanguageList(Glib::ustring& messages);
+    void applyChanges();
+    void refresh();
 };
 
 #endif // TESSDATAMANAGER_HH

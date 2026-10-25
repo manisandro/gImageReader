@@ -37,91 +37,91 @@ std::string pkgExePath;
 
 static std::string get_application_dir(char* argv0) {
 #ifdef G_OS_WIN32
-	gchar* dir = g_win32_get_package_installation_directory_of_module(0);
-	std::string pathstr = dir;
-	g_free(dir);
+    gchar* dir = g_win32_get_package_installation_directory_of_module(0);
+    std::string pathstr = dir;
+    g_free(dir);
 #else
-	pid_t pid = getpid();
-	std::string exe = Glib::ustring::compose("/proc/%1/exe", pid);
-	GError* err = nullptr;
-	char* path = g_file_read_link(exe.c_str(), &err);
-	std::string pathstr = Glib::build_filename(Glib::path_get_dirname(path), "..");
-	g_free(path);
-	if (err) {
-		if (Glib::path_is_absolute(argv0)) {
-			pathstr = Glib::build_filename(Glib::path_get_dirname(argv0), "..");
-		} else {
-			pathstr = Glib::build_filename(Glib::get_current_dir(), Glib::path_get_dirname(argv0), "..");
-		}
-	}
+    pid_t pid = getpid();
+    std::string exe = Glib::ustring::compose("/proc/%1/exe", pid);
+    GError* err = nullptr;
+    char* path = g_file_read_link(exe.c_str(), &err);
+    std::string pathstr = Glib::build_filename(Glib::path_get_dirname(path), "..");
+    g_free(path);
+    if (err) {
+        if (Glib::path_is_absolute(argv0)) {
+            pathstr = Glib::build_filename(Glib::path_get_dirname(argv0), "..");
+        } else {
+            pathstr = Glib::build_filename(Glib::get_current_dir(), Glib::path_get_dirname(argv0), "..");
+        }
+    }
 #endif
-	return pathstr;
+    return pathstr;
 }
 
 static std::string get_application_exec_path(char* argv0) {
 #ifdef G_OS_WIN32
-	char buf[MAX_PATH];
-	bool success = GetModuleFileName(0, buf, MAX_PATH) > 0;
-	std::string pathstr = buf;
+    char buf[MAX_PATH];
+    bool success = GetModuleFileName(0, buf, MAX_PATH) > 0;
+    std::string pathstr = buf;
 #else
-	pid_t pid = getpid();
-	std::string exe = Glib::ustring::compose("/proc/%1/exe", pid);
-	GError* err = nullptr;
-	char* path = g_file_read_link(exe.c_str(), &err);
-	std::string pathstr = path;
-	g_free(path);
-	bool success = err == nullptr;
+    pid_t pid = getpid();
+    std::string exe = Glib::ustring::compose("/proc/%1/exe", pid);
+    GError* err = nullptr;
+    char* path = g_file_read_link(exe.c_str(), &err);
+    std::string pathstr = path;
+    g_free(path);
+    bool success = err == nullptr;
 #endif
-	if (!success) {
-		if (Glib::path_is_absolute(argv0)) {
-			pathstr = Glib::path_get_dirname(argv0);
-		} else {
-			pathstr = Glib::build_filename(Glib::get_current_dir(), argv0);
-		}
-	}
-	return pathstr;
+    if (!success) {
+        if (Glib::path_is_absolute(argv0)) {
+            pathstr = Glib::path_get_dirname(argv0);
+        } else {
+            pathstr = Glib::build_filename(Glib::get_current_dir(), argv0);
+        }
+    }
+    return pathstr;
 }
 
 int main(int argc, char* argv[]) {
-	pkgDir = get_application_dir(argv[0]);
-	pkgExePath = get_application_exec_path(argv[0]);
+    pkgDir = get_application_dir(argv[0]);
+    pkgExePath = get_application_exec_path(argv[0]);
 
 #ifdef G_OS_WIN32
-	if (Glib::getenv("LANG").empty()) {
-		gchar* locale = g_win32_getlocale();
-		Glib::setenv("LANG", locale);
-		g_free(locale);
-	}
+    if (Glib::getenv("LANG").empty()) {
+        gchar* locale = g_win32_getlocale();
+        Glib::setenv("LANG", locale);
+        g_free(locale);
+    }
 #endif
 
-	std::string localeDir = Glib::build_filename(pkgDir, "share", "locale");
+    std::string localeDir = Glib::build_filename(pkgDir, "share", "locale");
 
-	bindtextdomain(GETTEXT_PACKAGE, localeDir.c_str());
-	bind_textdomain_codeset(GETTEXT_PACKAGE, "UTF-8");
-	textdomain(GETTEXT_PACKAGE);
+    bindtextdomain(GETTEXT_PACKAGE, localeDir.c_str());
+    bind_textdomain_codeset(GETTEXT_PACKAGE, "UTF-8");
+    textdomain(GETTEXT_PACKAGE);
 
-	if (argc > 2 && std::strcmp("crashhandle", argv[1]) == 0) {
-		// Run the crash handler
-		CrashHandler app(argc, argv);
-		return app.run();
-	} else if (argc >= 2 && std::strcmp("tessdatadir", argv[1]) == 0) {
-		Config::openTessdataDir();
-		return 0;
-	} else if (argc >= 2 && std::strcmp("spellingdir", argv[1]) == 0) {
-		Config::openSpellingDir();
-		return 0;
-	} else {
-		// Run the normal application
+    if (argc > 2 && std::strcmp("crashhandle", argv[1]) == 0) {
+        // Run the crash handler
+        CrashHandler app(argc, argv);
+        return app.run();
+    } else if (argc >= 2 && std::strcmp("tessdatadir", argv[1]) == 0) {
+        Config::openTessdataDir();
+        return 0;
+    } else if (argc >= 2 && std::strcmp("spellingdir", argv[1]) == 0) {
+        Config::openSpellingDir();
+        return 0;
+    } else {
+        // Run the normal application
 
 #ifdef G_OS_WIN32
-		Glib::setenv("TWAINDSM_LOG", Glib::build_filename(pkgDir, "twain.log"));
-		std::freopen(Glib::build_filename(pkgDir, "gimagereader.log").c_str(), "w", stderr);
+        Glib::setenv("TWAINDSM_LOG", Glib::build_filename(pkgDir, "twain.log"));
+        std::freopen(Glib::build_filename(pkgDir, "gimagereader.log").c_str(), "w", stderr);
 #endif
 
-		GtkSpell::init();
-		Gsv::init();
-		Application app(argc, argv, APPLICATION_ID, Gio::APPLICATION_HANDLES_OPEN);
-		return app.run();
-	}
+        GtkSpell::init();
+        Gsv::init();
+        Application app(argc, argv, APPLICATION_ID, Gio::APPLICATION_HANDLES_OPEN);
+        return app.run();
+    }
 }
 

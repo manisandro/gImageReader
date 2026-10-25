@@ -32,75 +32,75 @@
 
 int main(int argc, char* argv[]) {
 #if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
-	QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
+    QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
 #endif
-	QApplication app(argc, argv);
+    QApplication app(argc, argv);
 
-	QDir dataDir = QDir(QString("%1/../share/").arg(QApplication::applicationDirPath()));
+    QDir dataDir = QDir(QString("%1/../share/").arg(QApplication::applicationDirPath()));
 
-	QApplication::setOrganizationName(PACKAGE_NAME);
-	QApplication::setApplicationName(PACKAGE_NAME);
-	QIcon::setFallbackSearchPaths(QIcon::fallbackSearchPaths() << ":/extra-theme-icons");
+    QApplication::setOrganizationName(PACKAGE_NAME);
+    QApplication::setApplicationName(PACKAGE_NAME);
+    QIcon::setFallbackSearchPaths(QIcon::fallbackSearchPaths() << ":/extra-theme-icons");
 
 #ifdef Q_OS_WIN
-	QIcon::setThemeSearchPaths({dataDir.absoluteFilePath("icons") });
-	QIcon::setThemeName("hicolor");
-	QDir packageDir = QDir(QString("%1/../").arg(QApplication::applicationDirPath()));
-	if (qgetenv("LANG").isEmpty()) {
-		qputenv("LANG", QLocale::system().name().toLocal8Bit());
-	}
+    QIcon::setThemeSearchPaths({dataDir.absoluteFilePath("icons") });
+    QIcon::setThemeName("hicolor");
+    QDir packageDir = QDir(QString("%1/../").arg(QApplication::applicationDirPath()));
+    if (qgetenv("LANG").isEmpty()) {
+        qputenv("LANG", QLocale::system().name().toLocal8Bit());
+    }
 #endif
 
-	QTranslator qtTranslator;
+    QTranslator qtTranslator;
 #if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
-	QString translationsPath = QLibraryInfo::path(QLibraryInfo::TranslationsPath);
+    QString translationsPath = QLibraryInfo::path(QLibraryInfo::TranslationsPath);
 #else
-	QString translationsPath = QLibraryInfo::location(QLibraryInfo::TranslationsPath);
+    QString translationsPath = QLibraryInfo::location(QLibraryInfo::TranslationsPath);
 #endif
 #ifdef Q_OS_WIN
 #if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
-	translationsPath = packageDir.absolutePath() + translationsPath.mid(QLibraryInfo::path(QLibraryInfo::PrefixPath).length());
+    translationsPath = packageDir.absolutePath() + translationsPath.mid(QLibraryInfo::path(QLibraryInfo::PrefixPath).length());
 #else
-	translationsPath = packageDir.absolutePath() + translationsPath.mid(QLibraryInfo::location(QLibraryInfo::PrefixPath).length());
+    translationsPath = packageDir.absolutePath() + translationsPath.mid(QLibraryInfo::location(QLibraryInfo::PrefixPath).length());
 #endif
 #endif
-	qtTranslator.load("qt_" + QLocale::system().name(), translationsPath);
-	qtTranslator.load("qtbase_" + QLocale::system().name(), translationsPath);
-	QApplication::instance()->installTranslator(&qtTranslator);
+    qtTranslator.load("qt_" + QLocale::system().name(), translationsPath);
+    qtTranslator.load("qtbase_" + QLocale::system().name(), translationsPath);
+    QApplication::instance()->installTranslator(&qtTranslator);
 
-	bindtextdomain(GETTEXT_PACKAGE, dataDir.absoluteFilePath("locale").toLocal8Bit().data());
-	bind_textdomain_codeset(GETTEXT_PACKAGE, "UTF-8");
-	textdomain(GETTEXT_PACKAGE);
+    bindtextdomain(GETTEXT_PACKAGE, dataDir.absoluteFilePath("locale").toLocal8Bit().data());
+    bind_textdomain_codeset(GETTEXT_PACKAGE, "UTF-8");
+    textdomain(GETTEXT_PACKAGE);
 
-	QWidget* window;
-	if (argc >= 3 && std::strcmp("crashhandle", argv[1]) == 0) {
-		int pid = std::atoi(argv[2]);
-		int tesseractCrash = std::atoi(argv[3]);
-		QString savefile = argc >= 5 ? argv[4] : "";
-		window = new CrashHandler(pid, tesseractCrash, savefile);
-	} else if (argc >= 2 && std::strcmp("tessdatadir", argv[1]) == 0) {
-		Config::openTessdataDir();
-		return 0;
-	} else if (argc >= 2 && std::strcmp("spellingdir", argv[1]) == 0) {
-		Config::openSpellingDir();
-		return 0;
-	} else {
+    QWidget* window;
+    if (argc >= 3 && std::strcmp("crashhandle", argv[1]) == 0) {
+        int pid = std::atoi(argv[2]);
+        int tesseractCrash = std::atoi(argv[3]);
+        QString savefile = argc >= 5 ? argv[4] : "";
+        window = new CrashHandler(pid, tesseractCrash, savefile);
+    } else if (argc >= 2 && std::strcmp("tessdatadir", argv[1]) == 0) {
+        Config::openTessdataDir();
+        return 0;
+    } else if (argc >= 2 && std::strcmp("spellingdir", argv[1]) == 0) {
+        Config::openSpellingDir();
+        return 0;
+    } else {
 #ifdef Q_OS_WIN
-		qputenv("TWAINDSM_LOG", packageDir.absoluteFilePath("twain.log").toLocal8Bit());
-		std::freopen(packageDir.absoluteFilePath("gimagereader.log").toLocal8Bit().data(), "w", stderr);
+        qputenv("TWAINDSM_LOG", packageDir.absoluteFilePath("twain.log").toLocal8Bit());
+        std::freopen(packageDir.absoluteFilePath("gimagereader.log").toLocal8Bit().data(), "w", stderr);
 #endif
-		QStringList files;
-		for (int i = 1; i < argc; ++i) {
-			if (QFile(argv[i]).exists()) {
-				files.append(argv[i]);
-			}
-		}
-		window = new MainWindow(files);
-	}
-	window->show();
+        QStringList files;
+        for (int i = 1; i < argc; ++i) {
+            if (QFile(argv[i]).exists()) {
+                files.append(argv[i]);
+            }
+        }
+        window = new MainWindow(files);
+    }
+    window->show();
 
-	int exitcode = app.exec();
-	delete window;
-	return exitcode;
+    int exitcode = app.exec();
+    delete window;
+    return exitcode;
 }
 

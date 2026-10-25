@@ -25,69 +25,69 @@
 
 class Application : public Gtk::Application {
 public:
-	Application(int& argc, char**& argv, const Glib::ustring& application_id, Gio::ApplicationFlags flags)
-		: Gtk::Application(argc, argv, application_id, flags) {
-		Glib::set_application_name(PACKAGE_NAME);
-	}
+    Application(int& argc, char**& argv, const Glib::ustring& application_id, Gio::ApplicationFlags flags)
+        : Gtk::Application(argc, argv, application_id, flags) {
+        Glib::set_application_name(PACKAGE_NAME);
+    }
 
 private:
-	void on_activate() override {
-		if (m_mainWindow) {
-			m_mainWindow->getWindow()->present();
-		}
-	}
+    void on_activate() override {
+        if (m_mainWindow) {
+            m_mainWindow->getWindow()->present();
+        }
+    }
 
-	void on_startup() override {
-		Gtk::Application::on_startup();
+    void on_startup() override {
+        Gtk::Application::on_startup();
 
-		add_action("redetectLangs", [this] { m_mainWindow->redetectLanguages(); });
-		add_action("manageLangs", [this] { m_mainWindow->manageLanguages(); });
-		add_action("preferences", [this] { m_mainWindow->showConfig(); });
-		add_action("help", [this] { m_mainWindow->showHelp(); });
-		add_action("about", [this] { m_mainWindow->showAbout(); });
-		add_action("quit", [this] { on_quit(); });
+        add_action("redetectLangs", [this] { m_mainWindow->redetectLanguages(); });
+        add_action("manageLangs", [this] { m_mainWindow->manageLanguages(); });
+        add_action("preferences", [this] { m_mainWindow->showConfig(); });
+        add_action("help", [this] { m_mainWindow->showHelp(); });
+        add_action("about", [this] { m_mainWindow->showAbout(); });
+        add_action("quit", [this] { on_quit(); });
 
-		set_accel_for_action("app.quit", "<Primary>q");
+        set_accel_for_action("app.quit", "<Primary>q");
 
-		Glib::RefPtr<Gtk::Builder> appMenuBuilder = Gtk::Builder::create_from_resource("/org/gnome/gimagereader/appmenu.ui");
-		Glib::RefPtr<Gio::MenuModel> menuModel = Glib::RefPtr<Gio::MenuModel>::cast_static(appMenuBuilder->get_object("appmenu"));
+        Glib::RefPtr<Gtk::Builder> appMenuBuilder = Gtk::Builder::create_from_resource("/org/gnome/gimagereader/appmenu.ui");
+        Glib::RefPtr<Gio::MenuModel> menuModel = Glib::RefPtr<Gio::MenuModel>::cast_static(appMenuBuilder->get_object("appmenu"));
 
-		bool appMenu = false;
+        bool appMenu = false;
 #if GTK_CHECK_VERSION(3,14,0)
-		appMenu = prefers_app_menu();
+        appMenu = prefers_app_menu();
 #endif
-		if (appMenu) {
-			set_app_menu(menuModel);
-		}
+        if (appMenu) {
+            set_app_menu(menuModel);
+        }
 
-		g_assert(m_mainWindow == nullptr);
-		m_mainWindow = new MainWindow();
-		CONNECT(m_mainWindow->getWindow(), hide, [this] { on_quit(); });
-		if (!appMenu) {
-			m_mainWindow->setMenuModel(menuModel);
-		}
-		add_window(*m_mainWindow->getWindow());
-		m_mainWindow->getWindow()->show();
-	}
+        g_assert(m_mainWindow == nullptr);
+        m_mainWindow = new MainWindow();
+        CONNECT(m_mainWindow->getWindow(), hide, [this] { on_quit(); });
+        if (!appMenu) {
+            m_mainWindow->setMenuModel(menuModel);
+        }
+        add_window(*m_mainWindow->getWindow());
+        m_mainWindow->getWindow()->show();
+    }
 
-	void on_open(const type_vec_files& files, const Glib::ustring& /*hint*/) override {
-		m_mainWindow->openFiles(files);
-		m_mainWindow->getWindow()->present();
-	}
+    void on_open(const type_vec_files& files, const Glib::ustring& /*hint*/) override {
+        m_mainWindow->openFiles(files);
+        m_mainWindow->getWindow()->present();
+    }
 
-	void on_quit() {
-		if (m_mainWindow) {
-			if (!m_mainWindow->canClose()) {
-				return;
-			}
-			remove_window(*m_mainWindow->getWindow());
-			delete m_mainWindow;
-			m_mainWindow = nullptr;
-		}
-	}
+    void on_quit() {
+        if (m_mainWindow) {
+            if (!m_mainWindow->canClose()) {
+                return;
+            }
+            remove_window(*m_mainWindow->getWindow());
+            delete m_mainWindow;
+            m_mainWindow = nullptr;
+        }
+    }
 
-	MainWindow* m_mainWindow = nullptr;
-	ClassData m_classdata;
+    MainWindow* m_mainWindow = nullptr;
+    ClassData m_classdata;
 };
 
 #endif // APPLICATION_HPP

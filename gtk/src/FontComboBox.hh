@@ -24,30 +24,30 @@
 
 class FontComboBox : public Gtk::ComboBox {
 public:
-	FontComboBox();
-	FontComboBox(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Builder>& builder);
-	Glib::ustring get_active_font() const;
-	void set_active_font(const Glib::ustring& font);
+    FontComboBox();
+    FontComboBox(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Builder>& builder);
+    Glib::ustring get_active_font() const;
+    void set_active_font(const Glib::ustring& font);
 
-	sigc::signal<void, Glib::ustring> signal_font_changed() {
-		return m_signal_font_changed;
-	}
+    sigc::signal<void, Glib::ustring> signal_font_changed() {
+        return m_signal_font_changed;
+    }
 
 private:
-	ClassData m_classdata;
-	sigc::signal<void, Glib::ustring> m_signal_font_changed;
+    ClassData m_classdata;
+    sigc::signal<void, Glib::ustring> m_signal_font_changed;
 
-	struct FontComboColums : public Gtk::TreeModel::ColumnRecord {
-		Gtk::TreeModelColumn<Glib::ustring> fontFamily;
-		FontComboColums() {
-			add(fontFamily);
-		}
-	};
+    struct FontComboColums : public Gtk::TreeModel::ColumnRecord {
+        Gtk::TreeModelColumn<Glib::ustring> fontFamily;
+        FontComboColums() {
+            add(fontFamily);
+        }
+    };
 
-	void init();
+    void init();
 
-	static FontComboColums s_fontComboCols;
-	static Glib::RefPtr<Gtk::ListStore> getModel();
+    static FontComboColums s_fontComboCols;
+    static Glib::RefPtr<Gtk::ListStore> getModel();
 };
 
 #endif // FONTCOMBOBOX_HH

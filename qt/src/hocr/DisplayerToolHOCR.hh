@@ -25,52 +25,52 @@
 #include "Displayer.hh"
 
 class DisplayerToolHOCR : public DisplayerTool {
-	Q_OBJECT
+    Q_OBJECT
 public:
-	enum Action {ACTION_NONE, ACTION_DRAW_GRAPHIC_RECT, ACTION_DRAW_CAREA_RECT, ACTION_DRAW_PAR_RECT, ACTION_DRAW_LINE_RECT, ACTION_DRAW_WORD_RECT};
+    enum Action {ACTION_NONE, ACTION_DRAW_GRAPHIC_RECT, ACTION_DRAW_CAREA_RECT, ACTION_DRAW_PAR_RECT, ACTION_DRAW_LINE_RECT, ACTION_DRAW_WORD_RECT};
 
-	DisplayerToolHOCR(Displayer* displayer, QObject* parent = 0);
-	~DisplayerToolHOCR();
+    DisplayerToolHOCR(Displayer* displayer, QObject* parent = 0);
+    ~DisplayerToolHOCR();
 
-	QList<QImage> getOCRAreas() override;
-	void pageChanged() override {
-		emit displayedSourceChanged();
-		reset();
-	}
-	void resolutionChanged(double /*factor*/) override {
-		reset();
-	}
-	void rotationChanged(double /*delta*/) override {
-		reset();
-	}
-	void reset() override {
-		setAction(ACTION_NONE, QModelIndex(), true);
-	}
+    QList<QImage> getOCRAreas() override;
+    void pageChanged() override {
+        emit displayedSourceChanged();
+        reset();
+    }
+    void resolutionChanged(double /*factor*/) override {
+        reset();
+    }
+    void rotationChanged(double /*delta*/) override {
+        reset();
+    }
+    void reset() override {
+        setAction(ACTION_NONE, QModelIndex(), true);
+    }
 
-	void mousePressEvent(QMouseEvent* event) override;
-	void mouseMoveEvent(QMouseEvent* event) override;
-	void mouseReleaseEvent(QMouseEvent* event) override;
+    void mousePressEvent(QMouseEvent* event) override;
+    void mouseMoveEvent(QMouseEvent* event) override;
+    void mouseReleaseEvent(QMouseEvent* event) override;
 
-	void setAction(Action action, QModelIndex index, bool clearSel = true);
-	void setSelection(const QRect& rect, const QRect& minRect);
-	QImage getSelection(const QRect& rect) const;
-	void clearSelection();
+    void setAction(Action action, QModelIndex index, bool clearSel = true);
+    void setSelection(const QRect& rect, const QRect& minRect);
+    QImage getSelection(const QRect& rect) const;
+    void clearSelection();
 
 signals:
-	void displayedSourceChanged();
-	void bboxDrawn(QRect rect, int action, QModelIndex index);
-	void bboxChanged(QRect rect);
-	void positionPicked(QPoint pos);
-	void actionChanged(int action);
+    void displayedSourceChanged();
+    void bboxDrawn(QRect rect, int action, QModelIndex index);
+    void bboxChanged(QRect rect);
+    void positionPicked(QPoint pos);
+    void actionChanged(int action);
 
 private:
-	DisplayerSelection* m_selection = nullptr;
-	Action m_currentAction = ACTION_NONE;
-	QModelIndex m_currentIndex;
-	bool m_pressed = false;
+    DisplayerSelection* m_selection = nullptr;
+    Action m_currentAction = ACTION_NONE;
+    QModelIndex m_currentIndex;
+    bool m_pressed = false;
 
 private slots:
-	void selectionChanged(QRectF rect);
+    void selectionChanged(QRectF rect);
 };
 
 #endif // DISPLAYERTOOLHOCR_HH

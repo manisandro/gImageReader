@@ -25,35 +25,35 @@
 #include <libintl.h>
 
 struct ClassDataItem {
-	virtual ~ClassDataItem() = default;
+    virtual ~ClassDataItem() = default;
 };
 
 class ClassData {
 public:
-	~ClassData() {
-		std::for_each(m_connections.begin(), m_connections.end(), [](sigc::connection conn) {
-			conn.disconnect();
-		});
-		for (ClassDataItem* item : m_items) {
-			delete item;
-		}
-	}
-	template<class T>
-	sigc::connection addConn(const T& conn) {
-		m_connections.push_back(conn);
-		return m_connections.back();
-	}
-	void addItem(ClassDataItem* item) {
-		m_items.push_back(item);
-	}
+    ~ClassData() {
+        std::for_each(m_connections.begin(), m_connections.end(), [](sigc::connection conn) {
+            conn.disconnect();
+        });
+        for (ClassDataItem* item : m_items) {
+            delete item;
+        }
+    }
+    template<class T>
+    sigc::connection addConn(const T& conn) {
+        m_connections.push_back(conn);
+        return m_connections.back();
+    }
+    void addItem(ClassDataItem* item) {
+        m_items.push_back(item);
+    }
 private:
-	std::vector<sigc::connection> m_connections;
-	std::vector<ClassDataItem*> m_items;
+    std::vector<sigc::connection> m_connections;
+    std::vector<ClassDataItem*> m_items;
 };
 
 class DataObject {
 public:
-	virtual ~DataObject() = default;
+    virtual ~DataObject() = default;
 };
 
 #define CONNECT(src, signal, ...) m_classdata.addConn((src)->signal_##signal().connect(__VA_ARGS__))

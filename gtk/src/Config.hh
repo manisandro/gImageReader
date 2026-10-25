@@ -29,58 +29,58 @@
 
 class Config {
 public:
-	struct Lang {
-		Glib::ustring prefix, code, name;
-		Lang(const Glib::ustring& _prefix = Glib::ustring(), const Glib::ustring& _code = Glib::ustring(), const Glib::ustring& _name = Glib::ustring())
-			: prefix(_prefix), code(_code), name(_name) {}
-	};
+    struct Lang {
+        Glib::ustring prefix, code, name;
+        Lang(const Glib::ustring& _prefix = Glib::ustring(), const Glib::ustring& _code = Glib::ustring(), const Glib::ustring& _name = Glib::ustring())
+            : prefix(_prefix), code(_code), name(_name) {}
+    };
 
-	Config();
+    Config();
 
-	bool searchLangSpec(Lang& lang) const;
-	std::vector<Glib::ustring> searchLangCultures(const Glib::ustring& code) const;
-	void showDialog();
+    bool searchLangSpec(Lang& lang) const;
+    std::vector<Glib::ustring> searchLangCultures(const Glib::ustring& code) const;
+    void showDialog();
 
-	bool useSystemDataLocations() const;
-	std::string tessdataLocation() const;
-	std::string spellingLocation() const;
+    bool useSystemDataLocations() const;
+    std::string tessdataLocation() const;
+    std::string spellingLocation() const;
 
-	static void openTessdataDir();
-	static void openSpellingDir();
-	static Glib::ustring lookupLangCode(const Glib::ustring& prefix) { auto it = LANG_LOOKUP.find(prefix); return it != LANG_LOOKUP.end() ? it->second : ""; }
-	static std::vector<Glib::ustring> getAvailableLanguages();
+    static void openTessdataDir();
+    static void openSpellingDir();
+    static Glib::ustring lookupLangCode(const Glib::ustring& prefix) { auto it = LANG_LOOKUP.find(prefix); return it != LANG_LOOKUP.end() ? it->second : ""; }
+    static std::vector<Glib::ustring> getAvailableLanguages();
 
 private:
-	enum Location {SystemLocation = 0, UserLocation = 1};
+    enum Location {SystemLocation = 0, UserLocation = 1};
 
-	struct LangViewColumns : public Gtk::TreeModel::ColumnRecord {
-		Gtk::TreeModelColumn<Glib::ustring> prefix;
-		Gtk::TreeModelColumn<Glib::ustring> code;
-		Gtk::TreeModelColumn<Glib::ustring> name;
-		LangViewColumns() {
-			add(prefix);
-			add(code);
-			add(name);
-		}
-	};
+    struct LangViewColumns : public Gtk::TreeModel::ColumnRecord {
+        Gtk::TreeModelColumn<Glib::ustring> prefix;
+        Gtk::TreeModelColumn<Glib::ustring> code;
+        Gtk::TreeModelColumn<Glib::ustring> name;
+        LangViewColumns() {
+            add(prefix);
+            add(code);
+            add(name);
+        }
+    };
 
-	static const std::vector<Lang> LANGUAGES;
-	static const std::map<Glib::ustring, Glib::ustring> LANG_LOOKUP;
-	static const std::multimap<Glib::ustring, Glib::ustring> LANGUAGE_CULTURES ;
+    static const std::vector<Lang> LANGUAGES;
+    static const std::map<Glib::ustring, Glib::ustring> LANG_LOOKUP;
+    static const std::multimap<Glib::ustring, Glib::ustring> LANGUAGE_CULTURES ;
 
-	Ui::ConfigDialog ui;
-	ClassData m_classdata;
+    Ui::ConfigDialog ui;
+    ClassData m_classdata;
 
-	LangViewColumns m_langViewCols;
+    LangViewColumns m_langViewCols;
 
-	void addLanguage();
-	void removeLanguage();
-	void langTableSelectionChanged();
-	void setDataLocations(int idx);
-	void toggleAddLanguage(bool forceHide = false);
+    void addLanguage();
+    void removeLanguage();
+    void langTableSelectionChanged();
+    void setDataLocations(int idx);
+    void toggleAddLanguage(bool forceHide = false);
 
-	static std::string spellingLocation(Location location);
-	static std::string tessdataLocation(Location location);
+    static std::string spellingLocation(Location location);
+    static std::string tessdataLocation(Location location);
 };
 
 #endif // CONFIG_HH

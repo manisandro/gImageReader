@@ -28,27 +28,27 @@ class OutputTextEdit;
 class QTableWidget;
 
 class SubstitutionsManager : public QDialog {
-	Q_OBJECT
+    Q_OBJECT
 public:
-	SubstitutionsManager(QWidget* parent = nullptr);
-	~SubstitutionsManager();
+    SubstitutionsManager(QWidget* parent = nullptr);
+    ~SubstitutionsManager();
 
 signals:
-	void applySubstitutions(const QMap<QString, QString>& substitutions);
+    void applySubstitutions(const QMap<QString, QString>& substitutions);
 
 private:
-	QAction* m_removeAction;
-	QString m_currentFile;
-	QTableWidget* m_tableWidget;
+    QAction* m_removeAction;
+    QString m_currentFile;
+    QTableWidget* m_tableWidget;
 
 private slots:
-	void addRow();
-	void emitApplySubstitutions();
-	bool clearList();
-	void onTableSelectionChanged(const QItemSelection& selected, const QItemSelection& deselected);
-	void openList();
-	void removeRows();
-	bool saveList();
+    void addRow();
+    void emitApplySubstitutions();
+    bool clearList();
+    void onTableSelectionChanged(const QItemSelection& selected, const QItemSelection& deselected);
+    void openList();
+    void removeRows();
+    bool saveList();
 };
 
 #endif // SUBSTITUTIONS_MANAGER_HH

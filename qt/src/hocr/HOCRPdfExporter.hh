@@ -41,156 +41,156 @@ class PdfDocument;
 }
 
 class HOCRPdfExporter : public HOCRExporter {
-	Q_OBJECT
+    Q_OBJECT
 
 public:
-	struct PDFSettings : ExporterSettings {
-		QImage::Format colorFormat;
-		Qt::ImageConversionFlags conversionFlags;
-		enum Compression { CompressZip, CompressFax4, CompressJpeg } compression;
-		int compressionQuality;
-		QString fontFamily;
-		int fontSize;
-		QString fallbackFontFamily;
-		int fallbackFontSize;
-		bool uniformizeLineSpacing;
-		int preserveSpaceWidth;
-		bool overlay;
-		double detectedFontScaling;
-		bool sanitizeHyphens;
-		int assumedImageDpi;
-		int outputDpi;
-		QString paperSize;
-		bool paperSizeLandscape;
-		double paperWidthIn;
-		double paperHeightIn;
-		enum PDFBackend { BackendPoDoFo, BackendQPrinter} backend;
+    struct PDFSettings : ExporterSettings {
+        QImage::Format colorFormat;
+        Qt::ImageConversionFlags conversionFlags;
+        enum Compression { CompressZip, CompressFax4, CompressJpeg } compression;
+        int compressionQuality;
+        QString fontFamily;
+        int fontSize;
+        QString fallbackFontFamily;
+        int fallbackFontSize;
+        bool uniformizeLineSpacing;
+        int preserveSpaceWidth;
+        bool overlay;
+        double detectedFontScaling;
+        bool sanitizeHyphens;
+        int assumedImageDpi;
+        int outputDpi;
+        QString paperSize;
+        bool paperSizeLandscape;
+        double paperWidthIn;
+        double paperHeightIn;
+        enum PDFBackend { BackendPoDoFo, BackendQPrinter} backend;
 
-		enum Version {
-			PdfVersion_1_0 = 0,
-			PdfVersion_1_1,
-			PdfVersion_1_2,
-			PdfVersion_1_3,
-			PdfVersion_1_4,
-			PdfVersion_1_5,
-			PdfVersion_1_6,
-			PdfVersion_1_7
-		} version;
-		QString password;
-		QString producer;
-		QString creator;
-		QString title;
-		QString subject;
-		QString keywords;
-		QString author;
-	};
+        enum Version {
+            PdfVersion_1_0 = 0,
+            PdfVersion_1_1,
+            PdfVersion_1_2,
+            PdfVersion_1_3,
+            PdfVersion_1_4,
+            PdfVersion_1_5,
+            PdfVersion_1_6,
+            PdfVersion_1_7
+        } version;
+        QString password;
+        QString producer;
+        QString creator;
+        QString title;
+        QString subject;
+        QString keywords;
+        QString author;
+    };
 
-	bool run(const HOCRDocument* hocrdocument, const QString& outname, const ExporterSettings* settings = nullptr) override;
+    bool run(const HOCRDocument* hocrdocument, const QString& outname, const ExporterSettings* settings = nullptr) override;
 
 private slots:
-	bool setSource(const QString& sourceFile, int page, int dpi, double angle);
+    bool setSource(const QString& sourceFile, int page, int dpi, double angle);
 
 };
 
 class HOCRPdfPrinter : public QObject {
-	Q_OBJECT
+    Q_OBJECT
 public:
-	virtual void setFontFamily(const QString& family, bool bold, bool italic) = 0;
-	virtual void setFontSize(double pointSize) = 0;
-	virtual void drawText(double x, double y, const QString& text) = 0;
-	virtual void drawImage(const QRect& bbox, const QImage& image, const HOCRPdfExporter::PDFSettings& settings) = 0;
-	virtual double getAverageCharWidth() const = 0;
-	virtual double getTextWidth(const QString& text) const = 0;
-	virtual bool createPage(double /*width*/, double /*height*/, double /*offsetX*/, double /*offsetY*/, QString& /*errMsg*/) { return true; }
-	virtual void finishPage() {}
-	virtual bool finishDocument(QString& /*errMsg*/) { return true; }
+    virtual void setFontFamily(const QString& family, bool bold, bool italic) = 0;
+    virtual void setFontSize(double pointSize) = 0;
+    virtual void drawText(double x, double y, const QString& text) = 0;
+    virtual void drawImage(const QRect& bbox, const QImage& image, const HOCRPdfExporter::PDFSettings& settings) = 0;
+    virtual double getAverageCharWidth() const = 0;
+    virtual double getTextWidth(const QString& text) const = 0;
+    virtual bool createPage(double /*width*/, double /*height*/, double /*offsetX*/, double /*offsetY*/, QString& /*errMsg*/) { return true; }
+    virtual void finishPage() {}
+    virtual bool finishDocument(QString& /*errMsg*/) { return true; }
 
-	void printChildren(const HOCRItem* item, const HOCRPdfExporter::PDFSettings& pdfSettings, double px2pu/*pixels to printer units*/, double imgScale = 1., double fontScale = 1.);
+    void printChildren(const HOCRItem* item, const HOCRPdfExporter::PDFSettings& pdfSettings, double px2pu/*pixels to printer units*/, double imgScale = 1., double fontScale = 1.);
 
 protected:
-	QImage convertedImage(const QImage& image, QImage::Format targetFormat, Qt::ImageConversionFlags flags) const {
-		return image.format() == targetFormat ? image : image.convertToFormat(targetFormat, flags);
-	}
+    QImage convertedImage(const QImage& image, QImage::Format targetFormat, Qt::ImageConversionFlags flags) const {
+        return image.format() == targetFormat ? image : image.convertToFormat(targetFormat, flags);
+    }
 
 private slots:
-	QImage getSelection(const QRect& bbox);
+    QImage getSelection(const QRect& bbox);
 };
 
 class HOCRQPainterPdfPrinter : public HOCRPdfPrinter {
 public:
-	HOCRQPainterPdfPrinter(QPainter* painter, const QFont& defaultFont);
-	void setFontFamily(const QString& family, bool bold, bool italic) override;
-	void setFontSize(double pointSize) override;
-	void drawText(double x, double y, const QString& text) override;
-	void drawImage(const QRect& bbox, const QImage& image, const HOCRPdfExporter::PDFSettings& settings) override;
-	double getAverageCharWidth() const override;
-	double getTextWidth(const QString& text) const override;
+    HOCRQPainterPdfPrinter(QPainter* painter, const QFont& defaultFont);
+    void setFontFamily(const QString& family, bool bold, bool italic) override;
+    void setFontSize(double pointSize) override;
+    void drawText(double x, double y, const QString& text) override;
+    void drawImage(const QRect& bbox, const QImage& image, const HOCRPdfExporter::PDFSettings& settings) override;
+    double getAverageCharWidth() const override;
+    double getTextWidth(const QString& text) const override;
 
 protected:
-	QFontDatabase m_fontDatabase;
-	QPainter* m_painter;
-	QFont m_curFont;
-	QFont m_defaultFont;
-	double m_offsetX = 0.0;
-	double m_offsetY = 0.0;
+    QFontDatabase m_fontDatabase;
+    QPainter* m_painter;
+    QFont m_curFont;
+    QFont m_defaultFont;
+    double m_offsetX = 0.0;
+    double m_offsetY = 0.0;
 };
 
 
 class HOCRQPrinterPdfPrinter : public HOCRQPainterPdfPrinter {
 public:
-	HOCRQPrinterPdfPrinter(const QString& filename, const QString& creator, const QFont& defaultFont);
-	~HOCRQPrinterPdfPrinter();
-	bool createPage(double width, double height, double offsetX, double offsetY, QString& errMsg) override;
-	bool finishDocument(QString& /*errMsg*/) override;
-	void drawImage(const QRect& bbox, const QImage& image, const HOCRPdfExporter::PDFSettings& settings) override;
+    HOCRQPrinterPdfPrinter(const QString& filename, const QString& creator, const QFont& defaultFont);
+    ~HOCRQPrinterPdfPrinter();
+    bool createPage(double width, double height, double offsetX, double offsetY, QString& errMsg) override;
+    bool finishDocument(QString& /*errMsg*/) override;
+    void drawImage(const QRect& bbox, const QImage& image, const HOCRPdfExporter::PDFSettings& settings) override;
 
 private:
-	QPrinter m_printer;
-	bool m_firstPage = true;
+    QPrinter m_printer;
+    bool m_firstPage = true;
 };
 
 class HOCRPoDoFoPdfPrinter : public HOCRPdfPrinter {
 public:
-	static HOCRPoDoFoPdfPrinter* create(const QString& filename, const HOCRPdfExporter::PDFSettings& settings, const QFont& defaultFont, QString& errMsg);
+    static HOCRPoDoFoPdfPrinter* create(const QString& filename, const HOCRPdfExporter::PDFSettings& settings, const QFont& defaultFont, QString& errMsg);
 
-	HOCRPoDoFoPdfPrinter(PoDoFo::PdfDocument* document, const std::string& filename, const PoDoFo::PdfEncoding* fontEncoding, PoDoFo::PdfFont* defaultFont, const QString& defaultFontFamily, double defaultFontSize);
-	~HOCRPoDoFoPdfPrinter();
-	bool createPage(double width, double height, double offsetX, double offsetY, QString& /*errMsg*/) override;
-	void finishPage() override;
-	bool finishDocument(QString& errMsg) override;
-	void setFontFamily(const QString& family, bool bold, bool italic) override;
-	void setFontSize(double pointSize) override;
-	void drawText(double x, double y, const QString& text) override;
-	void drawImage(const QRect& bbox, const QImage& image, const HOCRPdfExporter::PDFSettings& settings) override;
-	double getAverageCharWidth() const override;
-	double getTextWidth(const QString& text) const override;
+    HOCRPoDoFoPdfPrinter(PoDoFo::PdfDocument* document, const std::string& filename, const PoDoFo::PdfEncoding* fontEncoding, PoDoFo::PdfFont* defaultFont, const QString& defaultFontFamily, double defaultFontSize);
+    ~HOCRPoDoFoPdfPrinter();
+    bool createPage(double width, double height, double offsetX, double offsetY, QString& /*errMsg*/) override;
+    void finishPage() override;
+    bool finishDocument(QString& errMsg) override;
+    void setFontFamily(const QString& family, bool bold, bool italic) override;
+    void setFontSize(double pointSize) override;
+    void drawText(double x, double y, const QString& text) override;
+    void drawImage(const QRect& bbox, const QImage& image, const HOCRPdfExporter::PDFSettings& settings) override;
+    double getAverageCharWidth() const override;
+    double getTextWidth(const QString& text) const override;
 
 private:
-	QFontDatabase m_fontDatabase;
-	QMap<QString, PoDoFo::PdfFont*> m_fontCache;
-	PoDoFo::PdfPainter* m_painter = nullptr;
-	PoDoFo::PdfDocument* m_document = nullptr;
-	std::string m_filename;
-	const PoDoFo::PdfEncoding* m_pdfFontEncoding;
-	PoDoFo::PdfFont* m_defaultFont;
-	QString m_defaultFontFamily;
-	double m_defaultFontSize = -1.0;
-	double m_pageHeight = 0.0;
-	double m_offsetX = 0.0;
-	double m_offsetY = 0.0;
+    QFontDatabase m_fontDatabase;
+    QMap<QString, PoDoFo::PdfFont*> m_fontCache;
+    PoDoFo::PdfPainter* m_painter = nullptr;
+    PoDoFo::PdfDocument* m_document = nullptr;
+    std::string m_filename;
+    const PoDoFo::PdfEncoding* m_pdfFontEncoding;
+    PoDoFo::PdfFont* m_defaultFont;
+    QString m_defaultFontFamily;
+    double m_defaultFontSize = -1.0;
+    double m_pageHeight = 0.0;
+    double m_offsetX = 0.0;
+    double m_offsetY = 0.0;
 
-	PoDoFo::PdfFont* getFont(QString family, bool bold, bool italic);
+    PoDoFo::PdfFont* getFont(QString family, bool bold, bool italic);
 };
 
 class HOCRPdfExportDialog : public QDialog {
-	Q_OBJECT
+    Q_OBJECT
 public:
-	HOCRPdfExportDialog(DisplayerToolHOCR* displayerTool, const HOCRDocument* hocrdocument, const HOCRPage* hocrpage, QWidget* parent = nullptr);
+    HOCRPdfExportDialog(DisplayerToolHOCR* displayerTool, const HOCRDocument* hocrdocument, const HOCRPage* hocrpage, QWidget* parent = nullptr);
 
-	HOCRPdfExporter::PDFSettings getPdfSettings() const;
+    HOCRPdfExporter::PDFSettings getPdfSettings() const;
 
 private:
-	HOCRPdfExportWidget* m_widget = nullptr;
+    HOCRPdfExportWidget* m_widget = nullptr;
 };
 
 #endif // HOCRPDFEXPORTER_HH

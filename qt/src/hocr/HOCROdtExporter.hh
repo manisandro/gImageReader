@@ -34,19 +34,19 @@ class QXmlStreamWriter;
 
 
 class HOCROdtExporter : public HOCRExporter {
-	Q_OBJECT
+    Q_OBJECT
 public:
-	bool run(const HOCRDocument* hocrdocument, const QString& outname, const ExporterSettings* settings = nullptr) override;
+    bool run(const HOCRDocument* hocrdocument, const QString& outname, const ExporterSettings* settings = nullptr) override;
 
 private:
-	void writeImage(QuaZip& zip, QMap<const HOCRItem*, QString>& images, const HOCRItem* item);
-	void writeFontFaceDecls(QSet<QString>& families, const HOCRItem* item, QXmlStreamWriter& writer);
-	void writeFontStyles(QMap<QString, QMap<double, QString >>& styles, const HOCRItem* item, QXmlStreamWriter& writer, int& counter);
-	void printItem(QXmlStreamWriter& writer, const HOCRItem* item, int pageNr, int dpi, const QMap<QString, QMap<double, QString >>& fontStyleNames, const QMap<const HOCRItem*, QString>& images);
+    void writeImage(QuaZip& zip, QMap<const HOCRItem*, QString>& images, const HOCRItem* item);
+    void writeFontFaceDecls(QSet<QString>& families, const HOCRItem* item, QXmlStreamWriter& writer);
+    void writeFontStyles(QMap<QString, QMap<double, QString >>& styles, const HOCRItem* item, QXmlStreamWriter& writer, int& counter);
+    void printItem(QXmlStreamWriter& writer, const HOCRItem* item, int pageNr, int dpi, const QMap<QString, QMap<double, QString >>& fontStyleNames, const QMap<const HOCRItem*, QString>& images);
 
 private slots:
-	bool setSource(const QString& sourceFile, int page, int dpi, double angle);
-	QImage getSelection(const QRect& bbox);
+    bool setSource(const QString& sourceFile, int page, int dpi, double angle);
+    QImage getSelection(const QRect& bbox);
 };
 
 #endif // HOCRODTEXPORTER_HH

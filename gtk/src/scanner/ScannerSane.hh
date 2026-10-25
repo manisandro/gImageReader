@@ -31,61 +31,61 @@
 
 class ScannerSane : public Scanner {
 public:
-	void init() override;
-	void redetect() override;
-	void scan(const Params& params) override;
-	void cancel() override;
-	void close() override;
+    void init() override;
+    void redetect() override;
+    void scan(const Params& params) override;
+    void cancel() override;
+    void close() override;
 
 private:
-	struct ScanJob {
-		ScanJob(const Params& _params) : params(_params) {}
-		Params params;
-		SANE_Handle handle = nullptr;
-		SANE_Parameters parameters;
-		std::vector<uint8_t> lineBuffer;
-		std::vector<uint8_t> imgbuf;
-		int nUsed = 0;		// Number of used bytes in the line buffer
-		int lineCount = 0;	// Number of read lines
-		int height = 0;
-		int rowstride = 0;
-		int pageNumber = 0;
-	};
+    struct ScanJob {
+        ScanJob(const Params& _params) : params(_params) {}
+        Params params;
+        SANE_Handle handle = nullptr;
+        SANE_Parameters parameters;
+        std::vector<uint8_t> lineBuffer;
+        std::vector<uint8_t> imgbuf;
+        int nUsed = 0;      // Number of used bytes in the line buffer
+        int lineCount = 0;  // Number of read lines
+        int height = 0;
+        int rowstride = 0;
+        int pageNumber = 0;
+    };
 
-	struct Request {
-		enum class Type { Redetect, StartScan, Cancel, Quit } type;
-		ScanJob* job;
-	};
+    struct Request {
+        enum class Type { Redetect, StartScan, Cancel, Quit } type;
+        ScanJob* job;
+    };
 
-	std::thread* m_thread = nullptr;
-	State m_state = State::IDLE;
-	Utils::AsyncQueue<Request> m_requestQueue;
-	ScanJob* m_job = nullptr;
-	bool m_finished = false;
+    std::thread* m_thread = nullptr;
+    State m_state = State::IDLE;
+    Utils::AsyncQueue<Request> m_requestQueue;
+    ScanJob* m_job = nullptr;
+    bool m_finished = false;
 
-	void run();
-	void doRedetect();
-	void doOpen();
-	void doSetOptions();
-	void doStart();
-	void doGetParameters();
-	void doRead();
-	void doCompletePage();
-	void doStop();
-	void setState(State state);
-	void failScan(const Glib::ustring& errorString);
+    void run();
+    void doRedetect();
+    void doOpen();
+    void doSetOptions();
+    void doStart();
+    void doGetParameters();
+    void doRead();
+    void doCompletePage();
+    void doStop();
+    void setState(State state);
+    void failScan(const Glib::ustring& errorString);
 
-	const SANE_Option_Descriptor* getOptionByName(const std::map<std::string, int>& options, SANE_Handle, const std::string& name, int& index);
-	bool setDefaultOption(SANE_Handle m_handle, const SANE_Option_Descriptor* option, SANE_Int option_index);
-	void setBoolOption(SANE_Handle m_handle, const SANE_Option_Descriptor* option, SANE_Int option_index, bool value, bool* result);
-	void setIntOption(SANE_Handle m_handle, const SANE_Option_Descriptor* option, SANE_Int option_index, int value, int* result);
-	void setFixedOption(SANE_Handle m_handle, const SANE_Option_Descriptor* option, SANE_Int option_index, double value, double* result);
-	bool setStringOption(SANE_Handle m_handle, const SANE_Option_Descriptor* option, SANE_Int option_index, const std::string& value, std::string* result);
-	bool setConstrainedStringOption(SANE_Handle m_handle, const SANE_Option_Descriptor* option, SANE_Int option_index, const std::vector<std::string>& values, std::string* result);
-	void logOption(SANE_Int index, const SANE_Option_Descriptor* option);
+    const SANE_Option_Descriptor* getOptionByName(const std::map<std::string, int>& options, SANE_Handle, const std::string& name, int& index);
+    bool setDefaultOption(SANE_Handle m_handle, const SANE_Option_Descriptor* option, SANE_Int option_index);
+    void setBoolOption(SANE_Handle m_handle, const SANE_Option_Descriptor* option, SANE_Int option_index, bool value, bool* result);
+    void setIntOption(SANE_Handle m_handle, const SANE_Option_Descriptor* option, SANE_Int option_index, int value, int* result);
+    void setFixedOption(SANE_Handle m_handle, const SANE_Option_Descriptor* option, SANE_Int option_index, double value, double* result);
+    bool setStringOption(SANE_Handle m_handle, const SANE_Option_Descriptor* option, SANE_Int option_index, const std::string& value, std::string* result);
+    bool setConstrainedStringOption(SANE_Handle m_handle, const SANE_Option_Descriptor* option, SANE_Int option_index, const std::vector<std::string>& values, std::string* result);
+    void logOption(SANE_Int index, const SANE_Option_Descriptor* option);
 
-	static Glib::ustring getFrameModeString(SANE_Frame frame);
-	static Glib::ustring getErrorMessage(SANE_Status status, const Glib::ustring& defaultMessage);
+    static Glib::ustring getFrameModeString(SANE_Frame frame);
+    static Glib::ustring getErrorMessage(SANE_Status status, const Glib::ustring& defaultMessage);
 };
 
 typedef ScannerSane ScannerImpl;

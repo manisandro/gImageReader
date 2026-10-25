@@ -25,42 +25,42 @@
 #include <QObject>
 
 class Scanner : public QObject {
-	Q_OBJECT
+    Q_OBJECT
 public:
-	enum class State { IDLE = 0, OPEN, SET_OPTIONS, START, GET_PARAMETERS, READ };
-	enum class ScanMode { DEFAULT = 0, COLOR, GRAY, LINEART };
-	enum class ScanType { SINGLE = 0, ADF_FRONT, ADF_BACK, ADF_BOTH };
+    enum class State { IDLE = 0, OPEN, SET_OPTIONS, START, GET_PARAMETERS, READ };
+    enum class ScanMode { DEFAULT = 0, COLOR, GRAY, LINEART };
+    enum class ScanType { SINGLE = 0, ADF_FRONT, ADF_BACK, ADF_BOTH };
 
-	struct Device {
-		QString name;
-		QString label;
-	};
+    struct Device {
+        QString name;
+        QString label;
+    };
 
-	struct Params {
-		QString device;
-		QString filename;
-		double dpi;
-		ScanMode scan_mode;
-		int depth;
-		ScanType type;
-		int page_width;
-		int page_height;
-	};
+    struct Params {
+        QString device;
+        QString filename;
+        double dpi;
+        ScanMode scan_mode;
+        int depth;
+        ScanType type;
+        int page_width;
+        int page_height;
+    };
 
-	virtual ~Scanner() {}
+    virtual ~Scanner() {}
 
-	virtual void init() = 0;
-	virtual void redetect() = 0;
-	virtual void scan(const Params& params) = 0;
-	virtual void cancel() = 0;
-	virtual void close() = 0;
+    virtual void init() = 0;
+    virtual void redetect() = 0;
+    virtual void scan(const Params& params) = 0;
+    virtual void cancel() = 0;
+    virtual void close() = 0;
 
 signals:
-	void initFailed();
-	void devicesDetected(QList<Scanner::Device> devices);
-	void scanFailed(const QString& message);
-	void scanStateChanged(Scanner::State state);
-	void pageAvailable(const QString& filename);
+    void initFailed();
+    void devicesDetected(QList<Scanner::Device> devices);
+    void scanFailed(const QString& message);
+    void scanStateChanged(Scanner::State state);
+    void pageAvailable(const QString& filename);
 };
 
 Q_DECLARE_METATYPE(Scanner::State)

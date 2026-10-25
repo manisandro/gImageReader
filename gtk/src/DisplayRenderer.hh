@@ -30,51 +30,51 @@ class DjVuDocument;
 
 class DisplayRenderer {
 public:
-	DisplayRenderer(const std::string& filename) : m_filename(filename) {}
-	virtual ~DisplayRenderer() {}
-	virtual Cairo::RefPtr<Cairo::ImageSurface> render(int page, double resolution) const = 0;
-	virtual Cairo::RefPtr<Cairo::ImageSurface> renderThumbnail(int page) const = 0;
-	virtual int getNPages() const = 0;
+    DisplayRenderer(const std::string& filename) : m_filename(filename) {}
+    virtual ~DisplayRenderer() {}
+    virtual Cairo::RefPtr<Cairo::ImageSurface> render(int page, double resolution) const = 0;
+    virtual Cairo::RefPtr<Cairo::ImageSurface> renderThumbnail(int page) const = 0;
+    virtual int getNPages() const = 0;
 
-	void adjustImage(const Cairo::RefPtr<Cairo::ImageSurface>& surf, int brightness, int contrast, bool invert) const;
+    void adjustImage(const Cairo::RefPtr<Cairo::ImageSurface>& surf, int brightness, int contrast, bool invert) const;
 
 protected:
-	std::string m_filename;
+    std::string m_filename;
 };
 
 class ImageRenderer : public DisplayRenderer {
 public:
-	ImageRenderer(const std::string& filename) : DisplayRenderer(filename) {}
-	Cairo::RefPtr<Cairo::ImageSurface> render(int page, double resolution) const override;
-	Cairo::RefPtr<Cairo::ImageSurface> renderThumbnail(int page) const override;
-	int getNPages() const override {
-		return 1;
-	}
+    ImageRenderer(const std::string& filename) : DisplayRenderer(filename) {}
+    Cairo::RefPtr<Cairo::ImageSurface> render(int page, double resolution) const override;
+    Cairo::RefPtr<Cairo::ImageSurface> renderThumbnail(int page) const override;
+    int getNPages() const override {
+        return 1;
+    }
 };
 
 class PDFRenderer : public DisplayRenderer {
 public:
-	PDFRenderer(const std::string& filename, const Glib::ustring& password);
-	~PDFRenderer();
-	Cairo::RefPtr<Cairo::ImageSurface> render(int page, double resolution) const override;
-	Cairo::RefPtr<Cairo::ImageSurface> renderThumbnail(int page) const override;
-	int getNPages() const override;
+    PDFRenderer(const std::string& filename, const Glib::ustring& password);
+    ~PDFRenderer();
+    Cairo::RefPtr<Cairo::ImageSurface> render(int page, double resolution) const override;
+    Cairo::RefPtr<Cairo::ImageSurface> renderThumbnail(int page) const override;
+    int getNPages() const override;
 
 private:
-	PopplerDocument* m_document;
-	mutable std::mutex m_mutex;
+    PopplerDocument* m_document;
+    mutable std::mutex m_mutex;
 };
 
 class DJVURenderer : public DisplayRenderer {
 public:
-	DJVURenderer(const std::string& filename);
-	~DJVURenderer();
-	Cairo::RefPtr<Cairo::ImageSurface> render(int page, double resolution) const override;
-	Cairo::RefPtr<Cairo::ImageSurface> renderThumbnail(int pageno) const override;
-	int getNPages() const override;
+    DJVURenderer(const std::string& filename);
+    ~DJVURenderer();
+    Cairo::RefPtr<Cairo::ImageSurface> render(int page, double resolution) const override;
+    Cairo::RefPtr<Cairo::ImageSurface> renderThumbnail(int pageno) const override;
+    int getNPages() const override;
 
 private:
-	DjVuDocument* m_djvu;
+    DjVuDocument* m_djvu;
 };
 
 #endif // IMAGERENDERER_HH

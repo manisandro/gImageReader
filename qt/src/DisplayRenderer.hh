@@ -33,52 +33,52 @@ class Document;
 
 class DisplayRenderer {
 public:
-	DisplayRenderer(const QString& filename) : m_filename(filename) {}
-	virtual ~DisplayRenderer() {}
-	virtual QImage render(int page, double resolution) const = 0;
-	virtual QImage renderThumbnail(int page) const = 0;
-	virtual int getNPages() const = 0;
+    DisplayRenderer(const QString& filename) : m_filename(filename) {}
+    virtual ~DisplayRenderer() {}
+    virtual QImage render(int page, double resolution) const = 0;
+    virtual QImage renderThumbnail(int page) const = 0;
+    virtual int getNPages() const = 0;
 
-	void adjustImage(QImage& image, int brightness, int contrast, bool invert) const;
+    void adjustImage(QImage& image, int brightness, int contrast, bool invert) const;
 
 protected:
-	QString m_filename;
+    QString m_filename;
 };
 
 class ImageRenderer : public DisplayRenderer {
 public:
-	ImageRenderer(const QString& filename) ;
-	QImage render(int page, double resolution) const override;
-	QImage renderThumbnail(int page) const override;
-	int getNPages() const override {
-		return m_pageCount;
-	}
+    ImageRenderer(const QString& filename) ;
+    QImage render(int page, double resolution) const override;
+    QImage renderThumbnail(int page) const override;
+    int getNPages() const override {
+        return m_pageCount;
+    }
 private:
-	int m_pageCount;
+    int m_pageCount;
 };
 
 class PDFRenderer : public DisplayRenderer {
 public:
-	PDFRenderer(const QString& filename, const QByteArray& password);
-	QImage render(int page, double resolution) const override;
-	QImage renderThumbnail(int page) const override;
-	int getNPages() const override;
+    PDFRenderer(const QString& filename, const QByteArray& password);
+    QImage render(int page, double resolution) const override;
+    QImage renderThumbnail(int page) const override;
+    int getNPages() const override;
 
 private:
-	std::unique_ptr<Poppler::Document> m_document;
-	mutable QMutex m_mutex;
+    std::unique_ptr<Poppler::Document> m_document;
+    mutable QMutex m_mutex;
 };
 
 class DJVURenderer : public DisplayRenderer {
 public:
-	DJVURenderer(const QString& filename);
-	~DJVURenderer();
-	QImage render(int page, double resolution) const override;
-	QImage renderThumbnail(int page) const override;
-	int getNPages() const override;
+    DJVURenderer(const QString& filename);
+    ~DJVURenderer();
+    QImage render(int page, double resolution) const override;
+    QImage renderThumbnail(int page) const override;
+    int getNPages() const override;
 
 private:
-	DjVuDocument* m_djvu;
+    DjVuDocument* m_djvu;
 };
 
 #endif // IMAGERENDERER_HH

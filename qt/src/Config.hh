@@ -27,52 +27,52 @@
 #include <QMap>
 
 class Config : public QDialog {
-	Q_OBJECT
+    Q_OBJECT
 public:
-	struct Lang {
-		QString prefix, code, name;
-	};
+    struct Lang {
+        QString prefix, code, name;
+    };
 
-	Config(QWidget* parent = nullptr);
+    Config(QWidget* parent = nullptr);
 
-	bool searchLangSpec(Lang& lang) const;
-	QStringList searchLangCultures(const QString& code) const;
-	void showDialog();
+    bool searchLangSpec(Lang& lang) const;
+    QStringList searchLangCultures(const QString& code) const;
+    void showDialog();
 
-	bool useUtf8() const;
-	bool useSystemDataLocations() const;
-	QString tessdataLocation() const;
-	QString spellingLocation() const;
+    bool useUtf8() const;
+    bool useSystemDataLocations() const;
+    QString tessdataLocation() const;
+    QString spellingLocation() const;
 
-	static void openTessdataDir();
-	static void openSpellingDir();
-	static QString lookupLangCode(const QString& prefix) { return LANG_LOOKUP[prefix]; }
-	static QStringList getAvailableLanguages();
+    static void openTessdataDir();
+    static void openSpellingDir();
+    static QString lookupLangCode(const QString& prefix) { return LANG_LOOKUP[prefix]; }
+    static QStringList getAvailableLanguages();
 
 public slots:
-	void disableDictInstall();
-	void disableUpdateCheck();
+    void disableDictInstall();
+    void disableUpdateCheck();
 
 private:
-	enum Location {SystemLocation = 0, UserLocation = 1};
-	static const QList<Lang> LANGUAGES;
-	static const QMap<QString, QString> LANG_LOOKUP;
-	static const QMultiMap<QString, QString> LANGUAGE_CULTURES;
+    enum Location {SystemLocation = 0, UserLocation = 1};
+    static const QList<Lang> LANGUAGES;
+    static const QMap<QString, QString> LANG_LOOKUP;
+    static const QMultiMap<QString, QString> LANGUAGE_CULTURES;
 
-	Ui::ConfigDialog ui;
-	QFontDialog m_fontDialog;
+    Ui::ConfigDialog ui;
+    QFontDialog m_fontDialog;
 
-	static QString spellingLocation(Location location);
-	static QString tessdataLocation(Location location);
+    static QString spellingLocation(Location location);
+    static QString tessdataLocation(Location location);
 
 private slots:
-	void addLanguage();
-	void removeLanguage();
-	void updateFontButton(const QFont& font);
-	void langTableSelectionChanged(const QItemSelection& selected, const QItemSelection& deselected);
-	void clearLineEditErrorState();
-	void setDataLocations(int idx);
-	void toggleAddLanguage(bool forceHide = false);
+    void addLanguage();
+    void removeLanguage();
+    void updateFontButton(const QFont& font);
+    void langTableSelectionChanged(const QItemSelection& selected, const QItemSelection& deselected);
+    void clearLineEditErrorState();
+    void setDataLocations(int idx);
+    void toggleAddLanguage(bool forceHide = false);
 };
 
 Q_DECLARE_METATYPE(Config::Lang)

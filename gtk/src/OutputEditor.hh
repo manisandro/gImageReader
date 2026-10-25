@@ -31,45 +31,45 @@ class TessBaseAPI;
 
 class OutputEditor {
 public:
-	struct PageInfo {
-		std::string filename;
-		int page;
-		double angle;
-		int resolution;
-	};
-	struct ReadSessionData {
-		virtual ~ReadSessionData() = default;
-		bool prependFile;
-		bool prependPage;
-		PageInfo pageInfo;
-	};
-	class BatchProcessor {
-	public:
-		virtual ~BatchProcessor() = default;
-		virtual std::string fileSuffix() const = 0;
-		virtual void writeHeader(std::ostream& /*dev*/, tesseract::TessBaseAPI* /*tess*/, const PageInfo& /*pageInfo*/) const {}
-		virtual void writeFooter(std::ostream& /*dev*/) const {}
-		virtual void appendOutput(std::ostream& dev, tesseract::TessBaseAPI* tess, const PageInfo& pageInfo, bool firstArea) const = 0;
-	};
+    struct PageInfo {
+        std::string filename;
+        int page;
+        double angle;
+        int resolution;
+    };
+    struct ReadSessionData {
+        virtual ~ReadSessionData() = default;
+        bool prependFile;
+        bool prependPage;
+        PageInfo pageInfo;
+    };
+    class BatchProcessor {
+    public:
+        virtual ~BatchProcessor() = default;
+        virtual std::string fileSuffix() const = 0;
+        virtual void writeHeader(std::ostream& /*dev*/, tesseract::TessBaseAPI* /*tess*/, const PageInfo& /*pageInfo*/) const {}
+        virtual void writeFooter(std::ostream& /*dev*/) const {}
+        virtual void appendOutput(std::ostream& dev, tesseract::TessBaseAPI* tess, const PageInfo& pageInfo, bool firstArea) const = 0;
+    };
 
-	OutputEditor() {}
-	virtual ~OutputEditor() {}
+    OutputEditor() {}
+    virtual ~OutputEditor() {}
 
-	virtual Gtk::Box* getUI() const = 0;
-	virtual ReadSessionData* initRead(tesseract::TessBaseAPI& tess) = 0;
-	virtual void read(tesseract::TessBaseAPI& tess, ReadSessionData* data) = 0;
-	virtual void readError(const Glib::ustring& errorMsg, ReadSessionData* data) = 0;
-	virtual void finalizeRead(ReadSessionData* data) {
-		delete data;
-	}
-	virtual BatchProcessor* createBatchProcessor(const std::map<Glib::ustring, Glib::ustring>& options) const = 0;
+    virtual Gtk::Box* getUI() const = 0;
+    virtual ReadSessionData* initRead(tesseract::TessBaseAPI& tess) = 0;
+    virtual void read(tesseract::TessBaseAPI& tess, ReadSessionData* data) = 0;
+    virtual void readError(const Glib::ustring& errorMsg, ReadSessionData* data) = 0;
+    virtual void finalizeRead(ReadSessionData* data) {
+        delete data;
+    }
+    virtual BatchProcessor* createBatchProcessor(const std::map<Glib::ustring, Glib::ustring>& options) const = 0;
 
-	virtual void onVisibilityChanged(bool /*visible*/) {}
-	virtual bool open(const std::string& filename) = 0;
-	virtual bool clear(bool hide = true) = 0;
-	virtual std::string crashSave(const std::string& filename) const = 0;
-	virtual void setLanguage(const Config::Lang& /*lang*/) {}
-	virtual bool containsSource(const std::string& source, int sourcePage) const { return false; }
+    virtual void onVisibilityChanged(bool /*visible*/) {}
+    virtual bool open(const std::string& filename) = 0;
+    virtual bool clear(bool hide = true) = 0;
+    virtual std::string crashSave(const std::string& filename) const = 0;
+    virtual void setLanguage(const Config::Lang& /*lang*/) {}
+    virtual bool containsSource(const std::string& source, int sourcePage) const { return false; }
 };
 
 #endif // OUTPUTEDITOR_HH

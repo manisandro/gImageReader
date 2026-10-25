@@ -26,100 +26,100 @@
 
 
 DisplayerToolHOCR::DisplayerToolHOCR(Displayer* displayer, QObject* parent)
-	: DisplayerTool(displayer, parent) {
-	displayer->setCursor(Qt::ArrowCursor);
-	MAIN->getRecognizer()->setRecognizeMode(_("Recognize"));
+    : DisplayerTool(displayer, parent) {
+    displayer->setCursor(Qt::ArrowCursor);
+    MAIN->getRecognizer()->setRecognizeMode(_("Recognize"));
 }
 
 DisplayerToolHOCR::~DisplayerToolHOCR() {
-	clearSelection();
+    clearSelection();
 }
 
 QList<QImage> DisplayerToolHOCR::getOCRAreas() {
-	return QList<QImage>() << m_displayer->getImage(m_displayer->getSceneBoundingRect());
+    return QList<QImage>() << m_displayer->getImage(m_displayer->getSceneBoundingRect());
 }
 
 void DisplayerToolHOCR::mousePressEvent(QMouseEvent* event) {
-	m_pressed = true;
-	if (event->button() == Qt::LeftButton && m_currentAction >= ACTION_DRAW_GRAPHIC_RECT && m_currentAction <= ACTION_DRAW_WORD_RECT) {
-		clearSelection();
-		m_selection = new DisplayerSelection(this,  m_displayer->mapToSceneClamped(event->pos()));
-		connect(m_selection, &DisplayerSelection::geometryChanged, this, &DisplayerToolHOCR::selectionChanged);
-		m_displayer->scene()->addItem(m_selection);
-		event->accept();
-	}
+    m_pressed = true;
+    if (event->button() == Qt::LeftButton && m_currentAction >= ACTION_DRAW_GRAPHIC_RECT && m_currentAction <= ACTION_DRAW_WORD_RECT) {
+        clearSelection();
+        m_selection = new DisplayerSelection(this,  m_displayer->mapToSceneClamped(event->pos()));
+        connect(m_selection, &DisplayerSelection::geometryChanged, this, &DisplayerToolHOCR::selectionChanged);
+        m_displayer->scene()->addItem(m_selection);
+        event->accept();
+    }
 }
 
 void DisplayerToolHOCR::mouseMoveEvent(QMouseEvent* event) {
-	if (m_selection && m_currentAction >= ACTION_DRAW_GRAPHIC_RECT && m_currentAction <= ACTION_DRAW_WORD_RECT) {
-		QPointF p = m_displayer->mapToSceneClamped(event->pos());
-		m_selection->setPoint(p);
-		m_displayer->ensureVisible(QRectF(p, p));
-		event->accept();
-	}
+    if (m_selection && m_currentAction >= ACTION_DRAW_GRAPHIC_RECT && m_currentAction <= ACTION_DRAW_WORD_RECT) {
+        QPointF p = m_displayer->mapToSceneClamped(event->pos());
+        m_selection->setPoint(p);
+        m_displayer->ensureVisible(QRectF(p, p));
+        event->accept();
+    }
 }
 
 void DisplayerToolHOCR::mouseReleaseEvent(QMouseEvent* event) {
-	// Don't do anything if the release event does not follow a press event...
-	if (!m_pressed) {
-		return;
-	}
-	m_pressed = false;
-	if (m_selection && m_currentAction >= ACTION_DRAW_GRAPHIC_RECT && m_currentAction <= ACTION_DRAW_WORD_RECT) {
-		if (m_selection->rect().width() < 5.0 || m_selection->rect().height() < 5.0) {
-			clearSelection();
-		} else {
-			QRect r = m_selection->rect().translated(-m_displayer->getSceneBoundingRect().toRect().topLeft()).toRect();
-			emit bboxDrawn(r, m_currentAction, m_currentIndex);
-		}
-		event->accept();
-	} else {
-		QPoint p = m_displayer->mapToSceneClamped(event->pos()).toPoint();
-		emit positionPicked(p);
-	}
-	setAction(ACTION_NONE, QModelIndex(), false);
+    // Don't do anything if the release event does not follow a press event...
+    if (!m_pressed) {
+        return;
+    }
+    m_pressed = false;
+    if (m_selection && m_currentAction >= ACTION_DRAW_GRAPHIC_RECT && m_currentAction <= ACTION_DRAW_WORD_RECT) {
+        if (m_selection->rect().width() < 5.0 || m_selection->rect().height() < 5.0) {
+            clearSelection();
+        } else {
+            QRect r = m_selection->rect().translated(-m_displayer->getSceneBoundingRect().toRect().topLeft()).toRect();
+            emit bboxDrawn(r, m_currentAction, m_currentIndex);
+        }
+        event->accept();
+    } else {
+        QPoint p = m_displayer->mapToSceneClamped(event->pos()).toPoint();
+        emit positionPicked(p);
+    }
+    setAction(ACTION_NONE, QModelIndex(), false);
 }
 
 void DisplayerToolHOCR::setAction(Action action, QModelIndex index, bool clearSel) {
-	if (action != m_currentAction) {
-		emit actionChanged(action);
-	}
-	if (clearSel) {
-		clearSelection();
-	}
-	m_currentAction = action;
-	m_currentIndex = index;
-	if (m_currentAction >= ACTION_DRAW_GRAPHIC_RECT && m_currentAction <= ACTION_DRAW_WORD_RECT) {
-		m_displayer->setCursor(Qt::CrossCursor);
-	} else {
-		m_displayer->setCursor(Qt::ArrowCursor);
-	}
+    if (action != m_currentAction) {
+        emit actionChanged(action);
+    }
+    if (clearSel) {
+        clearSelection();
+    }
+    m_currentAction = action;
+    m_currentIndex = index;
+    if (m_currentAction >= ACTION_DRAW_GRAPHIC_RECT && m_currentAction <= ACTION_DRAW_WORD_RECT) {
+        m_displayer->setCursor(Qt::CrossCursor);
+    } else {
+        m_displayer->setCursor(Qt::ArrowCursor);
+    }
 }
 
 void DisplayerToolHOCR::setSelection(const QRect& rect, const QRect& minRect) {
-	setAction(ACTION_NONE, QModelIndex(), false);
-	QRect r = rect.translated(m_displayer->getSceneBoundingRect().toRect().topLeft());
-	QRect mr = minRect.translated(m_displayer->getSceneBoundingRect().toRect().topLeft());
-	if (!m_selection) {
-		m_selection = new DisplayerSelection(this, r.topLeft());
-		connect(m_selection, &DisplayerSelection::geometryChanged, this, &DisplayerToolHOCR::selectionChanged);
-		m_displayer->scene()->addItem(m_selection);
-	}
-	m_selection->setAnchorAndPoint(r.topLeft(), r.bottomRight());
-	m_selection->setMinimumRect(mr);
-	m_displayer->ensureVisible(m_selection);
+    setAction(ACTION_NONE, QModelIndex(), false);
+    QRect r = rect.translated(m_displayer->getSceneBoundingRect().toRect().topLeft());
+    QRect mr = minRect.translated(m_displayer->getSceneBoundingRect().toRect().topLeft());
+    if (!m_selection) {
+        m_selection = new DisplayerSelection(this, r.topLeft());
+        connect(m_selection, &DisplayerSelection::geometryChanged, this, &DisplayerToolHOCR::selectionChanged);
+        m_displayer->scene()->addItem(m_selection);
+    }
+    m_selection->setAnchorAndPoint(r.topLeft(), r.bottomRight());
+    m_selection->setMinimumRect(mr);
+    m_displayer->ensureVisible(m_selection);
 }
 
 QImage DisplayerToolHOCR::getSelection(const QRect& rect) const {
-	return m_displayer->getImage(rect.translated(m_displayer->getSceneBoundingRect().toRect().topLeft()));
+    return m_displayer->getImage(rect.translated(m_displayer->getSceneBoundingRect().toRect().topLeft()));
 }
 
 void DisplayerToolHOCR::clearSelection() {
-	delete m_selection;
-	m_selection = nullptr;
+    delete m_selection;
+    m_selection = nullptr;
 }
 
 void DisplayerToolHOCR::selectionChanged(QRectF rect) {
-	QRect r = rect.translated(-m_displayer->getSceneBoundingRect().toRect().topLeft()).toRect();
-	emit bboxChanged(r);
+    QRect r = rect.translated(-m_displayer->getSceneBoundingRect().toRect().topLeft()).toRect();
+    emit bboxChanged(r);
 }

@@ -38,136 +38,136 @@ class SourceManager;
 
 class MainWindow {
 public:
-	enum class State { Idle, Normal, Busy };
-	enum OutputMode {OutputModeText = 0, OutputModeHOCR = 1};
+    enum class State { Idle, Normal, Busy };
+    enum OutputMode {OutputModeText = 0, OutputModeHOCR = 1};
 
-	struct NotificationAction {
-		Glib::ustring label;
-		std::function<bool() > action;
-	};
+    struct NotificationAction {
+        Glib::ustring label;
+        std::function<bool() > action;
+    };
 
-	class ProgressMonitor {
-	public:
-		ProgressMonitor(int total) : m_total(total) {}
-		virtual ~ProgressMonitor() {}
-		void increaseProgress() {
-			std::lock_guard<std::mutex> lock(m_mutex);
-			++m_progress;
-		}
-		virtual int getProgress() const {
-			std::lock_guard<std::mutex> lock(m_mutex);
-			return (m_progress * 100) / m_total;
-		}
-		virtual void cancel() {
-			std::lock_guard<std::mutex> lock(m_mutex);
-			m_cancelled = true;
-		}
-		bool cancelled() const {
-			std::lock_guard<std::mutex> lock(m_mutex);
-			return m_cancelled;
-		}
+    class ProgressMonitor {
+    public:
+        ProgressMonitor(int total) : m_total(total) {}
+        virtual ~ProgressMonitor() {}
+        void increaseProgress() {
+            std::lock_guard<std::mutex> lock(m_mutex);
+            ++m_progress;
+        }
+        virtual int getProgress() const {
+            std::lock_guard<std::mutex> lock(m_mutex);
+            return (m_progress * 100) / m_total;
+        }
+        virtual void cancel() {
+            std::lock_guard<std::mutex> lock(m_mutex);
+            m_cancelled = true;
+        }
+        bool cancelled() const {
+            std::lock_guard<std::mutex> lock(m_mutex);
+            return m_cancelled;
+        }
 
-	protected:
-		mutable std::mutex m_mutex;
-		const int m_total;
-		int m_progress = 0;
-		bool m_cancelled = false;
-	};
+    protected:
+        mutable std::mutex m_mutex;
+        const int m_total;
+        int m_progress = 0;
+        bool m_cancelled = false;
+    };
 
-	typedef void* Notification;
+    typedef void* Notification;
 
-	static MainWindow* getInstance() {
-		return s_instance;
-	}
-	static void signalHandler(int signal);
-	static void tesseractCrash(int signal);
+    static MainWindow* getInstance() {
+        return s_instance;
+    }
+    static void signalHandler(int signal);
+    static void tesseractCrash(int signal);
 
-	MainWindow();
-	~MainWindow();
+    MainWindow();
+    ~MainWindow();
 
-	Config* getConfig() const {
-		return m_config;
-	}
-	Displayer* getDisplayer() const {
-		return m_displayer;
-	}
-	OutputEditor* getOutputEditor() const {
-		return m_outputEditor;
-	}
-	Recognizer* getRecognizer() const {
-		return m_recognizer;
-	}
-	SourceManager* getSourceManager() const {
-		return m_sourceManager;
-	}
-	RecognitionMenu* getRecognitionMenu() const {
-		return m_recognitionMenu;
-	}
-	Gtk::Window* getWindow() const {
-		return ui.windowMain;
-	}
-	void setMenuModel(const Glib::RefPtr<Gio::MenuModel>& menuModel);
-	void redetectLanguages();
-	void manageLanguages();
-	void showConfig();
-	void showHelp(const std::string& chapter = "");
-	void showAbout();
-	void addNotification(const Glib::ustring& title, const Glib::ustring& message, const std::vector<NotificationAction>& actions, Notification* handle = nullptr);
-	void hideNotification(Notification handle);
-	void openFiles(const std::vector<Glib::RefPtr<Gio::File >>& files);
-	void openOutput(const std::string& filename);
-	bool setOutputMode(OutputMode mode);
-	void setOutputPaneVisible(bool visible);
-	void pushState(State state, const Glib::ustring& msg);
-	void popState();
-	void showProgress(ProgressMonitor* monitor, int updateInterval = 500);
-	void hideProgress();
-	bool canClose();
+    Config* getConfig() const {
+        return m_config;
+    }
+    Displayer* getDisplayer() const {
+        return m_displayer;
+    }
+    OutputEditor* getOutputEditor() const {
+        return m_outputEditor;
+    }
+    Recognizer* getRecognizer() const {
+        return m_recognizer;
+    }
+    SourceManager* getSourceManager() const {
+        return m_sourceManager;
+    }
+    RecognitionMenu* getRecognitionMenu() const {
+        return m_recognitionMenu;
+    }
+    Gtk::Window* getWindow() const {
+        return ui.windowMain;
+    }
+    void setMenuModel(const Glib::RefPtr<Gio::MenuModel>& menuModel);
+    void redetectLanguages();
+    void manageLanguages();
+    void showConfig();
+    void showHelp(const std::string& chapter = "");
+    void showAbout();
+    void addNotification(const Glib::ustring& title, const Glib::ustring& message, const std::vector<NotificationAction>& actions, Notification* handle = nullptr);
+    void hideNotification(Notification handle);
+    void openFiles(const std::vector<Glib::RefPtr<Gio::File >>& files);
+    void openOutput(const std::string& filename);
+    bool setOutputMode(OutputMode mode);
+    void setOutputPaneVisible(bool visible);
+    void pushState(State state, const Glib::ustring& msg);
+    void popState();
+    void showProgress(ProgressMonitor* monitor, int updateInterval = 500);
+    void hideProgress();
+    bool canClose();
 
 private:
-	static void signalHandlerExec(int signal, bool tesseractCrash);
+    static void signalHandlerExec(int signal, bool tesseractCrash);
 
-	static MainWindow* s_instance;
+    static MainWindow* s_instance;
 
-	Ui::MainWindow ui;
-	ClassData m_classdata;
+    Ui::MainWindow ui;
+    ClassData m_classdata;
 
-	Config* m_config = nullptr;
-	Acquirer* m_acquirer = nullptr;
-	Displayer* m_displayer = nullptr;
-	DisplayerTool* m_displayerTool = nullptr;
-	OutputEditor* m_outputEditor = nullptr;
-	RecognitionMenu* m_recognitionMenu = nullptr;
-	Recognizer* m_recognizer = nullptr;
-	SourceManager* m_sourceManager = nullptr;
+    Config* m_config = nullptr;
+    Acquirer* m_acquirer = nullptr;
+    Displayer* m_displayer = nullptr;
+    DisplayerTool* m_displayerTool = nullptr;
+    OutputEditor* m_outputEditor = nullptr;
+    RecognitionMenu* m_recognitionMenu = nullptr;
+    Recognizer* m_recognizer = nullptr;
+    SourceManager* m_sourceManager = nullptr;
 
-	std::thread* m_newVerThread = nullptr;
+    std::thread* m_newVerThread = nullptr;
 
-	MainWindow::Notification m_notifierHandle = nullptr;
+    MainWindow::Notification m_notifierHandle = nullptr;
 
-	ProgressMonitor* m_progressMonitor = nullptr;
+    ProgressMonitor* m_progressMonitor = nullptr;
 
-	std::vector<Gtk::Widget*> m_idlegroup;
-	std::vector<State> m_stateStack;
-	sigc::connection m_connection_setOCRMode;
-	sigc::connection m_connection_progressUpdate;
+    std::vector<Gtk::Widget*> m_idlegroup;
+    std::vector<State> m_stateStack;
+    sigc::connection m_connection_setOCRMode;
+    sigc::connection m_connection_progressUpdate;
 
-	bool closeEvent(GdkEventAny*);
-	void languageChanged(const Config::Lang& lang);
-	void onSourceChanged();
-	void setState(State state);
-	void progressCancel();
-	void progressUpdate();
+    bool closeEvent(GdkEventAny*);
+    void languageChanged(const Config::Lang& lang);
+    void onSourceChanged();
+    void setState(State state);
+    void progressCancel();
+    void progressUpdate();
 #if ENABLE_VERSIONCHECK
-	void getNewestVersion();
-	void checkVersion(const Glib::ustring& newver);
+    void getNewestVersion();
+    void checkVersion(const Glib::ustring& newver);
 #endif
 #ifdef G_OS_UNIX
-	void dictionaryAutoinstall(Glib::RefPtr<Gio::DBus::Proxy> proxy, const Glib::ustring& lang);
-	void dictionaryAutoinstallDone(Glib::RefPtr<Gio::DBus::Proxy> proxy, Glib::RefPtr<Gio::AsyncResult>& result);
+    void dictionaryAutoinstall(Glib::RefPtr<Gio::DBus::Proxy> proxy, const Glib::ustring& lang);
+    void dictionaryAutoinstallDone(Glib::RefPtr<Gio::DBus::Proxy> proxy, Glib::RefPtr<Gio::AsyncResult>& result);
 #endif
-	void dictionaryAutoinstall(Glib::ustring lang);
-	void batchExport();
+    void dictionaryAutoinstall(Glib::ustring lang);
+    void batchExport();
 };
 
 #endif

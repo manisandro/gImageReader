@@ -24,49 +24,49 @@ QMap<QString, AbstractSetting*> ConfigSettings::s_settings;
 
 
 void ConfigSettings::add(AbstractSetting* setting) {
-	s_settings.insert(setting->key(), setting);
+    s_settings.insert(setting->key(), setting);
 }
 
 void ConfigSettings::remove(const QString& key) {
-	auto it = s_settings.find(key);
-	if (it != s_settings.end()) {
-		s_settings.erase(it);
-	}
+    auto it = s_settings.find(key);
+    if (it != s_settings.end()) {
+        s_settings.erase(it);
+    }
 }
 
 
 TableSetting::TableSetting(const QString& key, QTableWidget* table)
-	: AbstractSetting(key), m_table(table) {
-	QString str = QSettings().value(m_key).toString();
-	m_table->setRowCount(0);
-	int nCols = m_table->columnCount();
+    : AbstractSetting(key), m_table(table) {
+    QString str = QSettings().value(m_key).toString();
+    m_table->setRowCount(0);
+    int nCols = m_table->columnCount();
 
-	for (const QString& row : str.split(';', Qt::SkipEmptyParts)) {
-		int colidx = 0;
-		QStringList cols = row.split(',');
-		if (cols.size() != nCols) {
-			continue;
-		}
-		int rowidx = m_table->rowCount();
-		m_table->insertRow(rowidx);
-		for (const QString& col : cols) {
-			m_table->setItem(rowidx, colidx++, new QTableWidgetItem(col));
-		}
-	}
+    for (const QString& row : str.split(';', Qt::SkipEmptyParts)) {
+        int colidx = 0;
+        QStringList cols = row.split(',');
+        if (cols.size() != nCols) {
+            continue;
+        }
+        int rowidx = m_table->rowCount();
+        m_table->insertRow(rowidx);
+        for (const QString& col : cols) {
+            m_table->setItem(rowidx, colidx++, new QTableWidgetItem(col));
+        }
+    }
 }
 
 void TableSetting::serialize() {
-	// Serialized string has format a11,a12,a13;a21,a22,a23;...
-	QStringList rows;
-	int nCols = m_table->columnCount();
-	for (int row = 0, nRows = m_table->rowCount(); row < nRows; ++row) {
-		QStringList cols;
-		for (int col = 0; col < nCols; ++col) {
-			QTableWidgetItem* item = m_table->item(row, col);
-			cols.append(item ? item->text() : QString());
-		}
-		rows.append(cols.join(","));
-	}
-	QSettings().setValue(m_key, QVariant::fromValue(rows.join(";")));
-	emit changed();
+    // Serialized string has format a11,a12,a13;a21,a22,a23;...
+    QStringList rows;
+    int nCols = m_table->columnCount();
+    for (int row = 0, nRows = m_table->rowCount(); row < nRows; ++row) {
+        QStringList cols;
+        for (int col = 0; col < nCols; ++col) {
+            QTableWidgetItem* item = m_table->item(row, col);
+            cols.append(item ? item->text() : QString());
+        }
+        rows.append(cols.join(","));
+    }
+    QSettings().setValue(m_key, QVariant::fromValue(rows.join(";")));
+    emit changed();
 }
