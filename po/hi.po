@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-12-28 15:20+0100\n"
+"POT-Creation-Date: 2026-10-25 14:59+0100\n"
 "PO-Revision-Date: 2024-03-30 05:02+0000\n"
 "Last-Translator: Purbayan Chowdhury <pur.cho.99@gmail.com>\n"
 "Language-Team: Hindi <https://hosted.weblate.org/projects/gimagereader/"
@@ -37,7 +37,7 @@ msgid "Preferences"
 msgstr "प्राथमिकताएँ"
 
 #: ../gtk/data/appmenu.ui.h:4 ../gtk/data/ConfigDialog.ui.h:2
-#: ../gtk/src/MainWindow.cc:525 ../qt/src/MainWindow.cc:533
+#: ../gtk/src/MainWindow.cc:525 ../qt/src/MainWindow.cc:536
 #: ../qt/src/Ui_MainWindow.hh:180
 msgid "Help"
 msgstr "मदद"
@@ -69,7 +69,7 @@ msgstr "केवल निम्नलिखित अक्षरों को
 
 #: ../gtk/data/ConfigDialog.ui.h:3 ../gtk/data/MainWindow.ui.h:49
 #: ../gtk/data/OutputEditorHOCR.ui.h:3 ../gtk/src/FileDialogs.cc:179
-#: ../gtk/src/FileDialogs.cc:194 ../gtk/src/hocr/HOCRPdfExporter.cc:682
+#: ../gtk/src/FileDialogs.cc:194 ../gtk/src/hocr/HOCRPdfExporter.cc:686
 #: ../gtk/src/Utils.cc:126 ../qt/data/ConfigDialog.ui.h:26
 msgid "OK"
 msgstr "ठीक है"
@@ -102,67 +102,80 @@ msgstr "पूर्वनिर्धारित भाषा परिभा�
 msgid "Additional language definitions:"
 msgstr "अन्य भाषा परिभाषाएँ:"
 
-#: ../gtk/data/ConfigDialog.ui.h:11 ../qt/data/ConfigDialog.ui.h:20
+#: ../gtk/data/ConfigDialog.ui.h:11 ../gtk/data/SubstitutionsManager.ui.h:5
+#: ../qt/data/ConfigDialog.ui.h:16 ../qt/src/SubstitutionsManager.cc:47
+#: ../qt/src/SubstitutionsManager.cc:48
+msgid "Add"
+msgstr "जोड़ें"
+
+#: ../gtk/data/ConfigDialog.ui.h:12 ../gtk/data/SubstitutionsManager.ui.h:6
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:974 ../qt/data/ConfigDialog.ui.h:17
+#: ../qt/src/hocr/OutputEditorHOCR.cc:854 ../qt/src/SubstitutionsManager.cc:50
+#: ../qt/src/SubstitutionsManager.cc:51
+msgid "Remove"
+msgstr "हटाएँ"
+
+#: ../gtk/data/ConfigDialog.ui.h:13 ../qt/data/ConfigDialog.ui.h:20
 msgid "The prefix of the tesseract language data file"
 msgstr "टेसेरेक्ट भाषा डेटा फ़ाइल का प्रिफिक्स"
 
-#: ../gtk/data/ConfigDialog.ui.h:12 ../qt/data/ConfigDialog.ui.h:21
+#: ../gtk/data/ConfigDialog.ui.h:14 ../qt/data/ConfigDialog.ui.h:21
 msgid "Prefix"
 msgstr "प्रिफिक्स"
 
-#: ../gtk/data/ConfigDialog.ui.h:13 ../qt/data/ConfigDialog.ui.h:22
+#: ../gtk/data/ConfigDialog.ui.h:15 ../qt/data/ConfigDialog.ui.h:22
 msgid "The ISO 639-1 language code followed by the country code"
 msgstr "ISO 639-1 भाषा कोड के बाद देश कोड"
 
-#: ../gtk/data/ConfigDialog.ui.h:14 ../qt/data/ConfigDialog.ui.h:23
+#: ../gtk/data/ConfigDialog.ui.h:16 ../qt/data/ConfigDialog.ui.h:23
 msgid "ISO Code"
 msgstr "आईएसओ कोड"
 
-#: ../gtk/data/ConfigDialog.ui.h:15 ../qt/data/ConfigDialog.ui.h:24
+#: ../gtk/data/ConfigDialog.ui.h:17 ../qt/data/ConfigDialog.ui.h:24
 msgid "The name of the language"
 msgstr "भाषा का नाम"
 
-#: ../gtk/data/ConfigDialog.ui.h:16 ../qt/data/ConfigDialog.ui.h:25
+#: ../gtk/data/ConfigDialog.ui.h:18 ../qt/data/ConfigDialog.ui.h:25
 msgid "Name"
 msgstr "नाम"
 
-#: ../gtk/data/ConfigDialog.ui.h:17 ../gtk/data/MainWindow.ui.h:48
+#: ../gtk/data/ConfigDialog.ui.h:19 ../gtk/data/MainWindow.ui.h:48
 #: ../gtk/data/OutputEditorHOCR.ui.h:2 ../gtk/src/Acquirer.cc:34
 #: ../gtk/src/FileDialogs.cc:178 ../gtk/src/FileDialogs.cc:193
-#: ../gtk/src/hocr/HOCRPdfExporter.cc:683 ../gtk/src/Utils.cc:156
+#: ../gtk/src/hocr/HOCRPdfExporter.cc:687 ../gtk/src/Utils.cc:156
 #: ../qt/data/ConfigDialog.ui.h:27 ../qt/data/MainWindow.ui.h:13
 msgid "Cancel"
 msgstr "रद्द करें"
 
-#: ../gtk/data/ConfigDialog.ui.h:18 ../qt/data/ConfigDialog.ui.h:5
+#: ../gtk/data/ConfigDialog.ui.h:20 ../qt/data/ConfigDialog.ui.h:5
 msgid "Output pane font:"
 msgstr "आउटपुट फलक फ़ॉन्ट:"
 
-#: ../gtk/data/ConfigDialog.ui.h:19 ../qt/data/ConfigDialog.ui.h:2
+#: ../gtk/data/ConfigDialog.ui.h:21 ../qt/data/ConfigDialog.ui.h:2
 msgid "Default"
 msgstr "डिफ़ॉल्ट"
 
-#: ../gtk/data/ConfigDialog.ui.h:20 ../qt/data/ConfigDialog.ui.h:6
+#: ../gtk/data/ConfigDialog.ui.h:22 ../qt/data/ConfigDialog.ui.h:6
 msgid "Language data locations:"
 msgstr "भाषा डेटा स्थान:"
 
-#: ../gtk/data/ConfigDialog.ui.h:21 ../qt/data/ConfigDialog.ui.h:13
+#: ../gtk/data/ConfigDialog.ui.h:23 ../qt/data/ConfigDialog.ui.h:13
 msgid "Language definitions path:"
 msgstr "भाषा परिभाषा पथ:"
 
-#: ../gtk/data/ConfigDialog.ui.h:22 ../qt/data/ConfigDialog.ui.h:28
+#: ../gtk/data/ConfigDialog.ui.h:24 ../qt/data/ConfigDialog.ui.h:28
 msgid "Spelling dictionaries path:"
 msgstr "वर्तनी शब्दकोश पथ:"
 
-#: ../gtk/data/ConfigDialog.ui.h:23 ../qt/data/ConfigDialog.ui.h:10
+#: ../gtk/data/ConfigDialog.ui.h:25 ../qt/data/ConfigDialog.ui.h:10
 msgid "System-wide paths"
 msgstr "सिस्टम-वाइड पथ"
 
-#: ../gtk/data/ConfigDialog.ui.h:24 ../qt/data/ConfigDialog.ui.h:11
+#: ../gtk/data/ConfigDialog.ui.h:26 ../qt/data/ConfigDialog.ui.h:11
 msgid "User paths"
 msgstr "उपयोगकर्ता पथ"
 
-#: ../gtk/data/ConfigDialog.ui.h:25 ../qt/data/ConfigDialog.ui.h:29
+#: ../gtk/data/ConfigDialog.ui.h:27 ../qt/data/ConfigDialog.ui.h:29
 msgid "Automatically open exported documents with default application"
 msgstr "निर्यात किए गए दस्तावेज़ को डिफ़ॉल्ट अनुप्रयोग द्वारा अपने आप खोलें"
 
@@ -170,16 +183,16 @@ msgstr "निर्यात किए गए दस्तावेज़ क�
 msgid "Regenerate backtrace"
 msgstr "बैकट्रेस फिर से बनाएँ"
 
-#: ../gtk/data/CrashHandler.ui.h:3
-#, no-c-format
+#: ../gtk/data/CrashHandler.ui.h:2
+#, fuzzy
 msgid ""
 "<b>The application has crashed</b>\n"
 "\n"
 "Apologies for the inconvenience. To help improve the application, please "
-"consider reporting the issue to <a href=\"mailto:manisandro@gmail.com?"
-"subject=gImageReader%20Crash\">manisandro@gmail.com</a>. Please try to "
-"describe what you were doing before the application crashed. Also, include "
-"the information below. Thank you."
+"consider reporting the issue in the <a href=\"https://github.com/manisandro/"
+"gImageReader/issues\">bug tracker</a>. Please try to describe what you were "
+"doing before the application crashed. Also, include the information below. "
+"Thank you."
 msgstr ""
 "<b>ऐप्लिकेशन क्रैश हो गया है</b>\n"
 "\n"
@@ -189,7 +202,7 @@ msgstr ""
 "ऐप्लिकेशन क्रैश हुआ तो उस समय आप सिस्टम पर क्या काम कर रहे थे। साथ ही नीचे दी गई "
 "जानकारी भी शामिल करें। धन्यवाद।"
 
-#: ../gtk/data/CrashHandler.ui.h:6
+#: ../gtk/data/CrashHandler.ui.h:5
 msgid ""
 "<b>Tesseract has aborted</b>\n"
 "\n"
@@ -228,8 +241,7 @@ msgid "Select source folder:"
 msgstr "स्त्रोत फोल्डर चुनें :"
 
 #: ../gtk/data/HOCRBatchExportDialog.ui.h:5 ../gtk/data/PdfExportWidget.ui.h:5
-#: ../qt/data/HOCRBatchExportDialog.ui.h:7 ../qt/data/PdfExportDialog.ui.h:16
-#: ../qt/data/PdfExportWidget.ui.h:15
+#: ../qt/data/HOCRBatchExportDialog.ui.h:7 ../qt/data/PdfExportWidget.ui.h:15
 msgid "Format:"
 msgstr "फॉर्मेट:"
 
@@ -463,7 +475,7 @@ msgstr "पृष्ठ सीमा"
 msgid "Page range:"
 msgstr "पृष्ठ सीमा:"
 
-#: ../gtk/data/MainWindow.ui.h:51 ../qt/data/PageRangeDialog.ui.h:3
+#: ../gtk/data/MainWindow.ui.h:51
 msgid "<small><b>Example:</b> 1-10, 13, 14-18</small>"
 msgstr "<small><b>उदाहरण:</b> 1-10, 13, 14-18</small>"
 
@@ -492,7 +504,7 @@ msgstr "स्रोत फ़ाइलनाम"
 msgid "Source page"
 msgstr "स्रोत पृष्ठ"
 
-#: ../gtk/data/MainWindow.ui.h:58 ../qt/src/SourceManager.cc:180
+#: ../gtk/data/MainWindow.ui.h:58 ../qt/src/SourceManager.cc:178
 msgid "Protected PDF"
 msgstr "सुरक्षित पीडीएफ़"
 
@@ -588,8 +600,7 @@ msgid "Show confidence values"
 msgstr "कॉन्फिडेंस मूल्य दिखाएँ"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:19 ../gtk/data/PdfExportWidget.ui.h:1
-#: ../qt/data/PdfExportDialog.ui.h:2 ../qt/data/PdfExportWidget.ui.h:1
-#: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:121
+#: ../qt/data/PdfExportWidget.ui.h:1 ../qt/src/hocr/Ui_OutputEditorHOCR.hh:121
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:122
 msgid "Show preview"
 msgstr "पूर्वावलोकन दिखाएँ"
@@ -604,13 +615,13 @@ msgstr "अगला (F3)"
 msgid "Previous (Shift+F3)"
 msgstr "पिछला (Shift+F3)"
 
-#: ../gtk/data/OutputEditorHOCR.ui.h:22 ../gtk/src/hocr/OutputEditorHOCR.cc:980
+#: ../gtk/data/OutputEditorHOCR.ui.h:22 ../gtk/src/hocr/OutputEditorHOCR.cc:978
 #: ../qt/src/hocr/OutputEditorHOCR.cc:857
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:165
 msgid "Expand all"
 msgstr "सभी फैलाएँ"
 
-#: ../gtk/data/OutputEditorHOCR.ui.h:23 ../gtk/src/hocr/OutputEditorHOCR.cc:983
+#: ../gtk/data/OutputEditorHOCR.ui.h:23 ../gtk/src/hocr/OutputEditorHOCR.cc:981
 #: ../qt/src/hocr/OutputEditorHOCR.cc:858
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:166
 msgid "Collapse all"
@@ -698,185 +709,149 @@ msgstr "दोहराएँ"
 msgid "New tab"
 msgstr "नया टैब"
 
-#: ../gtk/data/PdfExportWidget.ui.h:2 ../qt/data/PdfExportDialog.ui.h:4
-#: ../qt/data/PdfExportWidget.ui.h:3
+#: ../gtk/data/PdfExportWidget.ui.h:2 ../qt/data/PdfExportWidget.ui.h:3
 msgid "Output mode:"
 msgstr "आउटपुट मोड:"
 
 #: ../gtk/data/PdfExportWidget.ui.h:3
 #: ../gtk/src/hocr/HOCRBatchExportDialog.cc:45
-#: ../qt/data/PdfExportDialog.ui.h:6 ../qt/data/PdfExportWidget.ui.h:5
-#: ../qt/src/hocr/HOCRBatchExportDialog.cc:40
+#: ../qt/data/PdfExportWidget.ui.h:5 ../qt/src/hocr/HOCRBatchExportDialog.cc:40
 msgid "PDF"
 msgstr "पीडीएफ़"
 
-#: ../gtk/data/PdfExportWidget.ui.h:4 ../qt/data/PdfExportDialog.ui.h:7
-#: ../qt/data/PdfExportWidget.ui.h:6
+#: ../gtk/data/PdfExportWidget.ui.h:4 ../qt/data/PdfExportWidget.ui.h:6
 msgid "PDF with invisible text overlay"
 msgstr "अदृश्य पाठ ओवरले सहित पीडीएफ़"
 
-#: ../gtk/data/PdfExportWidget.ui.h:6 ../qt/data/PdfExportDialog.ui.h:17
-#: ../qt/data/PdfExportWidget.ui.h:16
+#: ../gtk/data/PdfExportWidget.ui.h:6 ../qt/data/PdfExportWidget.ui.h:16
 msgid "Compression:"
 msgstr "संपीडन:"
 
-#: ../gtk/data/PdfExportWidget.ui.h:7 ../qt/data/PdfExportDialog.ui.h:14
-#: ../qt/data/PdfExportWidget.ui.h:13
+#: ../gtk/data/PdfExportWidget.ui.h:7 ../qt/data/PdfExportWidget.ui.h:13
 msgid "Compression quality:"
 msgstr "संपीडन गुणवत्ता:"
 
-#: ../gtk/data/PdfExportWidget.ui.h:8 ../qt/data/PdfExportDialog.ui.h:15
-#: ../qt/data/PdfExportWidget.ui.h:14
+#: ../gtk/data/PdfExportWidget.ui.h:8 ../qt/data/PdfExportWidget.ui.h:14
 msgid "DPI:"
 msgstr "डीपीआई:"
 
-#: ../gtk/data/PdfExportWidget.ui.h:9 ../qt/data/PdfExportDialog.ui.h:18
-#: ../qt/data/PdfExportWidget.ui.h:17
+#: ../gtk/data/PdfExportWidget.ui.h:9 ../qt/data/PdfExportWidget.ui.h:17
 msgid "Dithering algorithm:"
 msgstr "डिथरिंग एल्गोरिदम:"
 
-#: ../gtk/data/PdfExportWidget.ui.h:10 ../qt/data/PdfExportDialog.ui.h:13
-#: ../qt/data/PdfExportWidget.ui.h:12
+#: ../gtk/data/PdfExportWidget.ui.h:10 ../qt/data/PdfExportWidget.ui.h:12
 msgid "Image settings:"
 msgstr "इमेज सेटिंग:"
 
-#: ../gtk/data/PdfExportWidget.ui.h:11 ../qt/data/PdfExportDialog.ui.h:25
-#: ../qt/data/PdfExportWidget.ui.h:24
+#: ../gtk/data/PdfExportWidget.ui.h:11 ../qt/data/PdfExportWidget.ui.h:24
 msgid "Uniformize line and word spacing"
 msgstr "पंक्ति तथा शब्द के बीच की दूरी एक समान करें"
 
-#: ../gtk/data/PdfExportWidget.ui.h:12 ../qt/data/PdfExportDialog.ui.h:21
-#: ../qt/data/PdfExportWidget.ui.h:20
+#: ../gtk/data/PdfExportWidget.ui.h:12 ../qt/data/PdfExportWidget.ui.h:20
 msgid "Override font family:"
 msgstr "फ़ॉन्ट परिवार को ओवरराइड करें:"
 
-#: ../gtk/data/PdfExportWidget.ui.h:13 ../qt/data/PdfExportDialog.ui.h:27
-#: ../qt/data/PdfExportWidget.ui.h:26
+#: ../gtk/data/PdfExportWidget.ui.h:13 ../qt/data/PdfExportWidget.ui.h:26
 msgid "Fallback font family:"
 msgstr "फ़ॉन्ट परिवार में वापस लौटें:"
 
-#: ../gtk/data/PdfExportWidget.ui.h:14 ../qt/data/PdfExportDialog.ui.h:20
-#: ../qt/data/PdfExportWidget.ui.h:19
+#: ../gtk/data/PdfExportWidget.ui.h:14 ../qt/data/PdfExportWidget.ui.h:19
 msgid "Override font size:"
 msgstr "फ़ॉन्ट आकार को ओवरराइड करें:"
 
-#: ../gtk/data/PdfExportWidget.ui.h:15 ../qt/data/PdfExportDialog.ui.h:23
-#: ../qt/data/PdfExportWidget.ui.h:22
+#: ../gtk/data/PdfExportWidget.ui.h:15 ../qt/data/PdfExportWidget.ui.h:22
 msgid "Font scaling:"
 msgstr "फॉन्ट स्केलिंग:"
 
-#: ../gtk/data/PdfExportWidget.ui.h:16 ../qt/data/PdfExportDialog.ui.h:26
-#: ../qt/data/PdfExportWidget.ui.h:25
+#: ../gtk/data/PdfExportWidget.ui.h:16 ../qt/data/PdfExportWidget.ui.h:25
 msgid "pt"
 msgstr "पाइंट"
 
-#: ../gtk/data/PdfExportWidget.ui.h:17 ../qt/data/PdfExportDialog.ui.h:22
-#: ../qt/data/PdfExportWidget.ui.h:21
+#: ../gtk/data/PdfExportWidget.ui.h:17 ../qt/data/PdfExportWidget.ui.h:21
 msgid "Preserve spaces wider than:"
 msgstr "इससे अधिक चौड़े रिक्त स्थान को बनाए रखें:"
 
-#: ../gtk/data/PdfExportWidget.ui.h:18 ../qt/data/PdfExportDialog.ui.h:24
-#: ../qt/data/PdfExportWidget.ui.h:23
+#: ../gtk/data/PdfExportWidget.ui.h:18 ../qt/data/PdfExportWidget.ui.h:23
 msgid "characters"
 msgstr "अक्षर"
 
-#: ../gtk/data/PdfExportWidget.ui.h:19 ../qt/data/PdfExportDialog.ui.h:28
-#: ../qt/data/PdfExportWidget.ui.h:27
+#: ../gtk/data/PdfExportWidget.ui.h:19 ../qt/data/PdfExportWidget.ui.h:27
 msgid "Sanitize hyphens before line breaks"
 msgstr "लाइन ब्रेक से पहले हाइफन चिह्न हटाएँ"
 
-#: ../gtk/data/PdfExportWidget.ui.h:20 ../qt/data/PdfExportDialog.ui.h:19
-#: ../qt/data/PdfExportWidget.ui.h:18
+#: ../gtk/data/PdfExportWidget.ui.h:20 ../qt/data/PdfExportWidget.ui.h:18
 msgid "Text settings:"
 msgstr "पाठ सेटिंग्स:"
 
-#: ../gtk/data/PdfExportWidget.ui.h:21 ../qt/data/PdfExportDialog.ui.h:10
-#: ../qt/data/PdfExportWidget.ui.h:9
+#: ../gtk/data/PdfExportWidget.ui.h:21 ../qt/data/PdfExportWidget.ui.h:9
 msgid "Paper size:"
 msgstr "कागज आकार:"
 
-#: ../gtk/data/PdfExportWidget.ui.h:22 ../qt/data/PdfExportDialog.ui.h:11
-#: ../qt/data/PdfExportWidget.ui.h:10
+#: ../gtk/data/PdfExportWidget.ui.h:22 ../qt/data/PdfExportWidget.ui.h:10
 msgid "Width"
 msgstr "चौड़ाई"
 
-#: ../gtk/data/PdfExportWidget.ui.h:23 ../qt/data/PdfExportDialog.ui.h:12
-#: ../qt/data/PdfExportWidget.ui.h:11
+#: ../gtk/data/PdfExportWidget.ui.h:23 ../qt/data/PdfExportWidget.ui.h:11
 msgid "Height"
 msgstr "ऊंचाई"
 
-#: ../gtk/data/PdfExportWidget.ui.h:24 ../qt/data/PdfExportDialog.ui.h:29
-#: ../qt/data/PdfExportWidget.ui.h:28
+#: ../gtk/data/PdfExportWidget.ui.h:24 ../qt/data/PdfExportWidget.ui.h:28
 msgid "Treat image sources as having true DPI:"
 msgstr "छवि स्रोतों को सही डीपीआई युक्त मानें:"
 
-#: ../gtk/data/PdfExportWidget.ui.h:25 ../qt/data/PdfExportDialog.ui.h:3
-#: ../qt/data/PdfExportWidget.ui.h:2
+#: ../gtk/data/PdfExportWidget.ui.h:25 ../qt/data/PdfExportWidget.ui.h:2
 msgid "Basic"
 msgstr "मूल"
 
-#: ../gtk/data/PdfExportWidget.ui.h:26 ../qt/data/PdfExportDialog.ui.h:31
-#: ../qt/data/PdfExportWidget.ui.h:30
+#: ../gtk/data/PdfExportWidget.ui.h:26 ../qt/data/PdfExportWidget.ui.h:30
 msgid "PDF version:"
 msgstr "पीडीएफ़ संस्करण:"
 
-#: ../gtk/data/PdfExportWidget.ui.h:27 ../qt/data/PdfExportDialog.ui.h:33
-#: ../qt/data/PdfExportWidget.ui.h:32
+#: ../gtk/data/PdfExportWidget.ui.h:27 ../qt/data/PdfExportWidget.ui.h:32
 msgid "Password:"
 msgstr "पासवर्ड:"
 
-#: ../gtk/data/PdfExportWidget.ui.h:28 ../qt/data/PdfExportDialog.ui.h:34
-#: ../qt/data/PdfExportWidget.ui.h:33
+#: ../gtk/data/PdfExportWidget.ui.h:28 ../qt/data/PdfExportWidget.ui.h:33
 msgid "Confirm password:"
 msgstr "पासवर्ड पुष्टि करें:"
 
-#: ../gtk/data/PdfExportWidget.ui.h:29 ../qt/data/PdfExportDialog.ui.h:32
-#: ../qt/data/PdfExportWidget.ui.h:31
+#: ../gtk/data/PdfExportWidget.ui.h:29 ../qt/data/PdfExportWidget.ui.h:31
 msgid "Encryption (optional):"
 msgstr "एन्क्रिप्शन (वैकल्पिक):"
 
-#: ../gtk/data/PdfExportWidget.ui.h:30 ../qt/data/PdfExportDialog.ui.h:36
-#: ../qt/data/PdfExportWidget.ui.h:35
+#: ../gtk/data/PdfExportWidget.ui.h:30 ../qt/data/PdfExportWidget.ui.h:35
 msgid "Author:"
 msgstr "लेखक:"
 
-#: ../gtk/data/PdfExportWidget.ui.h:31 ../qt/data/PdfExportDialog.ui.h:38
-#: ../qt/data/PdfExportWidget.ui.h:37
+#: ../gtk/data/PdfExportWidget.ui.h:31 ../qt/data/PdfExportWidget.ui.h:37
 msgid "Title:"
 msgstr "शीर्षक:"
 
-#: ../gtk/data/PdfExportWidget.ui.h:32 ../qt/data/PdfExportDialog.ui.h:40
-#: ../qt/data/PdfExportWidget.ui.h:39
+#: ../gtk/data/PdfExportWidget.ui.h:32 ../qt/data/PdfExportWidget.ui.h:39
 msgid "Subject:"
 msgstr "विषय:"
 
-#: ../gtk/data/PdfExportWidget.ui.h:33 ../qt/data/PdfExportDialog.ui.h:37
-#: ../qt/data/PdfExportWidget.ui.h:36
+#: ../gtk/data/PdfExportWidget.ui.h:33 ../qt/data/PdfExportWidget.ui.h:36
 msgid "Creator:"
 msgstr "सृजक:"
 
-#: ../gtk/data/PdfExportWidget.ui.h:34 ../qt/data/PdfExportDialog.ui.h:39
-#: ../qt/data/PdfExportWidget.ui.h:38
+#: ../gtk/data/PdfExportWidget.ui.h:34 ../qt/data/PdfExportWidget.ui.h:38
 msgid "Producer:"
 msgstr "निर्माता:"
 
-#: ../gtk/data/PdfExportWidget.ui.h:35 ../qt/data/PdfExportDialog.ui.h:41
-#: ../qt/data/PdfExportWidget.ui.h:40
+#: ../gtk/data/PdfExportWidget.ui.h:35 ../qt/data/PdfExportWidget.ui.h:40
 msgid "Keywords:"
 msgstr "की-वर्डस:"
 
-#: ../gtk/data/PdfExportWidget.ui.h:36 ../qt/data/PdfExportDialog.ui.h:35
-#: ../qt/data/PdfExportWidget.ui.h:34
+#: ../gtk/data/PdfExportWidget.ui.h:36 ../qt/data/PdfExportWidget.ui.h:34
 msgid "Additional information (optional):"
 msgstr "अतिरिक्त जानकारी (वैकल्पिक):"
 
-#: ../gtk/data/PdfExportWidget.ui.h:37 ../qt/data/PdfExportDialog.ui.h:42
-#: ../qt/data/PdfExportWidget.ui.h:41
+#: ../gtk/data/PdfExportWidget.ui.h:37 ../qt/data/PdfExportWidget.ui.h:41
 msgid "Import from current source"
 msgstr "वर्तमान स्रोत से आयात करें"
 
-#: ../gtk/data/PdfExportWidget.ui.h:38 ../qt/data/PdfExportDialog.ui.h:30
-#: ../qt/data/PdfExportWidget.ui.h:29
+#: ../gtk/data/PdfExportWidget.ui.h:38 ../qt/data/PdfExportWidget.ui.h:29
 msgid "Advanced"
 msgstr "उन्नत"
 
@@ -945,18 +920,6 @@ msgstr "सहेजें"
 #: ../qt/src/SubstitutionsManager.cc:45
 msgid "Clear"
 msgstr "साफ करें"
-
-#: ../gtk/data/SubstitutionsManager.ui.h:5 ../qt/data/ConfigDialog.ui.h:16
-#: ../qt/src/SubstitutionsManager.cc:47 ../qt/src/SubstitutionsManager.cc:48
-msgid "Add"
-msgstr "जोड़ें"
-
-#: ../gtk/data/SubstitutionsManager.ui.h:6
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:976 ../qt/data/ConfigDialog.ui.h:17
-#: ../qt/src/hocr/OutputEditorHOCR.cc:854 ../qt/src/SubstitutionsManager.cc:50
-#: ../qt/src/SubstitutionsManager.cc:51
-msgid "Remove"
-msgstr "हटाएँ"
 
 #: ../gtk/data/TessdataManager.ui.h:1 ../qt/src/TessdataManager.cc:45
 msgid "Tessdata Manager"
@@ -1101,7 +1064,7 @@ msgid "ODT"
 msgstr "ओडीटी"
 
 #: ../gtk/src/hocr/HOCRBatchExportDialog.cc:106 ../gtk/src/SourceManager.cc:270
-#: ../qt/src/hocr/HOCRBatchExportDialog.cc:73 ../qt/src/SourceManager.cc:289
+#: ../qt/src/hocr/HOCRBatchExportDialog.cc:73 ../qt/src/SourceManager.cc:287
 msgid "Select folder..."
 msgstr "फोल्डर का चयन करें..."
 
@@ -1118,7 +1081,7 @@ msgid "Ignore word"
 msgstr "शब्द नजरअंदाज करें"
 
 #: ../gtk/src/hocr/HOCRDocument.cc:800 ../gtk/src/hocr/HOCRDocument.cc:843
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:351 ../qt/src/hocr/HOCRDocument.cc:692
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:352 ../qt/src/hocr/HOCRDocument.cc:692
 #: ../qt/src/hocr/HOCRDocument.cc:733 ../qt/src/hocr/OutputEditorHOCR.cc:316
 msgid "Page"
 msgstr "पृष्ठ"
@@ -1127,7 +1090,7 @@ msgstr "पृष्ठ"
 msgid "Text block"
 msgstr "पाठ ब्लॉक"
 
-#: ../gtk/src/hocr/HOCRDocument.cc:804 ../gtk/src/hocr/OutputEditorHOCR.cc:357
+#: ../gtk/src/hocr/HOCRDocument.cc:804 ../gtk/src/hocr/OutputEditorHOCR.cc:358
 #: ../qt/src/hocr/HOCRDocument.cc:696 ../qt/src/hocr/OutputEditorHOCR.cc:318
 msgid "Paragraph"
 msgstr "पैराग्राफ"
@@ -1145,9 +1108,9 @@ msgid "Separator"
 msgstr ""
 
 #: ../gtk/src/hocr/HOCROdtExporter.cc:63 ../gtk/src/hocr/HOCROdtExporter.cc:328
-#: ../gtk/src/hocr/HOCRPdfExporter.cc:138
+#: ../gtk/src/hocr/HOCRPdfExporter.cc:142
 #: ../gtk/src/hocr/HOCRTextExporter.cc:31 ../qt/src/hocr/HOCROdtExporter.cc:49
-#: ../qt/src/hocr/HOCRPdfExporter.cc:146 ../qt/src/hocr/HOCRTextExporter.cc:34
+#: ../qt/src/hocr/HOCRPdfExporter.cc:150 ../qt/src/hocr/HOCRTextExporter.cc:34
 msgid "Export failed"
 msgstr "निर्यात असफल"
 
@@ -1160,23 +1123,28 @@ msgstr "ODT निर्यात विफल: आउटपुट फ़ाइ�
 msgid "Exporting to ODT..."
 msgstr "ODT को निर्यात कर रहा है..."
 
-#: ../gtk/src/hocr/HOCRPdfExporter.cc:73 ../qt/src/hocr/HOCRPdfExporter.cc:82
+#: ../gtk/src/hocr/HOCRPdfExporter.cc:72 ../qt/src/hocr/HOCRPdfExporter.cc:81
+#, fuzzy
+msgid "Failed to initialize export backend"
+msgstr "स्कैनिंग बैकएंड चालू नहीं कर सका."
+
+#: ../gtk/src/hocr/HOCRPdfExporter.cc:77 ../qt/src/hocr/HOCRPdfExporter.cc:86
 msgid "The operation was cancelled"
 msgstr "कार्रवाई रद्द कर दी गई"
 
-#: ../gtk/src/hocr/HOCRPdfExporter.cc:125 ../qt/src/hocr/HOCRPdfExporter.cc:134
+#: ../gtk/src/hocr/HOCRPdfExporter.cc:129 ../qt/src/hocr/HOCRPdfExporter.cc:138
 msgid "Failed to render page %1"
 msgstr "पेज %1 रेंडर करने में विफल रहा"
 
-#: ../gtk/src/hocr/HOCRPdfExporter.cc:134 ../qt/src/hocr/HOCRPdfExporter.cc:143
+#: ../gtk/src/hocr/HOCRPdfExporter.cc:138 ../qt/src/hocr/HOCRPdfExporter.cc:147
 msgid "Exporting to PDF..."
 msgstr "पीडीएफ़ के रूप में निर्यात कर रहा है..."
 
-#: ../gtk/src/hocr/HOCRPdfExporter.cc:138 ../qt/src/hocr/HOCRPdfExporter.cc:146
+#: ../gtk/src/hocr/HOCRPdfExporter.cc:142 ../qt/src/hocr/HOCRPdfExporter.cc:150
 msgid "The PDF export failed: %1."
 msgstr "पीडीएफ़ निर्यात विफल: %1."
 
-#: ../gtk/src/hocr/HOCRPdfExporter.cc:454 ../qt/src/hocr/HOCRPdfExporter.cc:485
+#: ../gtk/src/hocr/HOCRPdfExporter.cc:458 ../qt/src/hocr/HOCRPdfExporter.cc:489
 msgid "The PDF library could not load the font '%1'."
 msgstr "पीडीएफ लाइब्रेरी फ़ॉन्ट '%1' लोड नहीं कर सका."
 
@@ -1234,32 +1202,32 @@ msgstr "इंच"
 msgid "The text export failed: unable to write output file."
 msgstr "पाठ निर्यात विफल: आउटपुट फ़ाइल लिखने में असमर्थ."
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:354
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:355
 #: ../qt/src/hocr/OutputEditorHOCR.cc:317
 msgid "Block"
 msgstr "खंड"
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:360
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:361
 #: ../qt/src/hocr/OutputEditorHOCR.cc:319
 msgid "Line"
 msgstr "पंक्ति"
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:363
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:364
 #: ../qt/src/hocr/OutputEditorHOCR.cc:320
 msgid "Word"
 msgstr "शब्द"
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:366
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:367
 #: ../qt/src/hocr/OutputEditorHOCR.cc:321
 msgid "Misspelled word"
 msgstr "गलत वर्तनी शब्द"
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:369
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:370
 #: ../qt/src/hocr/OutputEditorHOCR.cc:322
 msgid "Low confidence word"
 msgstr "कम भरोसेमंद शब्द"
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:540
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:538
 #: ../qt/src/hocr/OutputEditorHOCR.cc:426
 msgid ""
 "The following pages could not be processed:\n"
@@ -1268,12 +1236,12 @@ msgstr ""
 "निम्नलिखित पृष्ठों पर कार्रवाई नहीं की जा सकी:\n"
 "%1"
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:541
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:539
 #: ../qt/src/hocr/OutputEditorHOCR.cc:427
 msgid "Recognition errors"
 msgstr "पहचानने में त्रुटियां"
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:708
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:706
 #: ../qt/src/hocr/OutputEditorHOCR.cc:184
 #: ../qt/src/hocr/OutputEditorHOCR.cc:627
 #: ../qt/src/hocr/OutputEditorHOCR.cc:639
@@ -1281,65 +1249,65 @@ msgid "Multiple values"
 msgstr "एक से अधिक मान"
 
 #. Merging allowed
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:903
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:901
 #: ../qt/src/hocr/OutputEditorHOCR.cc:786
 msgid "Merge"
 msgstr "मिलाएं"
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:910
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:968
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:908
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:966
 #: ../qt/src/hocr/OutputEditorHOCR.cc:788
 #: ../qt/src/hocr/OutputEditorHOCR.cc:852
 msgid "Split from parent"
 msgstr "पैरेंट से विभाजन"
 
 #. Swapping allowed
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:920
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:918
 #: ../qt/src/hocr/OutputEditorHOCR.cc:792
 msgid "Swap"
 msgstr "अदला - बदली"
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:943
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:941
 #: ../qt/src/hocr/OutputEditorHOCR.cc:837
 msgid "Add graphic region"
 msgstr "ग्राफिक क्षेत्र जोड़ें"
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:946
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:944
 #: ../qt/src/hocr/OutputEditorHOCR.cc:838
 msgid "Add text block"
 msgstr "पाठ ब्लॉक जोड़ें"
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:950
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:948
 #: ../qt/src/hocr/OutputEditorHOCR.cc:840
 msgid "Add paragraph"
 msgstr "अनुच्छेद जोड़ें"
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:954
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:952
 #: ../qt/src/hocr/OutputEditorHOCR.cc:842
 msgid "Add line"
 msgstr "पंक्ति जोड़ें"
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:958
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:956
 #: ../qt/src/hocr/OutputEditorHOCR.cc:844
 msgid "Add word"
 msgstr "शब्द जोड़ें"
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:1017
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:1100
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:1015
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:1098
 #: ../qt/src/hocr/OutputEditorHOCR.cc:919
 #: ../qt/src/hocr/OutputEditorHOCR.cc:995
 msgid "hOCR HTML Files"
 msgstr "hOCR एचटीएमएल फ़ाइलें"
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:1018
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:1016
 #: ../qt/src/hocr/OutputEditorHOCR.cc:919
 msgid "Open hOCR File"
 msgstr "hOCR फ़ाइलें खोलें"
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:1066 ../gtk/src/OutputEditorText.cc:466
-#: ../gtk/src/OutputEditorText.cc:516 ../gtk/src/SourceManager.cc:170
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:1064 ../gtk/src/OutputEditorText.cc:463
+#: ../gtk/src/OutputEditorText.cc:513 ../gtk/src/SourceManager.cc:170
 #: ../qt/src/hocr/OutputEditorHOCR.cc:959 ../qt/src/OutputEditorText.cc:393
-#: ../qt/src/SourceManager.cc:162
+#: ../qt/src/SourceManager.cc:160
 msgid ""
 "The following files could not be opened:\n"
 "%1"
@@ -1347,7 +1315,7 @@ msgstr ""
 "निम्नलिखित फाइलें नहीं खुलीं:\n"
 "%1"
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:1069
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:1067
 #: ../qt/src/hocr/OutputEditorHOCR.cc:962
 msgid ""
 "The following files are not valid hOCR HTML:\n"
@@ -1356,17 +1324,17 @@ msgstr ""
 "निम्नलिखित फाइलें सही एचओसीआर एचटीएमएल नहीं हैं:\n"
 "%1"
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:1072 ../gtk/src/OutputEditorText.cc:467
-#: ../gtk/src/OutputEditorText.cc:517 ../gtk/src/SourceManager.cc:170
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:1070 ../gtk/src/OutputEditorText.cc:464
+#: ../gtk/src/OutputEditorText.cc:514 ../gtk/src/SourceManager.cc:170
 #: ../qt/src/hocr/OutputEditorHOCR.cc:965 ../qt/src/OutputEditorText.cc:393
-#: ../qt/src/SourceManager.cc:162
+#: ../qt/src/SourceManager.cc:160
 msgid "Unable to open files"
 msgstr "फ़ाइल खोलने में अक्षम"
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:1097
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:1163
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:1199
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:1229
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:1095
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:1161
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:1197
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:1227
 #: ../qt/src/hocr/OutputEditorHOCR.cc:992
 #: ../qt/src/hocr/OutputEditorHOCR.cc:1054
 #: ../qt/src/hocr/OutputEditorHOCR.cc:1088
@@ -1374,78 +1342,78 @@ msgstr "फ़ाइल खोलने में अक्षम"
 msgid "output"
 msgstr "आउटपुट"
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:1101
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:1099
 #: ../qt/src/hocr/OutputEditorHOCR.cc:995
 msgid "Save hOCR Output..."
 msgstr "hOCR आउटपुट सहेजें..."
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:1108 ../gtk/src/OutputEditorText.cc:539
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:1106 ../gtk/src/OutputEditorText.cc:536
 #: ../qt/src/hocr/OutputEditorHOCR.cc:1002 ../qt/src/OutputEditorText.cc:416
 msgid "Failed to save output"
 msgstr "आउटपुट सहेजने में विफल रहा"
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:1108 ../gtk/src/OutputEditorText.cc:539
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:1106 ../gtk/src/OutputEditorText.cc:536
 #: ../qt/src/hocr/OutputEditorHOCR.cc:1002 ../qt/src/OutputEditorText.cc:416
 msgid "Check that you have writing permissions in the selected folder."
 msgstr "जांच कर लें कि चयनित फ़ोल्डर में आपके पास लिखने की अनुमति है."
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:1166
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:1164
 #: ../qt/src/hocr/OutputEditorHOCR.cc:1057
 msgid "OpenDocument Text Documents"
 msgstr "ओपनडॉक्युमेंट पाठ दस्तावेज़"
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:1167
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:1165
 #: ../qt/src/hocr/OutputEditorHOCR.cc:1057
 msgid "Save ODT Output..."
 msgstr "ODT आउटपुट सहेजें..."
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:1204
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:1202
 #: ../qt/src/hocr/OutputEditorHOCR.cc:1093
 msgid "PDF Files"
 msgstr "पीडीएफ़ फाइलें"
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:1205
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:1203
 #: ../qt/src/hocr/OutputEditorHOCR.cc:1093
 msgid "Save PDF Output..."
 msgstr "पीडीएफ़ आउटपुट सहेजें..."
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:1210
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:1208
 #: ../qt/src/hocr/OutputEditorHOCR.cc:1098
 msgid "Invalid Output"
 msgstr "अमान्य आउटपुट"
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:1210
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:1208
 #: ../qt/src/hocr/OutputEditorHOCR.cc:1098
 msgid "Cannot overwrite a file which is a source image of this document."
 msgstr "किसी फाइल को मिटाकर नहीं लिख सकते जो इस दस्तावेज़ का स्रोत चित्र है."
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:1232 ../gtk/src/OutputEditorText.cc:457
-#: ../gtk/src/OutputEditorText.cc:531 ../qt/src/hocr/OutputEditorHOCR.cc:1120
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:1230 ../gtk/src/OutputEditorText.cc:454
+#: ../gtk/src/OutputEditorText.cc:528 ../qt/src/hocr/OutputEditorHOCR.cc:1120
 #: ../qt/src/OutputEditorText.cc:341 ../qt/src/OutputEditorText.cc:409
 msgid "Text Files"
 msgstr "पाठ फ़ाइलें"
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:1233
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:1231
 #: ../qt/src/hocr/OutputEditorHOCR.cc:1120
 msgid "Save Text Output..."
 msgstr "पाठ आउटपुट सहेजें..."
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:1249
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:1247
 #: ../qt/src/hocr/OutputEditorHOCR.cc:1139
 msgid "Output not saved"
 msgstr "आउटपुट सहेजा नहीं गया"
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:1249
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:1247
 #: ../qt/src/hocr/OutputEditorHOCR.cc:1139
 msgid "Save output before proceeding?"
 msgstr "आगे बढ़ने से पहले आउटपुट सहेजें?"
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:1369 ../gtk/src/OutputEditorText.cc:357
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:1367 ../gtk/src/OutputEditorText.cc:351
 #: ../qt/src/hocr/OutputEditorHOCR.cc:1237 ../qt/src/OutputEditorText.cc:253
 msgid "Replacing..."
 msgstr "बदल रहा है..."
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:1394 ../gtk/src/OutputEditorText.cc:373
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:1392 ../gtk/src/OutputEditorText.cc:367
 #: ../qt/src/hocr/OutputEditorHOCR.cc:1260 ../qt/src/OutputEditorText.cc:264
 msgid "Applying substitutions..."
 msgstr "प्रतिस्थापन लागू कर रहा है..."
@@ -1509,7 +1477,7 @@ msgstr "कीबोर्ड शॉर्टकट"
 msgid "Confidence: %1"
 msgstr "विश्वास: %1"
 
-#: ../gtk/src/MainWindow.cc:133 ../qt/src/MainWindow.cc:353
+#: ../gtk/src/MainWindow.cc:133 ../qt/src/MainWindow.cc:356
 msgid "Using tesseract"
 msgstr "टेसेरेक्ट उपयोग में"
 
@@ -1517,53 +1485,53 @@ msgstr "टेसेरेक्ट उपयोग में"
 msgid "Select an image to begin..."
 msgstr "प्रारंभ करने के लिए कोई चित्र चुनें..."
 
-#: ../gtk/src/MainWindow.cc:331 ../qt/src/MainWindow.cc:336
+#: ../gtk/src/MainWindow.cc:331 ../qt/src/MainWindow.cc:339
 msgid "Multiple sources (%1)"
 msgstr "कई स्रोत (% 1)"
 
-#: ../gtk/src/MainWindow.cc:333 ../qt/src/MainWindow.cc:338
+#: ../gtk/src/MainWindow.cc:333 ../qt/src/MainWindow.cc:341
 msgid "Ready"
 msgstr "तैयार"
 
-#: ../gtk/src/MainWindow.cc:485 ../qt/src/MainWindow.cc:475
+#: ../gtk/src/MainWindow.cc:485 ../qt/src/MainWindow.cc:478
 msgid "New version"
 msgstr "नया संस्करण"
 
-#: ../gtk/src/MainWindow.cc:485 ../qt/src/MainWindow.cc:475
+#: ../gtk/src/MainWindow.cc:485 ../qt/src/MainWindow.cc:478
 msgid "gImageReader %1 is available"
 msgstr "जी-इमेज-रीडर %1 उपलब्ध है"
 
-#: ../gtk/src/MainWindow.cc:486 ../qt/src/MainWindow.cc:476
+#: ../gtk/src/MainWindow.cc:486 ../qt/src/MainWindow.cc:479
 msgid "Download"
 msgstr "डाउनलोड"
 
-#: ../gtk/src/MainWindow.cc:487 ../qt/src/MainWindow.cc:477
+#: ../gtk/src/MainWindow.cc:487 ../qt/src/MainWindow.cc:480
 msgid "Changelog"
 msgstr "बदलाव-सूची"
 
-#: ../gtk/src/MainWindow.cc:488 ../qt/src/MainWindow.cc:478
+#: ../gtk/src/MainWindow.cc:488 ../qt/src/MainWindow.cc:481
 msgid "Don't notify again"
 msgstr "फिर से सूचित नहीं करें"
 
-#: ../gtk/src/MainWindow.cc:509 ../qt/src/MainWindow.cc:526
+#: ../gtk/src/MainWindow.cc:509 ../qt/src/MainWindow.cc:529
 msgid "Don't show again"
 msgstr "फिर से न दिखाएँ"
 
 #: ../gtk/src/MainWindow.cc:510 ../gtk/src/MainWindow.cc:523
-#: ../qt/src/MainWindow.cc:527
+#: ../qt/src/MainWindow.cc:530
 msgid "Install"
 msgstr "संस्थापित करें"
 
-#: ../gtk/src/MainWindow.cc:530 ../qt/src/MainWindow.cc:539
+#: ../gtk/src/MainWindow.cc:530 ../qt/src/MainWindow.cc:542
 msgid "Spelling dictionary missing"
 msgstr "वर्तनी शब्दकोश उपलब्ध नहीं है"
 
-#: ../gtk/src/MainWindow.cc:530 ../qt/src/MainWindow.cc:539
+#: ../gtk/src/MainWindow.cc:530 ../qt/src/MainWindow.cc:542
 msgid "The spellcheck dictionary for %1 is not installed"
 msgstr "%1 के लिए वर्तनी शब्दकोश संस्थापित नहीं है"
 
 #: ../gtk/src/MainWindow.cc:537 ../gtk/src/MainWindow.cc:566
-#: ../qt/src/MainWindow.cc:545
+#: ../qt/src/MainWindow.cc:548
 msgid "Installing spelling dictionary for '%1'"
 msgstr "'%1' के लिए वर्तनी शब्दकोश संस्थापित किया जा रहा है"
 
@@ -1571,30 +1539,30 @@ msgstr "'%1' के लिए वर्तनी शब्दकोश संस
 #: ../gtk/src/MainWindow.cc:587 ../gtk/src/MainWindow.cc:635
 #: ../gtk/src/MainWindow.cc:640 ../gtk/src/TessdataManager.cc:60
 #: ../gtk/src/TessdataManager.cc:70 ../gtk/src/TessdataManager.cc:339
-#: ../qt/src/MainWindow.cc:564 ../qt/src/MainWindow.cc:577
-#: ../qt/src/MainWindow.cc:586 ../qt/src/MainWindow.cc:632
-#: ../qt/src/MainWindow.cc:637 ../qt/src/TessdataManager.cc:70
+#: ../qt/src/MainWindow.cc:567 ../qt/src/MainWindow.cc:580
+#: ../qt/src/MainWindow.cc:589 ../qt/src/MainWindow.cc:635
+#: ../qt/src/MainWindow.cc:640 ../qt/src/TessdataManager.cc:70
 #: ../qt/src/TessdataManager.cc:80 ../qt/src/TessdataManager.cc:288
 msgid "Error"
 msgstr "त्रुटि"
 
-#: ../gtk/src/MainWindow.cc:558 ../qt/src/MainWindow.cc:564
+#: ../gtk/src/MainWindow.cc:558 ../qt/src/MainWindow.cc:567
 msgid "Failed to install spelling dictionary: %1"
 msgstr "वर्तनी शब्दकोश संस्थापित करने में विफल: %1"
 
-#: ../gtk/src/MainWindow.cc:579 ../qt/src/MainWindow.cc:577
+#: ../gtk/src/MainWindow.cc:579 ../qt/src/MainWindow.cc:580
 msgid "Failed to create directory for spelling dictionaries."
 msgstr "वर्तनी शब्दकोश के लिए डिरेक्ट्री बनाने में विफल रहा."
 
-#: ../gtk/src/MainWindow.cc:587 ../qt/src/MainWindow.cc:586
+#: ../gtk/src/MainWindow.cc:587 ../qt/src/MainWindow.cc:589
 msgid "Could not read %1: %2."
 msgstr "पढ़ नहीं सका %1: %2."
 
-#: ../gtk/src/MainWindow.cc:614 ../qt/src/MainWindow.cc:612
+#: ../gtk/src/MainWindow.cc:614 ../qt/src/MainWindow.cc:615
 msgid "Downloading '%1'..."
 msgstr "'%1' को डाउनलोड किया जा रहा है..."
 
-#: ../gtk/src/MainWindow.cc:635 ../qt/src/MainWindow.cc:632
+#: ../gtk/src/MainWindow.cc:635 ../qt/src/MainWindow.cc:635
 msgid ""
 "The following dictionaries could not be downloaded:\n"
 "%1\n"
@@ -1610,7 +1578,7 @@ msgstr ""
 "संकेत: यदि आपके पास सिस्टम फ़ोल्डर में लिखने की अनुमति नहीं है तो सेटिंग संवाद में बदल कर आप "
 "उपयोगकर्ता पथ चुन सकते हैं."
 
-#: ../gtk/src/MainWindow.cc:638 ../qt/src/MainWindow.cc:635
+#: ../gtk/src/MainWindow.cc:638 ../qt/src/MainWindow.cc:638
 msgid "Dictionaries installed"
 msgstr "शब्दकोश संस्थापित हैं"
 
@@ -1622,7 +1590,7 @@ msgstr ""
 "निम्न शब्दकोश संस्थापित हैं:\n"
 "%1"
 
-#: ../gtk/src/MainWindow.cc:640 ../qt/src/MainWindow.cc:637
+#: ../gtk/src/MainWindow.cc:640 ../qt/src/MainWindow.cc:640
 msgid "No spelling dictionaries found for '%1'."
 msgstr "'%1' के लिए कोई वर्तनी शब्दकोश नहीं मिला."
 
@@ -1646,35 +1614,35 @@ msgstr "दस्तावेज़ सहेजा नहीं गया"
 msgid "Save document before proceeding?"
 msgstr "क्या आगे बढ़ने से पहले दस्तावेज़ सहेजा जाना चाहिएँ?"
 
-#: ../gtk/src/OutputEditorText.cc:298 ../qt/src/OutputEditorText.cc:238
+#: ../gtk/src/OutputEditorText.cc:292 ../qt/src/OutputEditorText.cc:238
 msgid "Stripping line breaks..."
 msgstr "लाइन ब्रेक को हटाया जा रहा है..."
 
-#: ../gtk/src/OutputEditorText.cc:309
+#: ../gtk/src/OutputEditorText.cc:303
 msgid "No highlight"
 msgstr "चिह्नित नहीं"
 
-#: ../gtk/src/OutputEditorText.cc:329
+#: ../gtk/src/OutputEditorText.cc:323
 msgid "Highlight mode"
 msgstr "चिह्नित प्रकार"
 
-#: ../gtk/src/OutputEditorText.cc:334
+#: ../gtk/src/OutputEditorText.cc:328
 msgid "Check spelling"
 msgstr "वर्तनी जांचें"
 
-#: ../gtk/src/OutputEditorText.cc:364 ../qt/src/OutputEditorText.cc:256
+#: ../gtk/src/OutputEditorText.cc:358 ../qt/src/OutputEditorText.cc:256
 msgid "%1 occurrences replaced"
 msgstr "%1 घटनाओं को बदला गया"
 
-#: ../gtk/src/OutputEditorText.cc:412 ../qt/src/OutputEditorText.cc:300
+#: ../gtk/src/OutputEditorText.cc:406 ../qt/src/OutputEditorText.cc:300
 msgid "File: %1"
 msgstr "फ़ाइलः %1"
 
-#: ../gtk/src/OutputEditorText.cc:415 ../qt/src/OutputEditorText.cc:303
+#: ../gtk/src/OutputEditorText.cc:409 ../qt/src/OutputEditorText.cc:303
 msgid "Page: %1"
 msgstr "पृष्ठ: %1"
 
-#: ../gtk/src/OutputEditorText.cc:428 ../gtk/src/Recognizer.cc:242
+#: ../gtk/src/OutputEditorText.cc:422 ../gtk/src/Recognizer.cc:242
 #: ../qt/src/Recognizer.cc:259
 msgid ""
 "\n"
@@ -1683,20 +1651,20 @@ msgstr ""
 "\n"
 "[पृष्ठ %1 पहचानने में विफल]\n"
 
-#: ../gtk/src/OutputEditorText.cc:458 ../gtk/src/SourceManager.cc:299
-#: ../qt/src/OutputEditorText.cc:341 ../qt/src/SourceManager.cc:279
+#: ../gtk/src/OutputEditorText.cc:455 ../gtk/src/SourceManager.cc:299
+#: ../qt/src/OutputEditorText.cc:341 ../qt/src/SourceManager.cc:277
 msgid "Select Files"
 msgstr "फ़ाइल चुनें"
 
-#: ../gtk/src/OutputEditorText.cc:532 ../qt/src/OutputEditorText.cc:409
+#: ../gtk/src/OutputEditorText.cc:529 ../qt/src/OutputEditorText.cc:409
 msgid "Save Output..."
 msgstr "आउटपुट सहेजें..."
 
-#: ../gtk/src/OutputEditorText.cc:584
+#: ../gtk/src/OutputEditorText.cc:581
 msgid "Unsaved documents"
 msgstr "न सहेजे गए दस्तावेज़"
 
-#: ../gtk/src/OutputEditorText.cc:585 ../qt/src/OutputEditorText.cc:461
+#: ../gtk/src/OutputEditorText.cc:582 ../qt/src/OutputEditorText.cc:461
 msgid ""
 "The following documents have unsaved changes. Which documents do you want to "
 "save before proceeding?"
@@ -1843,55 +1811,62 @@ msgstr "कोई स्कैनर निर्दिष्ट नहीं �
 msgid "Unable to connect to scanner"
 msgstr "स्कैनर से जुड़ने में असमर्थ"
 
-#: ../gtk/src/scanner/ScannerSane.cc:408 ../gtk/src/scanner/ScannerTwain.cc:266
-#: ../gtk/src/scanner/ScannerTwain.cc:291 ../qt/src/scanner/ScannerSane.cc:406
+#: ../gtk/src/scanner/ScannerSane.cc:245 ../gtk/src/scanner/ScannerSane.cc:253
+#: ../gtk/src/scanner/ScannerSane.cc:261 ../gtk/src/scanner/ScannerSane.cc:267
+#: ../qt/src/scanner/ScannerSane.cc:243 ../qt/src/scanner/ScannerSane.cc:251
+#: ../qt/src/scanner/ScannerSane.cc:259 ../qt/src/scanner/ScannerSane.cc:265
+msgid "The selected scan source is not available on this device"
+msgstr ""
+
+#: ../gtk/src/scanner/ScannerSane.cc:417 ../gtk/src/scanner/ScannerTwain.cc:266
+#: ../gtk/src/scanner/ScannerTwain.cc:291 ../qt/src/scanner/ScannerSane.cc:415
 #: ../qt/src/scanner/ScannerTwain.cc:258 ../qt/src/scanner/ScannerTwain.cc:290
 msgid "Unable to start scan"
 msgstr "स्कैन प्रारंभ करने में अक्षम"
 
-#: ../gtk/src/scanner/ScannerSane.cc:416 ../gtk/src/scanner/ScannerSane.cc:466
-#: ../gtk/src/scanner/ScannerTwain.cc:317 ../qt/src/scanner/ScannerSane.cc:414
-#: ../qt/src/scanner/ScannerSane.cc:464 ../qt/src/scanner/ScannerTwain.cc:316
+#: ../gtk/src/scanner/ScannerSane.cc:425 ../gtk/src/scanner/ScannerSane.cc:475
+#: ../gtk/src/scanner/ScannerTwain.cc:317 ../qt/src/scanner/ScannerSane.cc:423
+#: ../qt/src/scanner/ScannerSane.cc:473 ../qt/src/scanner/ScannerTwain.cc:316
 msgid "Error communicating with scanner"
 msgstr "स्कैनर के साथ संचार में त्रुटि"
 
-#: ../gtk/src/scanner/ScannerSane.cc:526 ../qt/src/scanner/ScannerSane.cc:521
+#: ../gtk/src/scanner/ScannerSane.cc:535 ../qt/src/scanner/ScannerSane.cc:530
 msgid "Failed to save image"
 msgstr "चित्र सहेजने में असफल"
 
-#: ../gtk/src/scanner/ScannerSane.cc:808 ../qt/src/scanner/ScannerSane.cc:803
+#: ../gtk/src/scanner/ScannerSane.cc:817 ../qt/src/scanner/ScannerSane.cc:812
 msgid "Operation is cancelled."
 msgstr "कार्रवाई रद्द कर दी गई."
 
-#: ../gtk/src/scanner/ScannerSane.cc:810 ../qt/src/scanner/ScannerSane.cc:805
+#: ../gtk/src/scanner/ScannerSane.cc:819 ../qt/src/scanner/ScannerSane.cc:814
 msgid "Device is busy."
 msgstr "उपकरण व्यस्त है."
 
-#: ../gtk/src/scanner/ScannerSane.cc:812 ../qt/src/scanner/ScannerSane.cc:807
+#: ../gtk/src/scanner/ScannerSane.cc:821 ../qt/src/scanner/ScannerSane.cc:816
 msgid "Cover is opened."
 msgstr "कवर खुला है."
 
-#: ../gtk/src/scanner/ScannerSane.cc:814 ../qt/src/scanner/ScannerSane.cc:809
+#: ../gtk/src/scanner/ScannerSane.cc:823 ../qt/src/scanner/ScannerSane.cc:818
 msgid "Document feeder jammed."
 msgstr "दस्तावेज़ फ़ीडर जाम हो गया है."
 
-#: ../gtk/src/scanner/ScannerSane.cc:816 ../qt/src/scanner/ScannerSane.cc:811
+#: ../gtk/src/scanner/ScannerSane.cc:825 ../qt/src/scanner/ScannerSane.cc:820
 msgid "Document feeder out of documents."
 msgstr "दस्तावेज़ फ़ीडर में दस्तावेज़ खत्म हो गया है."
 
-#: ../gtk/src/scanner/ScannerSane.cc:818 ../qt/src/scanner/ScannerSane.cc:813
+#: ../gtk/src/scanner/ScannerSane.cc:827 ../qt/src/scanner/ScannerSane.cc:822
 msgid "Access to scanner is denied."
 msgstr "स्कैनर पर पंहुच अस्वीकृत."
 
-#: ../gtk/src/SourceManager.cc:184 ../qt/src/SourceManager.cc:177
+#: ../gtk/src/SourceManager.cc:184 ../qt/src/SourceManager.cc:175
 msgid "Enter password for file '%1':"
 msgstr "फ़ाइल '%1' के लिए पासवर्ड भरें:"
 
-#: ../gtk/src/SourceManager.cc:228 ../qt/src/SourceManager.cc:205
+#: ../gtk/src/SourceManager.cc:228 ../qt/src/SourceManager.cc:203
 msgid "PDF with text"
 msgstr "टेक्स्ट सहित पीडीएफ"
 
-#: ../gtk/src/SourceManager.cc:228 ../qt/src/SourceManager.cc:205
+#: ../gtk/src/SourceManager.cc:228 ../qt/src/SourceManager.cc:203
 msgid ""
 "The PDF file already contains text:\n"
 "%1\n"
@@ -1901,73 +1876,73 @@ msgstr ""
 "%1\n"
 "फिर भी उसे खोलें?"
 
-#: ../gtk/src/SourceManager.cc:294 ../qt/src/SourceManager.cc:278
+#: ../gtk/src/SourceManager.cc:294 ../qt/src/SourceManager.cc:276
 msgid "Images and PDFs"
 msgstr "चित्र तथा पीडीएफ़"
 
-#: ../gtk/src/SourceManager.cc:305 ../qt/src/SourceManager.cc:321
+#: ../gtk/src/SourceManager.cc:305 ../qt/src/SourceManager.cc:319
 msgid "Clipboard Error"
 msgstr "क्लिपबोर्ड त्रुटि"
 
-#: ../gtk/src/SourceManager.cc:305 ../qt/src/SourceManager.cc:321
+#: ../gtk/src/SourceManager.cc:305 ../qt/src/SourceManager.cc:319
 msgid "Failed to read the clipboard."
 msgstr "क्लिपबोर्ड को पढ़ने में असफ़ल."
 
-#: ../gtk/src/SourceManager.cc:309 ../qt/src/SourceManager.cc:325
-#: ../qt/src/SourceManager.cc:331
+#: ../gtk/src/SourceManager.cc:309 ../qt/src/SourceManager.cc:323
+#: ../qt/src/SourceManager.cc:329
 msgid "Pasted %1"
 msgstr "चिपकाया %1"
 
 #: ../gtk/src/SourceManager.cc:323 ../gtk/src/SourceManager.cc:360
 #: ../gtk/src/SourceManager.cc:366 ../gtk/src/SourceManager.cc:386
-#: ../gtk/src/SourceManager.cc:394 ../qt/src/SourceManager.cc:346
-#: ../qt/src/SourceManager.cc:380 ../qt/src/SourceManager.cc:394
-#: ../qt/src/SourceManager.cc:400
+#: ../gtk/src/SourceManager.cc:394 ../qt/src/SourceManager.cc:344
+#: ../qt/src/SourceManager.cc:378 ../qt/src/SourceManager.cc:392
+#: ../qt/src/SourceManager.cc:398
 msgid "Screenshot Error"
 msgstr "स्क्रीनशॉट त्रुटि"
 
 #: ../gtk/src/SourceManager.cc:323 ../gtk/src/SourceManager.cc:386
-#: ../gtk/src/SourceManager.cc:394 ../qt/src/SourceManager.cc:346
-#: ../qt/src/SourceManager.cc:394 ../qt/src/SourceManager.cc:400
+#: ../gtk/src/SourceManager.cc:394 ../qt/src/SourceManager.cc:344
+#: ../qt/src/SourceManager.cc:392 ../qt/src/SourceManager.cc:398
 #, fuzzy
 msgid "Failed to take screenshot: %1"
 msgstr "स्क्रीनशॉट लेने में विफल."
 
-#: ../gtk/src/SourceManager.cc:323 ../qt/src/SourceManager.cc:346
+#: ../gtk/src/SourceManager.cc:323 ../qt/src/SourceManager.cc:344
 msgid "xdg-desktop-portal not available"
 msgstr ""
 
-#: ../gtk/src/SourceManager.cc:338 ../qt/src/SourceManager.cc:357
+#: ../gtk/src/SourceManager.cc:338 ../qt/src/SourceManager.cc:355
 msgid "Grabbing screenshot..."
 msgstr ""
 
 #: ../gtk/src/SourceManager.cc:360 ../gtk/src/SourceManager.cc:366
-#: ../qt/src/SourceManager.cc:380
+#: ../qt/src/SourceManager.cc:378
 msgid "Failed to take screenshot."
 msgstr "स्क्रीनशॉट लेने में विफल."
 
 #: ../gtk/src/SourceManager.cc:370 ../gtk/src/SourceManager.cc:401
-#: ../qt/src/SourceManager.cc:384 ../qt/src/SourceManager.cc:405
+#: ../qt/src/SourceManager.cc:382 ../qt/src/SourceManager.cc:403
 msgid "Screenshot %1"
 msgstr "स्क्रीनशॉट %1"
 
-#: ../gtk/src/SourceManager.cc:386 ../qt/src/SourceManager.cc:394
+#: ../gtk/src/SourceManager.cc:386 ../qt/src/SourceManager.cc:392
 msgid "Cancelled or denied"
 msgstr ""
 
-#: ../gtk/src/SourceManager.cc:394 ../qt/src/SourceManager.cc:400
+#: ../gtk/src/SourceManager.cc:394 ../qt/src/SourceManager.cc:398
 msgid "Invalid screenshot URI"
 msgstr ""
 
-#: ../gtk/src/SourceManager.cc:407 ../qt/src/SourceManager.cc:411
+#: ../gtk/src/SourceManager.cc:407 ../qt/src/SourceManager.cc:409
 msgid "Saving image..."
 msgstr "चित्र सहेज रहा है..."
 
-#: ../gtk/src/SourceManager.cc:414 ../qt/src/SourceManager.cc:424
+#: ../gtk/src/SourceManager.cc:414 ../qt/src/SourceManager.cc:422
 msgid "Cannot Write File"
 msgstr "फ़ाइल लिख नहीं सकता"
 
-#: ../gtk/src/SourceManager.cc:414 ../qt/src/SourceManager.cc:424
+#: ../gtk/src/SourceManager.cc:414 ../qt/src/SourceManager.cc:422
 msgid "Could not write to %1."
 msgstr "%1 पर लिख नहीं सका."
 
@@ -1975,24 +1950,24 @@ msgstr "%1 पर लिख नहीं सका."
 msgid "Delete File?"
 msgstr "फ़ाइल मिटाएँ?"
 
-#: ../gtk/src/SourceManager.cc:453 ../qt/src/SourceManager.cc:452
+#: ../gtk/src/SourceManager.cc:453 ../qt/src/SourceManager.cc:450
 msgid "Delete the following files?"
 msgstr "निम्न फ़ाइलें हटाएं?"
 
-#: ../gtk/src/SourceManager.cc:495 ../qt/src/SourceManager.cc:529
+#: ../gtk/src/SourceManager.cc:495 ../qt/src/SourceManager.cc:527
 msgid "Open output"
 msgstr "आउटपुट खोलें"
 
-#: ../gtk/src/SourceManager.cc:495 ../qt/src/SourceManager.cc:529
+#: ../gtk/src/SourceManager.cc:495 ../qt/src/SourceManager.cc:527
 msgid ""
 "Both a text and a hOCR output were found. Which one do you want to open?"
 msgstr "टेक्स्ट और एचओसीआर आउटपुट दोनों पाए गए । आप किसे खोलना चाहते हैं?"
 
-#: ../gtk/src/SourceManager.cc:576 ../qt/src/SourceManager.cc:557
+#: ../gtk/src/SourceManager.cc:576 ../qt/src/SourceManager.cc:555
 msgid "Missing File"
 msgstr "फ़ाइल नहीं है"
 
-#: ../gtk/src/SourceManager.cc:576 ../qt/src/SourceManager.cc:557
+#: ../gtk/src/SourceManager.cc:576 ../qt/src/SourceManager.cc:555
 msgid ""
 "The following file has been deleted or moved:\n"
 "%1"
@@ -2136,11 +2111,11 @@ msgstr "खारिज करें"
 msgid "Discard all"
 msgstr "सभी खारिज करें"
 
-#: ../gtk/src/Utils.cc:150 ../qt/src/SourceManager.cc:530
+#: ../gtk/src/Utils.cc:150 ../qt/src/SourceManager.cc:528
 msgid "Text"
 msgstr "लेख"
 
-#: ../gtk/src/Utils.cc:153 ../qt/src/SourceManager.cc:531
+#: ../gtk/src/Utils.cc:153 ../qt/src/SourceManager.cc:529
 msgid "hOCR"
 msgstr "एचओसीआर"
 
@@ -2151,9 +2126,10 @@ msgstr "जी-इमेज-रीडर का परिचय"
 #: ../qt/data/AboutDialog.ui.h:3
 #, fuzzy
 msgid ""
-"<html><head/><body><p>&nbsp;</p><p>A graphical frontend to tesseract-ocr</"
-"p><p><a href=\"https://github.com/manisandro/gImageReader/\">Website</a></"
-"p><p>&nbsp;</p></body></html>"
+"&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&amp;nbsp;&lt;/p&gt;&lt;p&gt;A "
+"graphical frontend to tesseract-ocr&lt;/p&gt;&lt;p&gt;&lt;a "
+"href=&quot;https://github.com/manisandro/gImageReader/&quot;&gt;Website&lt;/"
+"a&gt;&lt;/p&gt;&lt;p&gt;&amp;nbsp;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;"
 msgstr ""
 "<html><head/><body><p>&nbsp;</p><p> tesseract-ocr का उपयोग में आसान प्रोग्राम</"
 "p><p><a href=\"https://github.com/manisandro/gImageReader/\">वेबसाइट</a></"
@@ -2187,39 +2163,41 @@ msgstr "यूटीएफ-8"
 msgid "Text file encoding:"
 msgstr "पाठ फ़ाइल एन्कोडिंग:"
 
-#: ../qt/data/CrashHandler.ui.h:2
-#, fuzzy, no-c-format
+#: ../qt/data/CrashHandler.ui.h:1
+#, fuzzy
 msgid ""
-"<html><head/><body><p><span style=\" font-weight:600;\">The application has "
-"crashed</span></p><p>Apologies for the inconvenience. To help improve the "
-"application, please consider reporting the issue to <a "
-"href=\"mailto:manisandro@gmail.com?"
-"subject=gImageReader%20Crash\">manisandro@gmail.com</a>. Please try to "
-"describe what you were doing before the application crashed. Also, include "
-"the information below. Thank you.</p></body></html>"
+"&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-"
+"weight:600;&quot;&gt;The application has crashed&lt;/span&gt;&lt;/"
+"p&gt;&lt;p&gt;Apologies for the inconvenience. To help improve the "
+"application, please consider reporting the issue in the &lt;a "
+"href=&quot;https://github.com/manisandro/gImageReader/issues&quot;&gt;bug "
+"tracker&lt;/a&gt;. Please try to describe what you were doing before the "
+"application crashed. Also, include the information below. Thank you.&lt;/"
+"p&gt;&lt;/body&gt;&lt;/html&gt;"
 msgstr ""
-"<b>ऐप्लिकेशन क्रैश हो गया है</b>\n"
-"\n"
-"असुविधा के लिए क्षमा चाहते हैं. इस ऐप्लिकेशन में सुधार के लिए, समस्या की रिपोर्ट यहाँ करें - "
-"<a href=\"mailto:manisandro@gmail.com?"
+"<html><head/><body><p><span style=\" font-weight:600;\">ऐप्लिकेशन क्रैश हो गया "
+"है</span></p><p>असुविधा के लिए क्षमा चाहते हैं. इस ऐप्लिकेशन में सुधार के लिए, समस्या की "
+"रिपोर्ट यहाँ करें - <a href=\"mailto:manisandro@gmail.com?"
 "subject=gImageReader%20Crash\">manisandro@gmail.com</a>. कृपया बताएँ कि जब "
 "ऐप्लिकेशन क्रैश हुआ तो उस समय आप सिस्टम पर क्या काम कर रहे थे. साथ ही नीचे दी गई "
-"जानकारी भी शामिल करें. धन्यवाद."
+"जानकारी भी शामिल करें. धन्यवाद.</p></body></html>"
 
-#: ../qt/data/CrashHandler.ui.h:3
+#: ../qt/data/CrashHandler.ui.h:2
+#, fuzzy
 msgid ""
-"<html><head/><body><p><span style=\" font-weight:600;\">Tesseract has "
-"aborted</span></p><p>Tesseract (the OCR engine) has aborted while "
-"recognizing text. This may occur if the used traineddatas are corrupt or "
-"incomplatible with the version of tesseract in use, or due to a bug in "
-"tesseract.</p><p>The stacktrace below may provide additional information "
-"about where the crash occurred.</p></body></html>"
+"&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-"
+"weight:600;&quot;&gt;Tesseract has aborted&lt;/span&gt;&lt;/"
+"p&gt;&lt;p&gt;Tesseract (the OCR engine) has aborted while recognizing text. "
+"This may occur if the used traineddatas are corrupt or incomplatible with "
+"the version of tesseract in use, or due to a bug in tesseract.&lt;/"
+"p&gt;&lt;p&gt;The stacktrace below may provide additional information about "
+"where the crash occurred.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;"
 msgstr ""
-"<html><head/><body><p><span style=\" font-weight:600;\">टेसरैक्ट निरस्त हो गया "
-"है</span></p><p>दस्तावेज़ पहचानते समय टेसरैक्ट (ओसीआर इंजन) निरस्त हो गया। यह तब हो "
-"सकता है जब उपयोग की गई आधार-सामग्री दूषित है, या टेसरैक्ट के संस्करण के साथ असंगत है, या "
-"फिर टेसरैक्ट में कोई दोष है।</p><p>नीचे दर्शाई विवरण सूची विफलता कहा हुई इस की अतिरिक्त "
-"जानकारी प्रदान कर सकती है।</p></body></html>"
+"<html> <head/> <body> <p> <span style=\" font-weight:600;\"> Tesseract एबोर्ट "
+"हो गया है </span></p><p> Tesseract (ओसीआर इंजन) पाठ को पहचानने के दौरान एबोर्ट हो "
+"गया है । यह तब हो सकता है जब उपयोग किए गए ट्रेन्डडेटा भ्रष्ट या उपयोग किये टेसेरेक्ट "
+"संस्करण से असंगत हों या टेसेरेक्ट में बग हो । </p> <p> नीचे दिए गए स्टैक ट्रेस इस बारे में "
+"अतिरिक्त जानकारी प्रदान कर सकते हैं कि क्रैश कहाँ हुआ । </p> </body> </html>"
 
 #: ../qt/data/MainWindow.ui.h:18
 msgid "Flatbed"
@@ -2281,23 +2259,24 @@ msgstr "आकार-प्रकार का अपने आप पता ल
 msgid "Toggle Output Pane"
 msgstr "आउटपुट पैन टॉगल करें"
 
-#: ../qt/data/PdfExportDialog.ui.h:1
-msgid "PDF Export"
-msgstr "पीडीएफ़ में निर्यात करें"
+#: ../qt/data/PageRangeDialog.ui.h:3
+#, fuzzy
+msgid "&lt;small&gt;&lt;b&gt;Example:&lt;/b&gt; 1-10, 13, 14-18&lt;/small&gt;"
+msgstr "<small><b>उदाहरण:</b> 1-10, 13, 14-18</small>"
 
-#: ../qt/data/PdfExportDialog.ui.h:5 ../qt/data/PdfExportWidget.ui.h:4
+#: ../qt/data/PdfExportWidget.ui.h:4
 msgid "Backend:"
 msgstr "बैकएंड:"
 
-#: ../qt/data/PdfExportDialog.ui.h:8 ../qt/data/PdfExportWidget.ui.h:7
+#: ../qt/data/PdfExportWidget.ui.h:7
 msgid "Portrait"
 msgstr "खड़ा"
 
-#: ../qt/data/PdfExportDialog.ui.h:9 ../qt/data/PdfExportWidget.ui.h:8
+#: ../qt/data/PdfExportWidget.ui.h:8
 msgid "Landscape"
 msgstr "लैंडस्केप"
 
-#: ../qt/src/hocr/HOCRPdfExporter.cc:320
+#: ../qt/src/hocr/HOCRPdfExporter.cc:324
 msgid "Failed to write to file"
 msgstr "फ़ाइल में लिखने में असफल"
 
@@ -2426,7 +2405,7 @@ msgstr "ढूंढें तथा बदलें"
 msgid "Show proofread widget"
 msgstr "पूर्वावलोकन दिखाएँ"
 
-#: ../qt/src/MainWindow.cc:635
+#: ../qt/src/MainWindow.cc:638
 msgid ""
 "The following dictionary files were installed:\n"
 "%1"
@@ -2434,11 +2413,11 @@ msgstr ""
 "निम्न शब्दकोश फ़ाइलें संस्थापित हैं:\n"
 "%1"
 
-#: ../qt/src/OutputEditorText.cc:519 ../qt/src/SourceManager.cc:262
+#: ../qt/src/OutputEditorText.cc:519 ../qt/src/SourceManager.cc:260
 msgid "No recent files"
 msgstr "हाल की कोई फाइल नहीं"
 
-#: ../qt/src/SourceManager.cc:452
+#: ../qt/src/SourceManager.cc:450
 msgid "Delete Files"
 msgstr "फ़ाइलें हटाएँ"
 
@@ -2507,6 +2486,41 @@ msgstr "आउटपुट साफ करें"
 msgid "Add tab"
 msgstr ""
 
+#, fuzzy, no-c-format
+#~ msgid ""
+#~ "<html><head/><body><p><span style=\" font-weight:600;\">The application "
+#~ "has crashed</span></p><p>Apologies for the inconvenience. To help improve "
+#~ "the application, please consider reporting the issue to <a "
+#~ "href=\"mailto:manisandro@gmail.com?"
+#~ "subject=gImageReader%20Crash\">manisandro@gmail.com</a>. Please try to "
+#~ "describe what you were doing before the application crashed. Also, "
+#~ "include the information below. Thank you.</p></body></html>"
+#~ msgstr ""
+#~ "<b>ऐप्लिकेशन क्रैश हो गया है</b>\n"
+#~ "\n"
+#~ "असुविधा के लिए क्षमा चाहते हैं. इस ऐप्लिकेशन में सुधार के लिए, समस्या की रिपोर्ट यहाँ करें "
+#~ "- <a href=\"mailto:manisandro@gmail.com?"
+#~ "subject=gImageReader%20Crash\">manisandro@gmail.com</a>. कृपया बताएँ कि जब "
+#~ "ऐप्लिकेशन क्रैश हुआ तो उस समय आप सिस्टम पर क्या काम कर रहे थे. साथ ही नीचे दी गई "
+#~ "जानकारी भी शामिल करें. धन्यवाद."
+
+#~ msgid ""
+#~ "<html><head/><body><p><span style=\" font-weight:600;\">Tesseract has "
+#~ "aborted</span></p><p>Tesseract (the OCR engine) has aborted while "
+#~ "recognizing text. This may occur if the used traineddatas are corrupt or "
+#~ "incomplatible with the version of tesseract in use, or due to a bug in "
+#~ "tesseract.</p><p>The stacktrace below may provide additional information "
+#~ "about where the crash occurred.</p></body></html>"
+#~ msgstr ""
+#~ "<html><head/><body><p><span style=\" font-weight:600;\">टेसरैक्ट निरस्त हो "
+#~ "गया है</span></p><p>दस्तावेज़ पहचानते समय टेसरैक्ट (ओसीआर इंजन) निरस्त हो गया। यह "
+#~ "तब हो सकता है जब उपयोग की गई आधार-सामग्री दूषित है, या टेसरैक्ट के संस्करण के साथ "
+#~ "असंगत है, या फिर टेसरैक्ट में कोई दोष है।</p><p>नीचे दर्शाई विवरण सूची विफलता कहा हुई "
+#~ "इस की अतिरिक्त जानकारी प्रदान कर सकती है।</p></body></html>"
+
+#~ msgid "PDF Export"
+#~ msgstr "पीडीएफ़ में निर्यात करें"
+
 #, fuzzy
 #~ msgid "Form"
 #~ msgstr "फॉर्मेट:"
@@ -2526,48 +2540,6 @@ msgstr ""
 
 #~ msgid "Failed to create output. The returned error was: %1"
 #~ msgstr "आउटपुट बनाने में विफल रहा. लौटाई गई त्रुटि थी: %1"
-
-#, fuzzy, no-c-format
-#~ msgid ""
-#~ "&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-"
-#~ "weight:600;&quot;&gt;The application has crashed&lt;/span&gt;&lt;/"
-#~ "p&gt;&lt;p&gt;Apologies for the inconvenience. To help improve the "
-#~ "application, please consider reporting the issue to &lt;a "
-#~ "href=&quot;mailto:manisandro@gmail.com?"
-#~ "subject=gImageReader%20Crash&quot;&gt;manisandro@gmail.com&lt;/a&gt;. "
-#~ "Please try to describe what you were doing before the application "
-#~ "crashed. Also, include the information below. Thank you.&lt;/p&gt;&lt;/"
-#~ "body&gt;&lt;/html&gt;"
-#~ msgstr ""
-#~ "<html><head/><body><p><span style=\" font-weight:600;\">ऐप्लिकेशन क्रैश हो "
-#~ "गया है</span></p><p>असुविधा के लिए क्षमा चाहते हैं. इस ऐप्लिकेशन में सुधार के लिए, "
-#~ "समस्या की रिपोर्ट यहाँ करें - <a href=\"mailto:manisandro@gmail.com?"
-#~ "subject=gImageReader%20Crash\">manisandro@gmail.com</a>. कृपया बताएँ कि जब "
-#~ "ऐप्लिकेशन क्रैश हुआ तो उस समय आप सिस्टम पर क्या काम कर रहे थे. साथ ही नीचे दी गई "
-#~ "जानकारी भी शामिल करें. धन्यवाद.</p></body></html>"
-
-#, fuzzy
-#~ msgid ""
-#~ "&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-"
-#~ "weight:600;&quot;&gt;Tesseract has aborted&lt;/span&gt;&lt;/"
-#~ "p&gt;&lt;p&gt;Tesseract (the OCR engine) has aborted while recognizing "
-#~ "text. This may occur if the used traineddatas are corrupt or "
-#~ "incomplatible with the version of tesseract in use, or due to a bug in "
-#~ "tesseract.&lt;/p&gt;&lt;p&gt;The stacktrace below may provide additional "
-#~ "information about where the crash occurred.&lt;/p&gt;&lt;/body&gt;&lt;/"
-#~ "html&gt;"
-#~ msgstr ""
-#~ "<html> <head/> <body> <p> <span style=\" font-weight:600;\"> Tesseract "
-#~ "एबोर्ट हो गया है </span></p><p> Tesseract (ओसीआर इंजन) पाठ को पहचानने के दौरान "
-#~ "एबोर्ट हो गया है । यह तब हो सकता है जब उपयोग किए गए ट्रेन्डडेटा भ्रष्ट या उपयोग "
-#~ "किये टेसेरेक्ट संस्करण से असंगत हों या टेसेरेक्ट में बग हो । </p> <p> नीचे दिए गए स्टैक ट्रेस "
-#~ "इस बारे में अतिरिक्त जानकारी प्रदान कर सकते हैं कि क्रैश कहाँ हुआ । </p> </body> </"
-#~ "html>"
-
-#, fuzzy
-#~ msgid ""
-#~ "&lt;small&gt;&lt;b&gt;Example:&lt;/b&gt; 1-10, 13, 14-18&lt;/small&gt;"
-#~ msgstr "<small><b>उदाहरण:</b> 1-10, 13, 14-18</small>"
 
 #, fuzzy
 #~ msgid "plain text"

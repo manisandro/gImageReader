@@ -35,7 +35,7 @@ gImageReader is a simple Gtk/Qt front-end to [tesseract-ocr](https://github.com/
 The steps for compiling gImageReader from source are documented in the [wiki](https://github.com/manisandro/gImageReader/wiki/Compiling-gImageReader).
 
 ## Support
-If you encounter issues, please file a ticket in the [issue tracker](https://github.com/manisandro/gImageReader/issues), or feel free to mail me directly at `manisandro(at)gmail(dot)com`. Be sure to also consult the [FAQ](https://github.com/manisandro/gImageReader/wiki/FAQ).
+If you encounter issues, please file a ticket in the [issue tracker](https://github.com/manisandro/gImageReader/issues). Be sure to also consult the [FAQ](https://github.com/manisandro/gImageReader/wiki/FAQ).
 
 ## Contributing
 Contributions are always welcome, ideally in the form of pull-requests.

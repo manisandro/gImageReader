@@ -85,6 +85,8 @@ gtk/src/SearchReplaceFrame.cc
 gtk/src/SearchReplaceFrame.hh
 gtk/src/SourceManager.cc
 gtk/src/SourceManager.hh
+gtk/src/SourceView.cc
+gtk/src/SourceView.hh
 gtk/src/SubstitutionsManager.cc
 gtk/src/SubstitutionsManager.hh
 gtk/src/TessdataManager.cc
@@ -99,7 +101,6 @@ gtk/src/Utils.hh
 [type: gettext/qtdesigner]qt/data/HOCRBatchExportDialog.ui
 [type: gettext/qtdesigner]qt/data/MainWindow.ui
 [type: gettext/qtdesigner]qt/data/PageRangeDialog.ui
-[type: gettext/qtdesigner]qt/data/PdfExportDialog.ui
 [type: gettext/qtdesigner]qt/data/PdfExportWidget.ui
 [type: gettext/qtdesigner]qt/data/SearchReplaceFrame.ui
 qt/src/Acquirer.cc
