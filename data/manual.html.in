@@ -47,6 +47,47 @@
 <h3><a name="News">News</a></h3>
 <p><i>A detailed list of changes can be found in the commit log: https://github.com/manisandro/gImageReader/commits/master</i></p>
 <pre style="max-height: 200px; overflow-y: auto; padding: 1em; border: 1px solid gray;">
+gImageReader 3.4.4 (Oct 25 2026):
+* Bugfixes
+ - [Qt] Fix spelling dictionary download not downloading all variants of the dictionary
+ - Fix hOCR ppageno which should be zero-based
+ - [Gtk,Qt] Fail the scan when the requested ADF source is not available
+ - [Gtk] Insert recognized text at the cursor when nothing is selected
+ - [Qt] Fix rendering images in hOCR exports
+* Enhancements:
+ - Implement screenshot capturing on Wayland
+ - Handle hOcr item classes separator and photo
+ - Upgrade to libxml++-5.0
+ - Use GtkSourceView directly instead of obsolete GtkSourceViewmm
+ - [Gtk,Qt] Add feedback in the statusbar if user should draw a rectangle
+* Updated translations
+* See https://github.com/manisandro/gImageReader/compare/v3.4.3...v3.4.4 for details
+
+gImageReader 3.4.3 (Aug 04 2025):
+* Bugfixes
+ - Fix incorrect dictionary mapping for latin
+ - Gracefully catch PoDoFo exceptions when printing document
+ - [Qt] Fix control modifier causing page blank during mouse select
+ - [Qt] Fix crash when adding new line to HOCR tree
+* Enhancements:
+ - Add support for PoDoF 1.0.x
+ - Switch windows builds to qt6
+* Updated translations
+* See https://github.com/manisandro/gImageReader/compare/v3.4.2...v3.4.3 for details
+
+gImageReader 3.4.2 (Feb 05 2024):
+* Bugfixes:
+ - [Qt] Fix crash in FileTreeModel::findFile with temporary file
+ - [Gtk] Correctly notify hOCR tree updates when merging items
+ - [Win32] Fix dictionary installation directory
+ - Quote x_font property in hOCR documents
+ - Assorted Wayland fixes
+* Enhancements:
+- Add support for PoDoFo 0.10.x
+- Apply brightness/contrast/resolution/invert to all selected images
+* Updated translations
+* See https://github.com/manisandro/gImageReader/compare/v3.4.1...v3.4.2 for details
+
 gImageReader 3.4.1 (Jan 29 2023):
 * Bugfixes:
  - Fix warning about text in pdf incorrectly shown even if PDF has no text
