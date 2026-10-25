@@ -125,11 +125,11 @@ bool HOCRPdfExporter::run(const HOCRDocument* hocrdocument, const QString& outna
                         return false;
                     }
 
+                    // Print the original image
                     if (pdfSettings->overlay) {
                         QRect scaledRect(imgScale * bbox.left(), imgScale * bbox.top(), imgScale * bbox.width(), imgScale * bbox.height());
                         QRect printRect(bbox.left() * px2pt, bbox.top() * px2pt, bbox.width() * px2pt, bbox.height() * px2pt);
-                        QImage selection;
-                        QMetaObject::invokeMethod(painter, "getSelection",  Qt::BlockingQueuedConnection, Q_RETURN_ARG(QImage, selection), Q_ARG(QRect, scaledRect));
+                        QImage selection = painter->getSelection(scaledRect);
                         painter->drawImage(printRect, selection, *pdfSettings);
                     }
                     QMetaObject::invokeMethod(this, "setSource", Qt::BlockingQueuedConnection, Q_RETURN_ARG(bool, success), Q_ARG(QString, page->sourceFile()), Q_ARG(int, page->pageNr()), Q_ARG(int, sourceScale), Q_ARG(double, page->angle()));
@@ -229,10 +229,10 @@ void HOCRPdfPrinter::printChildren(const HOCRItem* item, const HOCRPdfExporter::
             drawText(wordRect.x() * px2pu, y * px2pu, text);
         }
     } else if (itemClass == "ocr_graphic" && !pdfSettings.overlay) {
+        // Only print child graphics if not in invisible text overlay mode (in which case the full original image is painted)
         QRect scaledItemRect(itemRect.left() * imgScale, itemRect.top() * imgScale, itemRect.width() * imgScale, itemRect.height() * imgScale);
         QRect printRect(itemRect.left() * px2pu, itemRect.top() * px2pu, itemRect.width() * px2pu, itemRect.height() * px2pu);
-        QImage selection;
-        QMetaObject::invokeMethod(this, "getSelection", QThread::currentThread() == qApp->thread() ? Qt::DirectConnection : Qt::BlockingQueuedConnection, Q_RETURN_ARG(QImage, selection), Q_ARG(QRect, scaledItemRect));
+        QImage selection = getSelection(scaledItemRect);
         drawImage(printRect, selection, pdfSettings);
     } else {
         for (int i = 0, n = item->children().size(); i < n; ++i) {
@@ -243,7 +243,13 @@ void HOCRPdfPrinter::printChildren(const HOCRItem* item, const HOCRPdfExporter::
 
 QImage HOCRPdfPrinter::getSelection(const QRect& bbox) {
     Displayer* displayer = MAIN->getDisplayer();
-    return displayer->getImage(bbox.translated(displayer->getSceneBoundingRect().toRect().topLeft()));
+    QRectF sceneBoundingRect;
+    Qt::ConnectionType conn = QThread::currentThread() == displayer->thread() ? Qt::DirectConnection : Qt::BlockingQueuedConnection;
+    QMetaObject::invokeMethod(displayer, "getSceneBoundingRect", conn, Q_RETURN_ARG(QRectF, sceneBoundingRect));
+    QRectF imageRect = bbox.translated(sceneBoundingRect.toRect().topLeft());
+    QImage selection;
+    QMetaObject::invokeMethod(displayer, "getImage", conn, Q_RETURN_ARG(QImage, selection), Q_ARG(QRectF, imageRect));
+    return displayer->getImage(imageRect);
 }
 
 

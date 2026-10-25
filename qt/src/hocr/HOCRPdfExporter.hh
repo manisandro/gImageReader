@@ -105,6 +105,7 @@ public:
     virtual void finishPage() {}
     virtual bool finishDocument(QString& /*errMsg*/) { return true; }
 
+    QImage getSelection(const QRect& bbox);
     void printChildren(const HOCRItem* item, const HOCRPdfExporter::PDFSettings& pdfSettings, double px2pu/*pixels to printer units*/, double imgScale = 1., double fontScale = 1.);
 
 protected:
@@ -112,8 +113,6 @@ protected:
         return image.format() == targetFormat ? image : image.convertToFormat(targetFormat, flags);
     }
 
-private slots:
-    QImage getSelection(const QRect& bbox);
 };
 
 class HOCRQPainterPdfPrinter : public HOCRPdfPrinter {

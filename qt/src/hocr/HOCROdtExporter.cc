@@ -257,8 +257,7 @@ void HOCROdtExporter::writeImage(QuaZip& zip, QMap<const HOCRItem*, QString>& im
         return;
     }
     if (item->itemClass() == "ocr_graphic") {
-        QImage image;
-        QMetaObject::invokeMethod(this, "getSelection",  Qt::BlockingQueuedConnection, Q_RETURN_ARG(QImage, image), Q_ARG(QRect, item->bbox()));
+        QImage image = getSelection(item->bbox());
         QString filename = QString("Pictures/%1.png").arg(QUuid::createUuid().toString());
         QuaZipFile* file = new QuaZipFile(&zip);
         if (file->open(QIODevice::WriteOnly, QuaZipNewInfo(filename))) {
