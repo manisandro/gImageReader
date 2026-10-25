@@ -7,7 +7,7 @@ theme:
 
 repo_url: https://github.com/manisandro/gImageReader
 site_author: Miharix
-copyright: Copyright ©2009-2020 Sandro Mani
+copyright: Copyright Sandro Mani
 
 #if servin on server change to true
 use_directory_urls: false
