@@ -87,11 +87,14 @@ void DisplayerToolHOCR::setAction(Action action, QModelIndex index, bool clearSe
     if (clearSel) {
         clearSelection();
     }
+    Action prevAction = m_currentAction;
     m_currentAction = action;
     m_currentIndex = index;
     if (m_currentAction >= ACTION_DRAW_GRAPHIC_RECT && m_currentAction <= ACTION_DRAW_WORD_RECT) {
+        MAIN->pushState(MainWindow::State::Normal, _("Draw a rectangle around the desired region."));
         m_displayer->setCursor(Qt::CrossCursor);
-    } else {
+    } else if (prevAction >= ACTION_DRAW_GRAPHIC_RECT && prevAction <= ACTION_DRAW_WORD_RECT) {
+        MAIN->popState();
         m_displayer->setCursor(Qt::ArrowCursor);
     }
 }

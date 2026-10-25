@@ -90,10 +90,13 @@ void DisplayerToolHOCR::setAction(Action action, bool clearSel) {
     if (clearSel) {
         clearSelection();
     }
+    Action prevAction = m_currentAction;
     m_currentAction = action;
     if (m_currentAction >= ACTION_DRAW_GRAPHIC_RECT && m_currentAction <= ACTION_DRAW_WORD_RECT) {
+        MAIN->pushState(MainWindow::State::Normal, _("Draw a rectangle around the desired region."));
         m_displayer->setDefaultCursor(Gdk::Cursor::create(Gdk::TCROSS));
-    } else {
+    } else if (prevAction >= ACTION_DRAW_GRAPHIC_RECT && prevAction <= ACTION_DRAW_WORD_RECT) {
+        MAIN->popState();
         m_displayer->setDefaultCursor(Gdk::Cursor::create(Gdk::ARROW));
     }
 }
