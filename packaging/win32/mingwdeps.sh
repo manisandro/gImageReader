@@ -13,6 +13,7 @@ dnf install -y \
   hunspell-en \
   tesseract \
   mingw32-nsis \
+  mingw64-nsis \
   zip \
   python3-gobject \
   \
