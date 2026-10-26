@@ -8,17 +8,17 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-10-25 14:59+0100\n"
-"PO-Revision-Date: 2025-05-28 06:29+0000\n"
-"Last-Translator: eevan78 <ivan.pesic@gmail.com>\n"
+"PO-Revision-Date: 2026-10-27 03:51+0000\n"
+"Last-Translator: eevan78 <eevan78@users.noreply.hosted.weblate.org>\n"
 "Language-Team: Serbian <https://hosted.weblate.org/projects/gimagereader/"
 "translations/sr/>\n"
 "Language: sr_CS\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
-"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Generator: Weblate 5.12-dev\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"X-Generator: Weblate 2026.11.dev0\n"
 
 #: ../data/gimagereader.desktop.in.h:1
 msgid "OCR application"
@@ -185,7 +185,6 @@ msgid "Regenerate backtrace"
 msgstr "Поново генериши траг за отклањање грешака"
 
 #: ../gtk/data/CrashHandler.ui.h:2
-#, fuzzy
 msgid ""
 "<b>The application has crashed</b>\n"
 "\n"
@@ -198,11 +197,10 @@ msgstr ""
 "<b>Апликација се срушила</b>\n"
 "\n"
 "Извињавамо се због непријатности. Ако желите да нам помогнете да унапредимо "
-"апликацију, размотрите могућност да пријавите проблем на <a "
-"href=\"mailto:manisandro@gmail.com?"
-"subject=gImageReader%20Crash\">manisandro@gmail.com</a>. Молимо вас да "
-"покушате да опишете шта сте радили пре него што се апликација срушила. "
-"Такође, приложите и информације наведене испод. Хвала."
+"апликацију, размотрите могућност да пријавите проблем на <a href=\"https://"
+"github.com/manisandro/gImageReader/issues\">регистар проблема</a>. Молимо "
+"вас да покушате да опишете шта сте радили пре него што се апликација "
+"срушила. Такође, приложите и информације наведене испод. Хвала."
 
 #: ../gtk/data/CrashHandler.ui.h:5
 msgid ""
@@ -1111,7 +1109,7 @@ msgstr "Графика"
 
 #: ../gtk/src/hocr/HOCRDocument.cc:812 ../qt/src/hocr/HOCRDocument.cc:704
 msgid "Separator"
-msgstr ""
+msgstr "Граничник"
 
 #: ../gtk/src/hocr/HOCROdtExporter.cc:63 ../gtk/src/hocr/HOCROdtExporter.cc:328
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:142
@@ -1130,9 +1128,8 @@ msgid "Exporting to ODT..."
 msgstr "Извози се у ODT..."
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:72 ../qt/src/hocr/HOCRPdfExporter.cc:81
-#, fuzzy
 msgid "Failed to initialize export backend"
-msgstr "Није успела иницијализација позадинског механизма скенирања."
+msgstr "Није успела иницијализација позадинског механизма за извоз"
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:77 ../qt/src/hocr/HOCRPdfExporter.cc:86
 msgid "The operation was cancelled"
@@ -1825,7 +1822,7 @@ msgstr "Не може да се успостави веза са скенеро�
 #: ../qt/src/scanner/ScannerSane.cc:243 ../qt/src/scanner/ScannerSane.cc:251
 #: ../qt/src/scanner/ScannerSane.cc:259 ../qt/src/scanner/ScannerSane.cc:265
 msgid "The selected scan source is not available on this device"
-msgstr ""
+msgstr "Изабрани извор скеирања није доступан на овом уређају"
 
 #: ../gtk/src/scanner/ScannerSane.cc:417 ../gtk/src/scanner/ScannerTwain.cc:266
 #: ../gtk/src/scanner/ScannerTwain.cc:291 ../qt/src/scanner/ScannerSane.cc:415
@@ -1913,17 +1910,16 @@ msgstr "Грешка слике екрана"
 #: ../gtk/src/SourceManager.cc:323 ../gtk/src/SourceManager.cc:386
 #: ../gtk/src/SourceManager.cc:394 ../qt/src/SourceManager.cc:344
 #: ../qt/src/SourceManager.cc:392 ../qt/src/SourceManager.cc:398
-#, fuzzy
 msgid "Failed to take screenshot: %1"
-msgstr "Није успело узимање слике екрана."
+msgstr "Није успело узимање слике екрана: %1"
 
 #: ../gtk/src/SourceManager.cc:323 ../qt/src/SourceManager.cc:344
 msgid "xdg-desktop-portal not available"
-msgstr ""
+msgstr "xdg-desktop-portal није доступан"
 
 #: ../gtk/src/SourceManager.cc:338 ../qt/src/SourceManager.cc:355
 msgid "Grabbing screenshot..."
-msgstr ""
+msgstr "Хвата се слика екрана..."
 
 #: ../gtk/src/SourceManager.cc:360 ../gtk/src/SourceManager.cc:366
 #: ../qt/src/SourceManager.cc:378
@@ -1937,11 +1933,11 @@ msgstr "Слика екрана %1"
 
 #: ../gtk/src/SourceManager.cc:386 ../qt/src/SourceManager.cc:392
 msgid "Cancelled or denied"
-msgstr ""
+msgstr "Отказано или одбијено"
 
 #: ../gtk/src/SourceManager.cc:394 ../qt/src/SourceManager.cc:398
 msgid "Invalid screenshot URI"
-msgstr ""
+msgstr "Неисправан URI слике екрана"
 
 #: ../gtk/src/SourceManager.cc:407 ../qt/src/SourceManager.cc:409
 msgid "Saving image..."
@@ -2134,16 +2130,16 @@ msgid "About gImageReader"
 msgstr "О програму gImageReader"
 
 #: ../qt/data/AboutDialog.ui.h:3
-#, fuzzy
 msgid ""
 "&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&amp;nbsp;&lt;/p&gt;&lt;p&gt;A "
 "graphical frontend to tesseract-ocr&lt;/p&gt;&lt;p&gt;&lt;a "
 "href=&quot;https://github.com/manisandro/gImageReader/&quot;&gt;Website&lt;/"
 "a&gt;&lt;/p&gt;&lt;p&gt;&amp;nbsp;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;"
 msgstr ""
-"<html><head/><body><p>&nbsp;</p><p>Графички интерфејс за tesseract-ocr</"
-"p><p><a href=\"https://github.com/manisandro/gImageReader/\">Вебсајт</a></"
-"p><p>&nbsp;</p></body></html>"
+"&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&amp;nbsp;&lt;/"
+"p&gt;&lt;p&gt;Графички интерфејс за tesseract-ocrr&lt;/p&gt;&lt;p&gt;&lt;a "
+"href=&quot;https://github.com/manisandro/gImageReader/&quot;&gt;Вебсајт&lt;/"
+"a&gt;&lt;/p&gt;&lt;p&gt;&amp;nbsp;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;"
 
 #: ../qt/data/AboutDialog.ui.h:4
 msgid "Credits"
@@ -2174,7 +2170,6 @@ msgid "Text file encoding:"
 msgstr "Кодирање текст фајла:"
 
 #: ../qt/data/CrashHandler.ui.h:1
-#, fuzzy
 msgid ""
 "&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-"
 "weight:600;&quot;&gt;The application has crashed&lt;/span&gt;&lt;/"
@@ -2185,16 +2180,16 @@ msgid ""
 "application crashed. Also, include the information below. Thank you.&lt;/"
 "p&gt;&lt;/body&gt;&lt;/html&gt;"
 msgstr ""
-"<html><head/><body><p><span style=\" font-weight:600;\">Апликација се "
-"срушила</span></p><p>Извињавамо се због непријатности. Ако желите да нам "
-"помогнете да унапредимо апликацију, размотрите могућност да пријавите "
-"проблем на <a href=\"mailto:manisandro@gmail.com?"
-"subject=gImageReader%20Crash\">manisandro@gmail.com</a>. Молимо вас да "
-"покушате да опишете шта сте радили пре него што се апликација срушила. "
-"Такође, приложите и информације наведене испод. Хвала.</p></body></html>"
+"&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-"
+"weight:600;&quot;&gt;Апликација се срушила&lt;/span&gt;&lt;/"
+"p&gt;&lt;p&gt;Извињавамо се због непријатности. Ако желите да нам помогнете "
+"да унапредимо апликацију, размотрите могућност да пријавите проблем на &lt;a "
+"href=&quot;https://github.com/manisandro/gImageReader/"
+"issues&quot;&gt;пратилац багова&lt;/a&gt;. Молимо вас да покушате да опишете "
+"шта сте радили пре него што се апликација срушила. Такође, приложите и "
+"информације наведене испод. Хвала.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;"
 
 #: ../qt/data/CrashHandler.ui.h:2
-#, fuzzy
 msgid ""
 "&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-"
 "weight:600;&quot;&gt;Tesseract has aborted&lt;/span&gt;&lt;/"
@@ -2204,13 +2199,14 @@ msgid ""
 "p&gt;&lt;p&gt;The stacktrace below may provide additional information about "
 "where the crash occurred.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;"
 msgstr ""
-"<html><head/><body><p><span style=\" font-weight:600;\">Tesseract је "
-"прекинуо извршавање</span></p><p>Tesseract (OCR машина) прекинуо извршавање "
-"током препознавања текста. То може да се догоди ако су коришћени подаци "
-"тренирања покварени или нису компатибилни са tesseract верзијом која се "
-"користи, или услед бага у самом програму tesseract.</p><p>Траг стека испод "
-"може да пружи додатне информације у вези са местом на којем је дошло до "
-"краха.</p></body></html>"
+"&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-"
+"weight:600;&quot;&gt;Tesseract је прекинуо извршавање&lt;/span&gt;&lt;/"
+"p&gt;&lt;p&gt;Tesseract (OCR машина) прекинуо извршавање током препознавања "
+"текста. То може да се догоди ако су коришћени подаци тренирања покварени или "
+"нису компатибилни са tesseract верзијом која се користи, или услед бага у "
+"самом програму tesseract.&lt;/p&gt;&lt;p&gt;Траг стека испод може да пружи "
+"додатне информације у вези са местом на којем је дошло до краха.&lt;/"
+"p&gt;&lt;/body&gt;&lt;/html&gt;"
 
 #: ../qt/data/MainWindow.ui.h:18
 msgid "Flatbed"
@@ -2273,9 +2269,8 @@ msgid "Toggle Output Pane"
 msgstr "Преклопник за приказ панела излаза"
 
 #: ../qt/data/PageRangeDialog.ui.h:3
-#, fuzzy
 msgid "&lt;small&gt;&lt;b&gt;Example:&lt;/b&gt; 1-10, 13, 14-18&lt;/small&gt;"
-msgstr "<small><b>Пример:</b> 1-10, 13, 14-18</small>"
+msgstr "&lt;small&gt;&lt;b&gt;Пример:&lt;/b&gt; 1-10, 13, 14-18&lt;/small&gt;"
 
 #: ../qt/data/PdfExportWidget.ui.h:4
 msgid "Backend:"
@@ -2306,101 +2301,92 @@ msgstr ""
 "body></html>"
 
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:480
-#, fuzzy
 msgid "Next field"
-msgstr "Текст фајлови"
+msgstr "Наредно поље"
 
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:481
-#, fuzzy
 msgid "Previous field"
-msgstr "Претходно (Shift+F3)"
+msgstr "Претходно поље"
 
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:482
-#, fuzzy
 msgid "Next line"
-msgstr "Линија текста"
+msgstr "Наредна линија"
 
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:483
-#, fuzzy
 msgid "Previous line"
-msgstr "Претходно (Shift+F3)"
+msgstr "Претходна линија"
 
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:484
-#, fuzzy
 msgid "Spelling suggestions"
-msgstr "Нема предлога"
+msgstr "Правописни предлози"
 
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:485
-#, fuzzy
 msgid "Add word to dictionary"
-msgstr "Додај у речник"
+msgstr "Додај реч у речник"
 
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:486
 msgid "Toggle bold"
-msgstr ""
+msgstr "Укљ./искљ. црни слог"
 
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:487
 msgid "Toggle italic"
-msgstr ""
+msgstr "Укљ./искљ. курзив"
 
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:488
 msgid "Divide word at cursor position"
-msgstr ""
+msgstr "Подели реч на позицији курсора"
 
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:489
 msgid "Merge with previous word"
-msgstr ""
+msgstr "Споји са претходном речи"
 
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:490
 msgid "Merge with next word"
-msgstr ""
+msgstr "Споји са наредном речи"
 
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:491
-#, fuzzy
 msgid "Delete word"
-msgstr "Обриши"
+msgstr "Обриши реч"
 
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:492
 msgid "Move the bounding box up"
-msgstr ""
+msgstr "Помери граничну кутију навише"
 
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:493
 msgid "Move the bounding box down"
-msgstr ""
+msgstr "Помери граничну кутију наниже"
 
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:494
 msgid "Move the bounding box left"
-msgstr ""
+msgstr "Помери граничну кутију улево"
 
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:495
 msgid "Move the bounding box right"
-msgstr ""
+msgstr "Помери граничну кутију удесно"
 
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:496
 msgid "Shrink the bounding box vertically"
-msgstr ""
+msgstr "Умањи граничну кутију по вертикали"
 
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:497
 msgid "Enlarge the bounding box vertically"
-msgstr ""
+msgstr "Увећај граничну кутију по вертикали"
 
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:498
 msgid "Shrink the bounding box horizontally"
-msgstr ""
+msgstr "Умањи граничну кутију по хоризонтали"
 
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:499
 msgid "Enlarge the bounding box horizontally"
-msgstr ""
+msgstr "Увећај граничну кутију по хоризонтали"
 
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:500
-#, fuzzy
 msgid "Increase font size"
-msgstr "Преиначи величину фонта:"
+msgstr "Увећај величину фонта"
 
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:501
-#, fuzzy
 msgid "Decrease font size"
-msgstr "Преиначи величину фонта:"
+msgstr "Умањи величину фонта"
 
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:90
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:91
