@@ -9,8 +9,8 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-01-24 23:16+0100\n"
-"PO-Revision-Date: 2026-02-17 13:17+0000\n"
-"Last-Translator: 大王叫我来巡山 "
+"PO-Revision-Date: 2026-10-27 03:51+0000\n"
+"Last-Translator: Hosted Weblate user 54392 "
 "<hamburger2048@users.noreply.hosted.weblate.org>\n"
 "Language-Team: Chinese (Simplified Han script) <https://hosted.weblate.org/"
 "projects/gimagereader/translations/zh_Hans/>\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Weblate 5.16.1-dev\n"
+"X-Generator: Weblate 2026.11.dev0\n"
 
 #: ../data/gimagereader.desktop.in.h:1
 msgid "OCR application"
@@ -186,7 +186,6 @@ msgid "Regenerate backtrace"
 msgstr "重建 backtrace"
 
 #: ../gtk/data/CrashHandler.ui.h:2
-#, fuzzy
 msgid ""
 "<b>The application has crashed</b>\n"
 "\n"
@@ -198,10 +197,9 @@ msgid ""
 msgstr ""
 "<b>应用程序已崩溃</b>\n"
 "\n"
-"给您带来的不便深表歉意。为了帮助改善应用程序，请考虑发邮件将这个问题报告给 "
-"<a href=\"mailto:manisandro@gmail.com?subject=gImageReader%20Crash\">"
-"manisandro@gmail.com</a>。请试着描述在应用程序崩溃之前你在做什么。同时，请包"
-"括下面的信息。谢谢您。"
+"给您带来的不便深表歉意。为了帮助改善应用程序，请考虑在<a href=\"https://"
+"github.com/manisandro/gImageReader/issues\">bug 跟踪器</a> 报告该问题。请试着"
+"描述在应用程序崩溃之前你在做什么。同时，请包括下面的信息。谢谢您。"
 
 #: ../gtk/data/CrashHandler.ui.h:5
 msgid ""
@@ -1105,7 +1103,7 @@ msgstr "图像"
 
 #: ../gtk/src/hocr/HOCRDocument.cc:812 ../qt/src/hocr/HOCRDocument.cc:704
 msgid "Separator"
-msgstr ""
+msgstr "分隔符"
 
 #: ../gtk/src/hocr/HOCROdtExporter.cc:63 ../gtk/src/hocr/HOCROdtExporter.cc:328
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:142
@@ -1124,9 +1122,8 @@ msgid "Exporting to ODT..."
 msgstr "输出至 ODT..."
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:72 ../qt/src/hocr/HOCRPdfExporter.cc:81
-#, fuzzy
 msgid "Failed to initialize export backend"
-msgstr "不能初始化扫描服务。"
+msgstr "初始化导出后端失败"
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:77 ../qt/src/hocr/HOCRPdfExporter.cc:86
 msgid "The operation was cancelled"
@@ -1391,7 +1388,7 @@ msgstr "不能改写此文件的来源图像档。"
 #: ../gtk/src/OutputEditorText.cc:528 ../qt/src/hocr/OutputEditorHOCR.cc:1120
 #: ../qt/src/OutputEditorText.cc:341 ../qt/src/OutputEditorText.cc:409
 msgid "Text Files"
-msgstr "文本"
+msgstr "文本文件"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:1231
 #: ../qt/src/hocr/OutputEditorHOCR.cc:1120
@@ -1812,7 +1809,7 @@ msgstr "不能连接至扫描器"
 #: ../qt/src/scanner/ScannerSane.cc:243 ../qt/src/scanner/ScannerSane.cc:251
 #: ../qt/src/scanner/ScannerSane.cc:259 ../qt/src/scanner/ScannerSane.cc:265
 msgid "The selected scan source is not available on this device"
-msgstr ""
+msgstr "选中的扫描源在这台设备上不可用"
 
 #: ../gtk/src/scanner/ScannerSane.cc:417 ../gtk/src/scanner/ScannerTwain.cc:266
 #: ../gtk/src/scanner/ScannerTwain.cc:291 ../qt/src/scanner/ScannerSane.cc:415
@@ -1900,17 +1897,16 @@ msgstr "画面截图错误"
 #: ../gtk/src/SourceManager.cc:323 ../gtk/src/SourceManager.cc:386
 #: ../gtk/src/SourceManager.cc:394 ../qt/src/SourceManager.cc:344
 #: ../qt/src/SourceManager.cc:392 ../qt/src/SourceManager.cc:398
-#, fuzzy
 msgid "Failed to take screenshot: %1"
-msgstr "不能截取画面。"
+msgstr "不能截取屏幕：%1"
 
 #: ../gtk/src/SourceManager.cc:323 ../qt/src/SourceManager.cc:344
 msgid "xdg-desktop-portal not available"
-msgstr ""
+msgstr "xdg-desktop-portal 不可用"
 
 #: ../gtk/src/SourceManager.cc:338 ../qt/src/SourceManager.cc:355
 msgid "Grabbing screenshot..."
-msgstr ""
+msgstr "抓取屏幕截图中…"
 
 #: ../gtk/src/SourceManager.cc:360 ../gtk/src/SourceManager.cc:366
 #: ../qt/src/SourceManager.cc:378
@@ -1924,11 +1920,11 @@ msgstr "截图 %1"
 
 #: ../gtk/src/SourceManager.cc:386 ../qt/src/SourceManager.cc:392
 msgid "Cancelled or denied"
-msgstr ""
+msgstr "被取消或拒绝"
 
 #: ../gtk/src/SourceManager.cc:394 ../qt/src/SourceManager.cc:398
 msgid "Invalid screenshot URI"
-msgstr ""
+msgstr "无效的屏幕截图 URI"
 
 #: ../gtk/src/SourceManager.cc:407 ../qt/src/SourceManager.cc:409
 msgid "Saving image..."
@@ -2117,16 +2113,16 @@ msgid "About gImageReader"
 msgstr "有关 gImageReader"
 
 #: ../qt/data/AboutDialog.ui.h:3
-#, fuzzy
 msgid ""
 "&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&amp;nbsp;&lt;/p&gt;&lt;p&gt;A "
 "graphical frontend to tesseract-ocr&lt;/p&gt;&lt;p&gt;&lt;a "
 "href=&quot;https://github.com/manisandro/gImageReader/&quot;&gt;Website&lt;/"
 "a&gt;&lt;/p&gt;&lt;p&gt;&amp;nbsp;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;"
 msgstr ""
-"<html><head/><body><p>&nbsp;</p><p>tesseract-ocr 的图形前端</p><p><a "
-"href=\"https://github.com/manisandro/gImageReader/\">网站</a></p><p>&nbsp;</"
-"p></body></html>"
+"&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&amp;nbsp;&lt;/p&gt;&lt;p&gt; "
+"tesseract-ocr 的图形化前端&lt;/p&gt;&lt;p&gt;&lt;a href=&quot;https://"
+"github.com/manisandro/gImageReader/&quot;&gt;网站&lt;/a&gt;&lt;/"
+"p&gt;&lt;p&gt;&amp;nbsp;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;"
 
 #: ../qt/data/AboutDialog.ui.h:4
 msgid "Credits"
@@ -2155,7 +2151,6 @@ msgid "Text file encoding:"
 msgstr "文本编码："
 
 #: ../qt/data/CrashHandler.ui.h:1
-#, fuzzy
 msgid ""
 "&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-"
 "weight:600;&quot;&gt;The application has crashed&lt;/span&gt;&lt;/"
@@ -2168,10 +2163,9 @@ msgid ""
 msgstr ""
 "&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-"
 "weight:600;&quot;&gt;应用程序崩溃了&lt;/span&gt;&lt;/p&gt;&lt;p&gt;不便之处敬"
-"请原谅。 为了帮助改进应用程序，请考虑将问题报告给 &lt;a "
-"href=&quot;mailto:manisandro@gmail.com?"
-"subject=gImageReader%20Crash&quot;&gt;manisandro@gmail.com&lt;/a&gt;. 请尝试"
-"描述在应用程序崩溃之前您在做什么。 此外，请包括以下信息。 谢谢你。&lt;/"
+"请原谅。 为了帮助改进应用程序，请考虑将问题报告给 &lt;a href=&quot;https://"
+"github.com/manisandro/gImageReader/issues&quot;&gt;bug tracker&lt;/a&gt;. 请"
+"尝试描述在应用程序崩溃之前您在做什么。 此外，请包括以下信息。 谢谢你。&lt;/"
 "p&gt;&lt;/body&gt;&lt;/html&gt;"
 
 #: ../qt/data/CrashHandler.ui.h:2
@@ -2283,101 +2277,92 @@ msgstr ""
 "body></html>"
 
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:480
-#, fuzzy
 msgid "Next field"
-msgstr "文本"
+msgstr "下个字段"
 
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:481
-#, fuzzy
 msgid "Previous field"
-msgstr "上一个（Shift+F3）"
+msgstr "上个字段"
 
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:482
-#, fuzzy
 msgid "Next line"
-msgstr "文字"
+msgstr "下一行"
 
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:483
-#, fuzzy
 msgid "Previous line"
-msgstr "上一个（Shift+F3）"
+msgstr "上一行"
 
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:484
-#, fuzzy
 msgid "Spelling suggestions"
-msgstr "没有推荐"
+msgstr "拼写建议"
 
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:485
-#, fuzzy
 msgid "Add word to dictionary"
-msgstr "新增至词典"
+msgstr "添加单词到词典"
 
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:486
 msgid "Toggle bold"
-msgstr ""
+msgstr "粗体字切换"
 
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:487
 msgid "Toggle italic"
-msgstr ""
+msgstr "斜体字切换"
 
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:488
 msgid "Divide word at cursor position"
-msgstr ""
+msgstr "在光标位置分割单词"
 
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:489
 msgid "Merge with previous word"
-msgstr ""
+msgstr "和前一个单词合并"
 
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:490
 msgid "Merge with next word"
-msgstr ""
+msgstr "和下一个单词合并"
 
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:491
-#, fuzzy
 msgid "Delete word"
-msgstr "删除"
+msgstr "删除单词"
 
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:492
 msgid "Move the bounding box up"
-msgstr ""
+msgstr "上移边界框"
 
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:493
 msgid "Move the bounding box down"
-msgstr ""
+msgstr "下移边界框"
 
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:494
 msgid "Move the bounding box left"
-msgstr ""
+msgstr "左移边界框"
 
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:495
 msgid "Move the bounding box right"
-msgstr ""
+msgstr "右移边界框"
 
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:496
 msgid "Shrink the bounding box vertically"
-msgstr ""
+msgstr "垂直收缩边界框"
 
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:497
 msgid "Enlarge the bounding box vertically"
-msgstr ""
+msgstr "垂直扩大边界框"
 
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:498
 msgid "Shrink the bounding box horizontally"
-msgstr ""
+msgstr "水平收缩边界框"
 
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:499
 msgid "Enlarge the bounding box horizontally"
-msgstr ""
+msgstr "水平扩大边界框"
 
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:500
-#, fuzzy
 msgid "Increase font size"
-msgstr "改写字体尺寸："
+msgstr "增加字体尺寸"
 
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:501
-#, fuzzy
 msgid "Decrease font size"
-msgstr "改写字体尺寸："
+msgstr "减小字体尺寸"
 
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:90
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:91
