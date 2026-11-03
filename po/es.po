@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-10-25 14:59+0100\n"
-"PO-Revision-Date: 2026-10-26 01:09+0000\n"
+"PO-Revision-Date: 2026-11-04 20:51+0000\n"
 "Last-Translator: thorin <thorin@users.noreply.hosted.weblate.org>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/gimagereader/"
 "translations/es/>\n"
@@ -17,10 +17,9 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 2026.11.dev0\n"
+"X-Generator: Weblate 2026.11.1.dev0\n"
 
 #: ../data/gimagereader.desktop.in.h:1
-#, fuzzy
 msgid "OCR application"
 msgstr "Aplicación de OCR"
 
@@ -1110,7 +1109,7 @@ msgstr "Gráfico"
 
 #: ../gtk/src/hocr/HOCRDocument.cc:812 ../qt/src/hocr/HOCRDocument.cc:704
 msgid "Separator"
-msgstr ""
+msgstr "Separador"
 
 #: ../gtk/src/hocr/HOCROdtExporter.cc:63 ../gtk/src/hocr/HOCROdtExporter.cc:328
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:142
@@ -1130,9 +1129,8 @@ msgid "Exporting to ODT..."
 msgstr "Exportar a ODT..."
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:72 ../qt/src/hocr/HOCRPdfExporter.cc:81
-#, fuzzy
 msgid "Failed to initialize export backend"
-msgstr "Fallo al iniciar el sistema de escaneo."
+msgstr "Fallo al inicializar el backend de exportación"
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:77 ../qt/src/hocr/HOCRPdfExporter.cc:86
 msgid "The operation was cancelled"
@@ -1835,6 +1833,7 @@ msgstr "No se puede conectar con el escáner"
 #: ../qt/src/scanner/ScannerSane.cc:259 ../qt/src/scanner/ScannerSane.cc:265
 msgid "The selected scan source is not available on this device"
 msgstr ""
+"La fuente de escaneo seleccionada no está disponible en este dispositivo"
 
 #: ../gtk/src/scanner/ScannerSane.cc:417 ../gtk/src/scanner/ScannerTwain.cc:266
 #: ../gtk/src/scanner/ScannerTwain.cc:291 ../qt/src/scanner/ScannerSane.cc:415
@@ -1948,9 +1947,8 @@ msgid "Cancelled or denied"
 msgstr "Cancelada o rechazado"
 
 #: ../gtk/src/SourceManager.cc:394 ../qt/src/SourceManager.cc:398
-#, fuzzy
 msgid "Invalid screenshot URI"
-msgstr "Capturando pantalla..."
+msgstr "URI de captura de pantalla no válida"
 
 #: ../gtk/src/SourceManager.cc:407 ../qt/src/SourceManager.cc:409
 msgid "Saving image..."
@@ -2350,7 +2348,7 @@ msgstr "Activar/desactivar cursiva"
 
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:488
 msgid "Divide word at cursor position"
-msgstr ""
+msgstr "Dividir la palabra en la posición del cursor"
 
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:489
 msgid "Merge with previous word"
