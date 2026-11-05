@@ -1,3 +1,9 @@
+gImageReader 3.4.5 (Nov 05 2026):
+* Bugfixed
+ - Fix installing spelling dictionaries
+* Updated translations
+* See https://github.com/manisandro/gImageReader/compare/v3.4.4...v3.4.5 for details
+
 gImageReader 3.4.4 (Oct 25 2026):
 * Bugfixes
  - [Qt] Fix spelling dictionary download not downloading all variants of the dictionary
