@@ -1,5 +1,5 @@
 gImageReader 3.4.5 (Nov 05 2026):
-* Bugfixed
+* Bugfixes
  - Fix installing spelling dictionaries
 * Updated translations
 * See https://github.com/manisandro/gImageReader/compare/v3.4.4...v3.4.5 for details
