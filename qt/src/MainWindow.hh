@@ -43,6 +43,7 @@ class RecognitionMenu;
 class Recognizer;
 class SourceManager;
 class Source;
+class QDir;
 class QProgressBar;
 
 class MainWindow : public QMainWindow {
@@ -163,6 +164,7 @@ private:
 
     void closeEvent(QCloseEvent* ev);
     void setState(State state);
+    void dictionaryAutoinstallScanDir(const QDir& spellingDir, const QString& url, QStringList& downloaded, QStringList& failed);
 
 private slots:
     void checkVersion(const QString& newver);

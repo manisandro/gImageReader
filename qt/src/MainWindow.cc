@@ -22,6 +22,10 @@
 #include <QDBusConnectionInterface>
 #include <QDesktopServices>
 #include <QDir>
+#include <QJsonArray>
+#include <QJsonDocument>
+#include <QJsonObject>
+#include <QJsonValue>
 #include <QMessageBox>
 #include <QNetworkProxy>
 #include <QProcess>
@@ -572,8 +576,7 @@ void MainWindow::dictionaryAutoinstall() {
         popState();
 #endif
     } else {
-        QString url = "https://cgit.freedesktop.org/libreoffice/dictionaries/tree/";
-        QString plainurl = "https://cgit.freedesktop.org/libreoffice/dictionaries/plain/";
+        QString url = "https://api.github.com/repos/LibreOffice/dictionaries/contents/";
         QDir spellingDir(getConfig()->spellingLocation());
         if (!QDir().mkpath(spellingDir.absolutePath())) {
             popState();
@@ -583,8 +586,8 @@ void MainWindow::dictionaryAutoinstall() {
             return;
         }
         QString messages;
-        QString html = QString(Utils::download(url, messages));
-        if (html.isEmpty()) {
+        QJsonDocument root = QJsonDocument::fromJson(Utils::download(url, messages));
+        if (root.isEmpty() || !root.isArray()) {
             popState();
             if (QMessageBox::Help == QMessageBox::critical(this, _("Error"), _("Could not read %1: %2.").arg(url).arg(messages), QMessageBox::Ok | QMessageBox::Help, QMessageBox::Ok)) {
                 showHelp("#InstallSpelling");
@@ -592,42 +595,18 @@ void MainWindow::dictionaryAutoinstall() {
             return;
         }
         QString langCode = code.left(code.indexOf('_'));
-        QRegularExpression langPat(QString(">(%1_?[A-Z]*)<").arg(langCode));
-        QRegularExpression dictPat(QString(">(%1_?[\\w_]*\\.(dic|aff))<").arg(langCode));
         QStringList downloaded;
         QStringList failed;
-        int pos = 0;
-        QRegularExpressionMatch match;
-
-        while ((match = langPat.match(html, pos)).hasMatch()) {
-            QString lang = match.captured(1);
-            pos = match.capturedEnd();
-
-            QString dictHtml = QString(Utils::download(url + lang + "/", messages));
-            if (dictHtml.isEmpty()) {
+        for (const QJsonValue &langDirValue : root.array()) {
+            if (!langDirValue.isObject()) {
                 continue;
             }
-
-            int dictPos = 0;
-            QRegularExpressionMatch dictMatch;
-            while ((dictMatch = dictPat.match(dictHtml, dictPos)).hasMatch()) {
-                QString filename = dictMatch.captured(1);
-                pushState(State::Busy, _("Downloading '%1'...").arg(filename));
-                QByteArray data = Utils::download(plainurl + lang + "/" + filename, messages);
-                if (!data.isNull()) {
-                    QFile file(spellingDir.absoluteFilePath(filename));
-                    if (file.open(QIODevice::WriteOnly)) {
-                        file.write(data);
-                        downloaded.append(filename);
-                    } else {
-                        failed.append(filename);
-                    }
-                } else {
-                    failed.append(filename);
-                }
-                popState();
-                dictPos = dictMatch.capturedEnd();
+            const QJsonObject langDir = langDirValue.toObject();
+            const QString dirName = langDir.value("name").toString();
+            if (!(langDir.value("type").toString() == "dir" && (dirName == langCode || dirName.startsWith(langCode + "_")))) {
+                continue;
             }
+            dictionaryAutoinstallScanDir(spellingDir, langDir.value("url").toString(), downloaded, failed);
         }
 
         popState();
@@ -639,6 +618,43 @@ void MainWindow::dictionaryAutoinstall() {
         } else {
             if (QMessageBox::Help == QMessageBox::critical(this, _("Error"), _("No spelling dictionaries found for '%1'.").arg(code), QMessageBox::Ok | QMessageBox::Help, QMessageBox::Ok)) {
                 showHelp("#InstallSpelling");
+            }
+        }
+    }
+}
+
+void MainWindow::dictionaryAutoinstallScanDir(const QDir& spellingDir, const QString& url, QStringList& downloaded, QStringList& failed) {
+    QString messages;
+    QJsonDocument langFiles = QJsonDocument::fromJson(Utils::download(url, messages));
+    if (!langFiles.isArray()) {
+        return;
+    }
+    for (const QJsonValue &langFileValue : langFiles.array()) {
+        if (!langFileValue.isObject()) {
+            continue;
+        }
+        const QJsonObject langFile = langFileValue.toObject();
+        if (langFile.value("type").toString() == "dir") {
+            dictionaryAutoinstallScanDir(spellingDir, langFile.value("url").toString(), downloaded, failed);
+        } else if (langFile.value("type").toString() == "file") {
+            const QString fileName = langFile.value("name").toString();
+
+            if (fileName.endsWith(".dic", Qt::CaseInsensitive) || fileName.endsWith(".aff", Qt::CaseInsensitive)) {
+                const QString downloadUrl = langFile.value("download_url").toString();
+                pushState(State::Busy, _("Downloading '%1'...").arg(fileName));
+                QByteArray data = Utils::download(downloadUrl, messages);
+                if (!data.isNull()) {
+                    QFile file(spellingDir.absoluteFilePath(fileName));
+                    if (file.open(QIODevice::WriteOnly)) {
+                        file.write(data);
+                        downloaded.append(fileName);
+                    } else {
+                        failed.append(fileName);
+                    }
+                } else {
+                    failed.append(fileName);
+                }
+                popState();
             }
         }
     }
