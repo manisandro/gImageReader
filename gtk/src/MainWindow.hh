@@ -167,6 +167,7 @@ private:
     void dictionaryAutoinstallDone(Glib::RefPtr<Gio::DBus::Proxy> proxy, Glib::RefPtr<Gio::AsyncResult>& result);
 #endif
     void dictionaryAutoinstall(Glib::ustring lang);
+    void dictionaryAutoinstallScanDir(const std::string& spellingDir, const Glib::ustring& url, std::vector<Glib::ustring>& downloaded, std::vector<Glib::ustring>& failed);
     void batchExport();
 };
 

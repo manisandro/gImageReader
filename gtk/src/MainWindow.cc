@@ -40,6 +40,7 @@
 #include <cstdio>
 #include <fstream>
 #include <iostream>
+#include <json-glib/json-glib.h>
 #include <sstream>
 #include <unistd.h>
 #ifdef G_OS_WIN32
@@ -564,8 +565,8 @@ void MainWindow::dictionaryAutoinstallDone(Glib::RefPtr<Gio::DBus::Proxy> proxy,
 
 void MainWindow::dictionaryAutoinstall(Glib::ustring code) {
     pushState(State::Busy, Glib::ustring::compose(_("Installing spelling dictionary for '%1'"), code));
-    Glib::ustring url = "https://cgit.freedesktop.org/libreoffice/dictionaries/tree/";
-    Glib::ustring plainurl = "https://cgit.freedesktop.org/libreoffice/dictionaries/plain/";
+    Glib::ustring url = "https://api.github.com/repos/LibreOffice/dictionaries/contents/";
+    std::string langCode = code.substr(0, 2);
     std::string spellingDir = getConfig()->spellingLocation();
     Glib::RefPtr<Gio::File> dir = Gio::File::create_for_path(spellingDir);
     bool dirExists = false;
@@ -581,55 +582,47 @@ void MainWindow::dictionaryAutoinstall(Glib::ustring code) {
     }
 
     Glib::ustring messages;
-    Glib::RefPtr<Glib::ByteArray> htmlData = Utils::download(url, messages);
-    if (!htmlData) {
+    Glib::RefPtr<Glib::ByteArray> jsonData = Utils::download(url, messages);
+    JsonParser* parser = json_parser_new();
+    GError* error = nullptr;
+    const gboolean parsed = json_parser_load_from_data(parser, reinterpret_cast<gchar*> (jsonData->get_data()), jsonData->size(), &error);
+    if (error) {
+        g_error_free(error);
+    }
+    JsonNode* root = parsed ? json_parser_get_root(parser) : nullptr;
+    if (!root || !JSON_NODE_HOLDS_ARRAY(root)) {
+        g_object_unref(parser);
         popState();
         Utils::messageBox(Gtk::MESSAGE_ERROR, _("Error"), Glib::ustring::compose(_("Could not read %1: %2."), url, messages));
         return;
     }
-    Glib::ustring html(reinterpret_cast<const char*> (htmlData->get_data()), htmlData->size());
-    std::string langCode = code.substr(0, 2);
-    Glib::RefPtr<Glib::Regex> langPat = Glib::Regex::create(Glib::ustring::compose(">(%1_?[A-Z]*)<", langCode));
-    Glib::RefPtr<Glib::Regex> dictPat = Glib::Regex::create(Glib::ustring::compose(">(%1_?[\\w_]*\\.(dic|aff))<", langCode));
+    JsonArray* array = json_node_get_array(root);
+
     std::vector<Glib::ustring> downloaded;
     std::vector<Glib::ustring> failed;
 
-    int pos = 0;
-    Glib::MatchInfo langMatchInfo;
-    while (langPat->match(html, pos, langMatchInfo)) {
-        Glib::ustring lang = langMatchInfo.fetch(1);
-        int start;
-        langMatchInfo.fetch_pos(0, start, pos);
+    for (guint i = 0; i < json_array_get_length(array); ++i) {
+        JsonNode* node = json_array_get_element(array, i);
 
-        Glib::RefPtr<Glib::ByteArray> dictHtmlData = Utils::download(url + lang + "/", messages);
-        if (!dictHtmlData) {
+        if (!JSON_NODE_HOLDS_OBJECT(node)) {
             continue;
         }
-        Glib::ustring dictHtml(reinterpret_cast<const char*> (dictHtmlData->get_data()), dictHtmlData->size());
 
-        int dictPos = 0;
-        Glib::MatchInfo dictMatchInfo;
-        while (dictPat->match(dictHtml, dictPos, dictMatchInfo)) {
-            Glib::ustring filename = dictMatchInfo.fetch(1);
-            pushState(State::Busy, Glib::ustring::compose(_("Downloading '%1'..."), filename));
-            Glib::RefPtr<Glib::ByteArray> data = Utils::download(plainurl + lang + "/" + filename, messages);
-            if (data) {
-                std::ofstream file(Glib::build_filename(spellingDir, filename), std::ios::binary);
-                if (file.is_open()) {
-                    file.write(reinterpret_cast<char*> (data->get_data()), data->size());
-                    downloaded.push_back(filename);
-                } else {
-                    failed.push_back(filename);
-                }
-            } else {
-                failed.push_back(filename);
-            }
-            popState();
-            int start;
-            dictMatchInfo.fetch_pos(0, start, dictPos);
+        JsonObject* langDir = json_node_get_object(node);
+
+        Glib::ustring type = json_object_get_string_member_with_default(langDir, "type", "");
+        Glib::ustring dirName = json_object_get_string_member_with_default(langDir, "name", "");
+        if (type != "dir") {
+            continue;
         }
+        if (dirName != langCode && !Utils::string_startswith(dirName, langCode + "_")) {
+            continue;
+        }
+        Glib::ustring dirUrl = json_object_get_string_member_with_default(langDir, "url", "");
+        dictionaryAutoinstallScanDir(spellingDir, dirUrl, downloaded, failed);
     }
 
+    g_object_unref(parser);
     popState();
     if (!failed.empty()) {
         Utils::messageBox(Gtk::MESSAGE_ERROR, _("Error"), Glib::ustring::compose(_("The following dictionaries could not be downloaded:\n%1\n\nCheck the connectivity and directory permissions.\nHint: If you don't have write permissions in system folders, you can switch to user paths in the settings dialog."), Utils::string_join(failed, "\n")));
@@ -639,6 +632,74 @@ void MainWindow::dictionaryAutoinstall(Glib::ustring code) {
     } else {
         Utils::messageBox(Gtk::MESSAGE_ERROR, _("Error"), Glib::ustring::compose(_("No spelling dictionaries found for '%1'."), code));
     }
+}
+
+void MainWindow::dictionaryAutoinstallScanDir(
+    const std::string& spellingDir, const Glib::ustring& url,
+    std::vector<Glib::ustring>& downloaded, std::vector<Glib::ustring>& failed
+) {
+    Glib::ustring messages;
+    Glib::RefPtr<Glib::ByteArray> jsonData = Utils::download(url, messages);
+
+    JsonParser* parser = json_parser_new();
+    GError* error = nullptr;
+
+    if (!json_parser_load_from_data(parser, reinterpret_cast<gchar*> (jsonData->get_data()), jsonData->size(), &error)) {
+        if (error) {
+            g_error_free(error);
+        }
+        g_object_unref(parser);
+        return;
+    }
+    JsonNode* root = json_parser_get_root(parser);
+
+    if (!JSON_NODE_HOLDS_ARRAY(root)) {
+        g_object_unref(parser);
+        return;
+    }
+    JsonArray* array = json_node_get_array(root);
+    for (guint i = 0; i < json_array_get_length(array); ++i) {
+        JsonNode* node = json_array_get_element(array, i);
+
+        if (!JSON_NODE_HOLDS_OBJECT(node)) {
+            continue;
+        }
+
+        JsonObject* langFile = json_node_get_object(node);
+        Glib::ustring type = json_object_get_string_member_with_default(langFile, "type", "");
+        if (type == "dir") {
+            Glib::ustring dirUrl = json_object_get_string_member_with_default(langFile, "url", "");
+
+            dictionaryAutoinstallScanDir(spellingDir, dirUrl, downloaded, failed);
+        } else if (type == "file") {
+            Glib::ustring name = json_object_get_string_member_with_default(langFile, "name", "");
+
+            if (
+                Utils::string_endswith(name.lowercase(), ".dic") ||
+                Utils::string_endswith(name.lowercase(), ".aff")
+            ) {
+                Glib::ustring downloadUrl = json_object_get_string_member_with_default(langFile, "download_url", "");
+
+                pushState(State::Busy, Glib::ustring::compose(_("Downloading '%1'..."), name));
+
+                Glib::RefPtr<Glib::ByteArray> data = Utils::download(downloadUrl, messages);
+                if (data) {
+                    std::ofstream file(Glib::build_filename(spellingDir, name), std::ios::binary);
+                    if (file.is_open()) {
+                        file.write(reinterpret_cast<char*> (data->get_data()), data->size());
+                        downloaded.push_back(name);
+                    } else {
+                        failed.push_back(name);
+                    }
+                } else {
+                    failed.push_back(name);
+                }
+                popState();
+            }
+        }
+    }
+
+    g_object_unref(parser);
 }
 
 void MainWindow::batchExport() {
