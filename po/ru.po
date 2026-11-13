@@ -12,17 +12,18 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-10-25 14:59+0100\n"
-"PO-Revision-Date: 2022-06-18 17:01+0000\n"
-"Last-Translator: Сергей <asvmail.as@gmail.com>\n"
+"PO-Revision-Date: 2026-11-13 10:51+0000\n"
+"Last-Translator: Olesya_Gerasimenko "
+"<olesya_gerasimenko@users.noreply.hosted.weblate.org>\n"
 "Language-Team: Russian <https://hosted.weblate.org/projects/gimagereader/"
 "translations/ru/>\n"
 "Language: ru\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
-"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Generator: Weblate 4.13.1-dev\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"X-Generator: Weblate 2026.12.dev0\n"
 
 #: ../data/gimagereader.desktop.in.h:1
 msgid "OCR application"
@@ -189,7 +190,6 @@ msgid "Regenerate backtrace"
 msgstr "Обновить обратную трассировку"
 
 #: ../gtk/data/CrashHandler.ui.h:2
-#, fuzzy
 msgid ""
 "<b>The application has crashed</b>\n"
 "\n"
@@ -201,9 +201,9 @@ msgid ""
 msgstr ""
 "<b>Программа аварийно завершилась</b>\n"
 "\n"
-"Приносим извинения за неудобство. Для улучшения работы программы просьба "
-"сообщить о проблеме по адресу <a href=\"mailto:manisandro@gmail.com?"
-"subject=gImageReader%20Crash\">manisandro@gmail.com</a>. Пожалуйста, "
+"Приносим извинения за неудобства. Для улучшения работы программы просьба "
+"сообщить о проблеме с помощью <a href=\"https://github.com/manisandro/"
+"gImageReader/issues\">системы отслеживания ошибок</a>. Пожалуйста, "
 "постарайтесь описать, какие действия вы выполняли перед сбоем программы. "
 "Также приложите информацию, размещённую ниже. Спасибо."
 
@@ -1113,7 +1113,7 @@ msgstr "Графика"
 
 #: ../gtk/src/hocr/HOCRDocument.cc:812 ../qt/src/hocr/HOCRDocument.cc:704
 msgid "Separator"
-msgstr ""
+msgstr "Разделитель"
 
 #: ../gtk/src/hocr/HOCROdtExporter.cc:63 ../gtk/src/hocr/HOCROdtExporter.cc:328
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:142
@@ -1132,9 +1132,8 @@ msgid "Exporting to ODT..."
 msgstr "Экспорт в ODT..."
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:72 ../qt/src/hocr/HOCRPdfExporter.cc:81
-#, fuzzy
 msgid "Failed to initialize export backend"
-msgstr "Не удалось инициализировать программные средства сканирования."
+msgstr "Не удалось инициализировать программные средства экспорта"
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:77 ../qt/src/hocr/HOCRPdfExporter.cc:86
 msgid "The operation was cancelled"
@@ -1831,7 +1830,7 @@ msgstr "Невозможно подключиться к сканеру"
 #: ../qt/src/scanner/ScannerSane.cc:243 ../qt/src/scanner/ScannerSane.cc:251
 #: ../qt/src/scanner/ScannerSane.cc:259 ../qt/src/scanner/ScannerSane.cc:265
 msgid "The selected scan source is not available on this device"
-msgstr ""
+msgstr "Выбранный источник сканирования недоступен на этом устройстве"
 
 #: ../gtk/src/scanner/ScannerSane.cc:417 ../gtk/src/scanner/ScannerTwain.cc:266
 #: ../gtk/src/scanner/ScannerTwain.cc:291 ../qt/src/scanner/ScannerSane.cc:415
@@ -1919,17 +1918,16 @@ msgstr "Ошибка получения снимка экрана"
 #: ../gtk/src/SourceManager.cc:323 ../gtk/src/SourceManager.cc:386
 #: ../gtk/src/SourceManager.cc:394 ../qt/src/SourceManager.cc:344
 #: ../qt/src/SourceManager.cc:392 ../qt/src/SourceManager.cc:398
-#, fuzzy
 msgid "Failed to take screenshot: %1"
-msgstr "Не удалось сделать снимок экрана."
+msgstr "Не удалось сделать снимок экрана: %1"
 
 #: ../gtk/src/SourceManager.cc:323 ../qt/src/SourceManager.cc:344
 msgid "xdg-desktop-portal not available"
-msgstr ""
+msgstr "xdg-desktop-portal недоступен"
 
 #: ../gtk/src/SourceManager.cc:338 ../qt/src/SourceManager.cc:355
 msgid "Grabbing screenshot..."
-msgstr ""
+msgstr "Создание снимка экрана..."
 
 #: ../gtk/src/SourceManager.cc:360 ../gtk/src/SourceManager.cc:366
 #: ../qt/src/SourceManager.cc:378
@@ -1943,11 +1941,11 @@ msgstr "Снимок экрана %1"
 
 #: ../gtk/src/SourceManager.cc:386 ../qt/src/SourceManager.cc:392
 msgid "Cancelled or denied"
-msgstr ""
+msgstr "Отмена или отказ в доступе"
 
 #: ../gtk/src/SourceManager.cc:394 ../qt/src/SourceManager.cc:398
 msgid "Invalid screenshot URI"
-msgstr ""
+msgstr "Неверный URI снимка экрана"
 
 #: ../gtk/src/SourceManager.cc:407 ../qt/src/SourceManager.cc:409
 msgid "Saving image..."
@@ -2180,7 +2178,6 @@ msgid "Text file encoding:"
 msgstr "Кодировка текстового файла:"
 
 #: ../qt/data/CrashHandler.ui.h:1
-#, fuzzy
 msgid ""
 "&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-"
 "weight:600;&quot;&gt;The application has crashed&lt;/span&gt;&lt;/"
@@ -2193,13 +2190,12 @@ msgid ""
 msgstr ""
 "&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-"
 "weight:600;&quot;&gt;Программа аварийно завершилась&lt;/span&gt;&lt;/"
-"p&gt;&lt;p&gt;Приношу извинения за неудобство. Для улучшения работы "
-"программы просьба сообщить о проблеме по адресу &lt;a "
-"href=&quot;mailto:manisandro@gmail.com?"
-"subject=gImageReader%20Crash&quot;&gt;manisandro@gmail.com&lt;/a&gt;. "
-"Просьба постараться описать, какие действия вы выполняли перед сбоем "
-"программы. Также приложите информацию, размещённую ниже. Спасибо.&lt;/"
-"p&gt;&lt;/body&gt;&lt;/html&gt;"
+"p&gt;&lt;p&gt;Приносим извинения за неудобства. Для улучшения работы "
+"программы просьба сообщить о проблеме с помощью &lt;a href=&quot;https://"
+"github.com/manisandro/gImageReader/issues&quot;&gt;системы отслеживания "
+"ошибок&lt;/a&gt;. Пожалуйста, постарайтесь описать, какие действия вы "
+"выполняли перед сбоем программы. Также приложите информацию, размещённую "
+"ниже. Спасибо.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;"
 
 #: ../qt/data/CrashHandler.ui.h:2
 msgid ""
@@ -2313,101 +2309,92 @@ msgstr ""
 "</li></ul></body></html>"
 
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:480
-#, fuzzy
 msgid "Next field"
-msgstr "Текстовые файлы"
+msgstr "Следующее поле"
 
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:481
-#, fuzzy
 msgid "Previous field"
-msgstr "Предыдущий (Shift+F3)"
+msgstr "Предыдущее поле"
 
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:482
-#, fuzzy
 msgid "Next line"
-msgstr "Строка"
+msgstr "Следующая строка"
 
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:483
-#, fuzzy
 msgid "Previous line"
-msgstr "Предыдущий (Shift+F3)"
+msgstr "Предыдущая строка"
 
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:484
-#, fuzzy
 msgid "Spelling suggestions"
-msgstr "Нет вариантов"
+msgstr "Предложения написания"
 
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:485
-#, fuzzy
 msgid "Add word to dictionary"
-msgstr "Добавить в словарь"
+msgstr "Добавить слово в словарь"
 
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:486
 msgid "Toggle bold"
-msgstr ""
+msgstr "Включить/отключить полужирный текст"
 
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:487
 msgid "Toggle italic"
-msgstr ""
+msgstr "Включить/отключить курсивный текст"
 
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:488
 msgid "Divide word at cursor position"
-msgstr ""
+msgstr "Разделить слово в позиции курсора"
 
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:489
 msgid "Merge with previous word"
-msgstr ""
+msgstr "Объединить с предыдущим словом"
 
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:490
 msgid "Merge with next word"
-msgstr ""
+msgstr "Объединить со следующим словом"
 
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:491
-#, fuzzy
 msgid "Delete word"
-msgstr "Удалить"
+msgstr "Удалить слово"
 
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:492
 msgid "Move the bounding box up"
-msgstr ""
+msgstr "Переместить ограничивающую рамку вверх"
 
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:493
 msgid "Move the bounding box down"
-msgstr ""
+msgstr "Переместить ограничивающую рамку вниз"
 
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:494
 msgid "Move the bounding box left"
-msgstr ""
+msgstr "Переместить ограничивающую рамку влево"
 
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:495
 msgid "Move the bounding box right"
-msgstr ""
+msgstr "Переместить ограничивающую рамку вправо"
 
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:496
 msgid "Shrink the bounding box vertically"
-msgstr ""
+msgstr "Сжать ограничивающую рамку по вертикали"
 
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:497
 msgid "Enlarge the bounding box vertically"
-msgstr ""
+msgstr "Увеличить ограничивающую рамку по вертикали"
 
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:498
 msgid "Shrink the bounding box horizontally"
-msgstr ""
+msgstr "Сжать ограничивающую рамку по горизонтали"
 
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:499
 msgid "Enlarge the bounding box horizontally"
-msgstr ""
+msgstr "Увеличить ограничивающую рамку по горизонтали"
 
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:500
-#, fuzzy
 msgid "Increase font size"
-msgstr "Указать размер шрифта:"
+msgstr "Увеличить размер шрифта"
 
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:501
-#, fuzzy
 msgid "Decrease font size"
-msgstr "Указать размер шрифта:"
+msgstr "Уменьшить размер шрифта"
 
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:90
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:91
