@@ -4,8 +4,8 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-10-25 14:59+0100\n"
-"PO-Revision-Date: 2022-01-30 16:54+0000\n"
-"Last-Translator: Oğuz Ersen <oguzersen@protonmail.com>\n"
+"PO-Revision-Date: 2026-11-14 17:51+0000\n"
+"Last-Translator: umablognot <umablognot@users.noreply.hosted.weblate.org>\n"
 "Language-Team: Turkish <https://hosted.weblate.org/projects/gimagereader/"
 "translations/tr/>\n"
 "Language: tr\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 4.11-dev\n"
+"X-Generator: Weblate 2026.12.dev0\n"
 "X-POOTLE-MTIME: 1441292742.000000\n"
 
 #: ../data/gimagereader.desktop.in.h:1
@@ -181,7 +181,6 @@ msgid "Regenerate backtrace"
 msgstr "Geri dönük izlemeyi yeniden oluştur"
 
 #: ../gtk/data/CrashHandler.ui.h:2
-#, fuzzy
 msgid ""
 "<b>The application has crashed</b>\n"
 "\n"
@@ -193,11 +192,11 @@ msgid ""
 msgstr ""
 "<b>Uygulama çöktü</b>\n"
 "\n"
-"Rahatsızlık için özür dilerim. Uygulamayı iyileştirmeye yardımcı olmak için "
-"lütfen sorunu <a href=\"mailto:manisandro@gmail.com?"
-"subject=gImageReader%20Crash\">manisandro@gmail.com</a> adresine bildirmeyi "
-"düşünün. Lütfen uygulama çökmeden önce ne yaptığınızı açıklamaya çalışın. "
-"Ayrıca aşağıdaki bilgileri de ekleyin. Teşekkürler."
+"Rahatsızlık için özür dileriz. Uygulamanın iyileştirilmesine yardımcı olmak "
+"için lütfen sorunu <a href=\"https://github.com/manisandro/gImageReader/"
+"issues\">hata takipçisinde</a> bildirmeyi düşünün. Lütfen uygulama çökmeden "
+"önce ne yaptığınızı açıklamaya çalışın. Ayrıca aşağıdaki bilgileri de "
+"ekleyin. Teşekkürler."
 
 #: ../gtk/data/CrashHandler.ui.h:5
 msgid ""
@@ -1104,7 +1103,7 @@ msgstr "Grafik"
 
 #: ../gtk/src/hocr/HOCRDocument.cc:812 ../qt/src/hocr/HOCRDocument.cc:704
 msgid "Separator"
-msgstr ""
+msgstr "Ayırıcı"
 
 #: ../gtk/src/hocr/HOCROdtExporter.cc:63 ../gtk/src/hocr/HOCROdtExporter.cc:328
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:142
@@ -1123,9 +1122,8 @@ msgid "Exporting to ODT..."
 msgstr "ODT olarak dışa aktarılıyor..."
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:72 ../qt/src/hocr/HOCRPdfExporter.cc:81
-#, fuzzy
 msgid "Failed to initialize export backend"
-msgstr "Tarama uygulaması başlatılamadı."
+msgstr "Dışa aktarma arka ucunu başlatılamadı"
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:77 ../qt/src/hocr/HOCRPdfExporter.cc:86
 msgid "The operation was cancelled"
@@ -1820,7 +1818,7 @@ msgstr "Tarayıcıya bağlanılamadı"
 #: ../qt/src/scanner/ScannerSane.cc:243 ../qt/src/scanner/ScannerSane.cc:251
 #: ../qt/src/scanner/ScannerSane.cc:259 ../qt/src/scanner/ScannerSane.cc:265
 msgid "The selected scan source is not available on this device"
-msgstr ""
+msgstr "Seçilen tarama kaynağı bu cihazda mevcut değil"
 
 #: ../gtk/src/scanner/ScannerSane.cc:417 ../gtk/src/scanner/ScannerTwain.cc:266
 #: ../gtk/src/scanner/ScannerTwain.cc:291 ../qt/src/scanner/ScannerSane.cc:415
@@ -1908,17 +1906,16 @@ msgstr "Ekran Görüntüsü Hatası"
 #: ../gtk/src/SourceManager.cc:323 ../gtk/src/SourceManager.cc:386
 #: ../gtk/src/SourceManager.cc:394 ../qt/src/SourceManager.cc:344
 #: ../qt/src/SourceManager.cc:392 ../qt/src/SourceManager.cc:398
-#, fuzzy
 msgid "Failed to take screenshot: %1"
-msgstr "Ekran görüntüsü alınamadı."
+msgstr "Ekran görüntüsü alınamadı: %1"
 
 #: ../gtk/src/SourceManager.cc:323 ../qt/src/SourceManager.cc:344
 msgid "xdg-desktop-portal not available"
-msgstr ""
+msgstr "xdg-desktop-portal kullanılamıyor"
 
 #: ../gtk/src/SourceManager.cc:338 ../qt/src/SourceManager.cc:355
 msgid "Grabbing screenshot..."
-msgstr ""
+msgstr "Ekran görüntüsü alınıyor..."
 
 #: ../gtk/src/SourceManager.cc:360 ../gtk/src/SourceManager.cc:366
 #: ../qt/src/SourceManager.cc:378
@@ -1932,11 +1929,11 @@ msgstr "Ekran Görüntüsü %1"
 
 #: ../gtk/src/SourceManager.cc:386 ../qt/src/SourceManager.cc:392
 msgid "Cancelled or denied"
-msgstr ""
+msgstr "İptal edildi veya reddedildi"
 
 #: ../gtk/src/SourceManager.cc:394 ../qt/src/SourceManager.cc:398
 msgid "Invalid screenshot URI"
-msgstr ""
+msgstr "Geçersiz ekran görüntüsü Bağlantısı"
 
 #: ../gtk/src/SourceManager.cc:407 ../qt/src/SourceManager.cc:409
 msgid "Saving image..."
@@ -2130,16 +2127,17 @@ msgid "About gImageReader"
 msgstr "gImageReader Hakkında"
 
 #: ../qt/data/AboutDialog.ui.h:3
-#, fuzzy
 msgid ""
 "&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&amp;nbsp;&lt;/p&gt;&lt;p&gt;A "
 "graphical frontend to tesseract-ocr&lt;/p&gt;&lt;p&gt;&lt;a "
 "href=&quot;https://github.com/manisandro/gImageReader/&quot;&gt;Website&lt;/"
 "a&gt;&lt;/p&gt;&lt;p&gt;&amp;nbsp;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;"
 msgstr ""
-"<html><head/><body><p>&nbsp;</p><p>tesseract-ocr için grafiksel bir arayüz</"
-"p><p><a href=\"https://github.com/manisandro/gImageReader/\">Web sitesi</a></"
-"p><p>&nbsp;</p></body></html>"
+"&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&amp;nbsp;&lt;/"
+"p&gt;&lt;p&gt;Tesseract-or için grafiksel bir kullanıcı arayüzü&lt;/"
+"p&gt;&lt;p&gt;&lt;a href=&quot;&lt;/p&gt;&lt;p&gt;&lt;a href=&quot;https://"
+"github.com/manisandro/gImageReader/&quot;&gt;Website&lt;/a&gt;&lt;/"
+"p&gt;&lt;p&gt;&amp;nbsp;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;"
 
 #: ../qt/data/AboutDialog.ui.h:4
 msgid "Credits"
@@ -2170,7 +2168,6 @@ msgid "Text file encoding:"
 msgstr "Metin dosyası kodlaması:"
 
 #: ../qt/data/CrashHandler.ui.h:1
-#, fuzzy
 msgid ""
 "&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-"
 "weight:600;&quot;&gt;The application has crashed&lt;/span&gt;&lt;/"
@@ -2181,15 +2178,14 @@ msgid ""
 "application crashed. Also, include the information below. Thank you.&lt;/"
 "p&gt;&lt;/body&gt;&lt;/html&gt;"
 msgstr ""
-"&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-"
-"weight:600;&quot;&gt;Uygulama çöktü&lt;/span&gt;&lt;/"
-"p&gt;&lt;p&gt;Anlayışınız için teşekkür ederiz. Uygulamanın gelişimine "
-"katkıda bulunmak için lütfen bu hatayı &lt;a "
-"href=&quot;mailto:manisandro@gmail.com?"
-"subject=gImageReader%20Crash&quot;&gt;manisandro@gmail.com&lt;/a&gt; "
-"adresine bildirin. Lütfen uygulama çökmeden önce ne yaptığınızı açıklamaya "
-"çalışın. Aşağıdaki bilgileri de ekleyin. Teşekkür ederiz.&lt;/p&gt;&lt;/"
-"body&gt;&lt;/html&gt;"
+"<html><head/><body>\n"
+"<p><span style=\" font-weight:600;\">Uygulama çöktü</span></p>\n"
+"<p>Verdiğimiz rahatsızlık için özür dileriz. Uygulamanın geliştirilmesine "
+"yardımcı olmak için lütfen sorunu <a href=\"https://github.com/manisandro/"
+"gImageReader/issues\">hata takipçisinde</a> bildirmeyi düşünün. Lütfen "
+"uygulama çökmeden önce ne yaptığınızı açıklamaya çalışın. Ayrıca aşağıdaki "
+"bilgileri de ekleyin. Teşekkürler.</p>\n"
+"</body></html>"
 
 #: ../qt/data/CrashHandler.ui.h:2
 msgid ""
@@ -2302,101 +2298,92 @@ msgstr ""
 "betikleri destekler.</li></ul></body></html>"
 
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:480
-#, fuzzy
 msgid "Next field"
-msgstr "Metin Dosyaları"
+msgstr "Sonraki alan"
 
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:481
-#, fuzzy
 msgid "Previous field"
-msgstr "Önceki (Shift+F3)"
+msgstr "Önceki alan"
 
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:482
-#, fuzzy
 msgid "Next line"
-msgstr "Metin"
+msgstr "Sonraki satır"
 
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:483
-#, fuzzy
 msgid "Previous line"
-msgstr "Önceki (Shift+F3)"
+msgstr "Önceki satır"
 
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:484
-#, fuzzy
 msgid "Spelling suggestions"
-msgstr "Öneri yok"
+msgstr "Yazım önerileri"
 
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:485
-#, fuzzy
 msgid "Add word to dictionary"
-msgstr "Sözlüğe ekle"
+msgstr "Sözlüğe kelime ekle"
 
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:486
 msgid "Toggle bold"
-msgstr ""
+msgstr "Kalın yazıyı aç/kapat"
 
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:487
 msgid "Toggle italic"
-msgstr ""
+msgstr "İtalik gösterimi aç/kapat"
 
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:488
 msgid "Divide word at cursor position"
-msgstr ""
+msgstr "Kelimeleri imleç konumunda böl"
 
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:489
 msgid "Merge with previous word"
-msgstr ""
+msgstr "Önceki kelimeyle birleştir"
 
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:490
 msgid "Merge with next word"
-msgstr ""
+msgstr "Sonraki kelimeyle birleştir"
 
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:491
-#, fuzzy
 msgid "Delete word"
-msgstr "Sil"
+msgstr "Kelimeyi sil"
 
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:492
 msgid "Move the bounding box up"
-msgstr ""
+msgstr "Çerçeveyi yukarı kaydır"
 
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:493
 msgid "Move the bounding box down"
-msgstr ""
+msgstr "Çerçeveyi aşağı kaydırın"
 
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:494
 msgid "Move the bounding box left"
-msgstr ""
+msgstr "Çerçeveyi sola kaydır"
 
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:495
 msgid "Move the bounding box right"
-msgstr ""
+msgstr "Çerçeveyi sağa kaydır"
 
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:496
 msgid "Shrink the bounding box vertically"
-msgstr ""
+msgstr "Sınır kutusunu dikey olarak küçült"
 
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:497
 msgid "Enlarge the bounding box vertically"
-msgstr ""
+msgstr "Sınır kutusunu dikey olarak büyüt"
 
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:498
 msgid "Shrink the bounding box horizontally"
-msgstr ""
+msgstr "Sınır kutusunu yatay olarak küçült"
 
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:499
 msgid "Enlarge the bounding box horizontally"
-msgstr ""
+msgstr "Sınır kutusunu yatay olarak genişlet"
 
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:500
-#, fuzzy
 msgid "Increase font size"
-msgstr "Yazı tipi boyutunu geçersiz kıl:"
+msgstr "Yazı tipi boyutunu büyüt"
 
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:501
-#, fuzzy
 msgid "Decrease font size"
-msgstr "Yazı tipi boyutunu geçersiz kıl:"
+msgstr "Yazı tipi boyutunu küçült"
 
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:90
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:91
