@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-10-25 14:59+0100\n"
-"PO-Revision-Date: 2024-11-30 10:00+0000\n"
-"Last-Translator: OIS <mistresssilvara@hotmail.com>\n"
+"PO-Revision-Date: 2026-11-14 17:51+0000\n"
+"Last-Translator: OIS <caarmi@users.noreply.hosted.weblate.org>\n"
 "Language-Team: Occidental <https://hosted.weblate.org/projects/gimagereader/"
 "translations/ie/>\n"
 "Language: ie\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.9-dev\n"
+"X-Generator: Weblate 2026.12.dev0\n"
 
 #: ../data/gimagereader.desktop.in.h:1
 msgid "OCR application"
@@ -209,7 +209,7 @@ msgstr ""
 #: ../gtk/data/HOCRBatchExportDialog.ui.h:1
 #: ../qt/data/HOCRBatchExportDialog.ui.h:1
 msgid "HOCR Batch Export"
-msgstr ""
+msgstr "Exportar in masse a HOCR"
 
 #: ../gtk/data/HOCRBatchExportDialog.ui.h:2
 #: ../gtk/data/SubstitutionsManager.ui.h:7 ../gtk/data/TessdataManager.ui.h:2
@@ -223,9 +223,8 @@ msgstr "Clúder"
 
 #: ../gtk/data/HOCRBatchExportDialog.ui.h:4
 #: ../qt/data/HOCRBatchExportDialog.ui.h:6
-#, fuzzy
 msgid "Select source folder:"
-msgstr "Selecter un fólder..."
+msgstr "Selecter un fólder del orígine..."
 
 #: ../gtk/data/HOCRBatchExportDialog.ui.h:5 ../gtk/data/PdfExportWidget.ui.h:5
 #: ../qt/data/HOCRBatchExportDialog.ui.h:7 ../qt/data/PdfExportWidget.ui.h:15
@@ -949,7 +948,7 @@ msgstr "Apertente li aparate..."
 
 #: ../gtk/src/Acquirer.cc:165 ../qt/src/Acquirer.cc:151
 msgid "Setting options..."
-msgstr ""
+msgstr "Applicante li parametres…"
 
 #: ../gtk/src/Acquirer.cc:169 ../qt/src/Acquirer.cc:155
 msgid "Getting parameters..."
@@ -1090,7 +1089,7 @@ msgstr "Pictura"
 
 #: ../gtk/src/hocr/HOCRDocument.cc:812 ../qt/src/hocr/HOCRDocument.cc:704
 msgid "Separator"
-msgstr ""
+msgstr "Separator"
 
 #: ../gtk/src/hocr/HOCROdtExporter.cc:63 ../gtk/src/hocr/HOCROdtExporter.cc:328
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:142
@@ -1109,9 +1108,8 @@ msgid "Exporting to ODT..."
 msgstr "Exportante a ODT..."
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:72 ../qt/src/hocr/HOCRPdfExporter.cc:81
-#, fuzzy
 msgid "Failed to initialize export backend"
-msgstr "Ne successat inicialisar li infrastructura de scannation."
+msgstr "Ne successat inicialisar li infrastructura de exportation"
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:77 ../qt/src/hocr/HOCRPdfExporter.cc:86
 msgid "The operation was cancelled"
@@ -1209,9 +1207,8 @@ msgstr "Parol misespelat"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:370
 #: ../qt/src/hocr/OutputEditorHOCR.cc:322
-#, fuzzy
 msgid "Low confidence word"
-msgstr "Monstrar valores de confidentie"
+msgstr "Bass confidentie"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:538
 #: ../qt/src/hocr/OutputEditorHOCR.cc:426
@@ -1387,7 +1384,7 @@ msgstr "Gardar li textu…"
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:1247
 #: ../qt/src/hocr/OutputEditorHOCR.cc:1139
 msgid "Output not saved"
-msgstr ""
+msgstr "Production ne es gardat"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:1247
 #: ../qt/src/hocr/OutputEditorHOCR.cc:1139
@@ -1593,14 +1590,12 @@ msgid "Untitled %1"
 msgstr "Sin nómine %1"
 
 #: ../gtk/src/OutputEditorText.cc:188 ../qt/src/OutputEditorText.cc:156
-#, fuzzy
 msgid "Document not saved"
-msgstr "Li alimentator serrat se."
+msgstr "Li document ne es gardat"
 
 #: ../gtk/src/OutputEditorText.cc:188 ../qt/src/OutputEditorText.cc:156
-#, fuzzy
 msgid "Save document before proceeding?"
-msgstr "Gardar li resultates ante que iniciar?"
+msgstr "Gardar li document ante que continuar?"
 
 #: ../gtk/src/OutputEditorText.cc:292 ../qt/src/OutputEditorText.cc:238
 msgid "Stripping line breaks..."
@@ -1608,11 +1603,11 @@ msgstr "Correctente ruptet lineas..."
 
 #: ../gtk/src/OutputEditorText.cc:303
 msgid "No highlight"
-msgstr ""
+msgstr "Sin marcation"
 
 #: ../gtk/src/OutputEditorText.cc:323
 msgid "Highlight mode"
-msgstr ""
+msgstr "Mode de marcation"
 
 #: ../gtk/src/OutputEditorText.cc:328
 msgid "Check spelling"
@@ -1650,7 +1645,7 @@ msgstr "Gardar li resultate…"
 
 #: ../gtk/src/OutputEditorText.cc:581
 msgid "Unsaved documents"
-msgstr ""
+msgstr "Documentes ne gardat"
 
 #: ../gtk/src/OutputEditorText.cc:582 ../qt/src/OutputEditorText.cc:461
 msgid ""
@@ -1686,7 +1681,7 @@ msgstr "Suposir un singul columne"
 
 #: ../gtk/src/RecognitionMenu.cc:208 ../qt/src/RecognitionMenu.cc:183
 msgid "Assume single block of vertically aligned text"
-msgstr ""
+msgstr "Un singul bloc de vertical textu"
 
 #: ../gtk/src/RecognitionMenu.cc:209 ../qt/src/RecognitionMenu.cc:184
 msgid "Assume a single uniform block of text"
@@ -1893,17 +1888,16 @@ msgstr "Errore del captura"
 #: ../gtk/src/SourceManager.cc:323 ../gtk/src/SourceManager.cc:386
 #: ../gtk/src/SourceManager.cc:394 ../qt/src/SourceManager.cc:344
 #: ../qt/src/SourceManager.cc:392 ../qt/src/SourceManager.cc:398
-#, fuzzy
 msgid "Failed to take screenshot: %1"
-msgstr "Ne successat capturar li ecran."
+msgstr "Ne successat capturar li ecran: %1"
 
 #: ../gtk/src/SourceManager.cc:323 ../qt/src/SourceManager.cc:344
 msgid "xdg-desktop-portal not available"
-msgstr ""
+msgstr "xdg-desktop-portal es índisponibil"
 
 #: ../gtk/src/SourceManager.cc:338 ../qt/src/SourceManager.cc:355
 msgid "Grabbing screenshot..."
-msgstr ""
+msgstr "Capturante li ecran…"
 
 #: ../gtk/src/SourceManager.cc:360 ../gtk/src/SourceManager.cc:366
 #: ../qt/src/SourceManager.cc:378
@@ -2254,59 +2248,52 @@ msgstr ""
 "ul></body></html>"
 
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:480
-#, fuzzy
 msgid "Next field"
-msgstr "Files textual"
+msgstr "Sequent camp"
 
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:481
-#, fuzzy
 msgid "Previous field"
-msgstr "Precedent (Shift+F3)"
+msgstr "Precedent camp"
 
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:482
-#, fuzzy
 msgid "Next line"
-msgstr "Linea de textu"
+msgstr "Sequent linea"
 
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:483
-#, fuzzy
 msgid "Previous line"
-msgstr "Precedent (Shift+F3)"
+msgstr "Precedent linea"
 
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:484
-#, fuzzy
 msgid "Spelling suggestions"
-msgstr "Null suggestiones"
+msgstr "Suggestiones ortografic"
 
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:485
-#, fuzzy
 msgid "Add word to dictionary"
 msgstr "Adjunter al dictionarium"
 
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:486
 msgid "Toggle bold"
-msgstr ""
+msgstr "Grass fonde"
 
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:487
 msgid "Toggle italic"
-msgstr ""
+msgstr "Italic fonde"
 
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:488
 msgid "Divide word at cursor position"
-msgstr ""
+msgstr "Separar li parol al position actual"
 
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:489
 msgid "Merge with previous word"
-msgstr ""
+msgstr "Unir con li precedent parol"
 
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:490
 msgid "Merge with next word"
-msgstr ""
+msgstr "Unir con li sequent parol"
 
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:491
-#, fuzzy
 msgid "Delete word"
-msgstr "Deleter"
+msgstr "Remover li parol"
 
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:492
 msgid "Move the bounding box up"
@@ -2318,7 +2305,7 @@ msgstr ""
 
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:494
 msgid "Move the bounding box left"
-msgstr ""
+msgstr "Mover li born-bux a levul"
 
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:495
 msgid "Move the bounding box right"
@@ -2326,29 +2313,27 @@ msgstr ""
 
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:496
 msgid "Shrink the bounding box vertically"
-msgstr ""
+msgstr "Contraher li born-bux verticalmen"
 
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:497
 msgid "Enlarge the bounding box vertically"
-msgstr ""
+msgstr "Expander li born-bux verticalmen"
 
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:498
 msgid "Shrink the bounding box horizontally"
-msgstr ""
+msgstr "Contraher li born-bux horizontalmen"
 
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:499
 msgid "Enlarge the bounding box horizontally"
-msgstr ""
+msgstr "Expander li born-bux horizontalmen"
 
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:500
-#, fuzzy
 msgid "Increase font size"
-msgstr "Dimension del fonde:"
+msgstr "Agrandar li fonde"
 
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:501
-#, fuzzy
 msgid "Decrease font size"
-msgstr "Dimension del fonde:"
+msgstr "Diminuer li fonde"
 
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:90
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:91
@@ -2362,9 +2347,8 @@ msgstr "Serchar e substituer"
 
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:118
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:119
-#, fuzzy
 msgid "Show proofread widget"
-msgstr "Previder"
+msgstr "Monstrar li fenestre de correction"
 
 #: ../qt/src/MainWindow.cc:638
 msgid ""
