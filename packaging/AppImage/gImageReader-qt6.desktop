@@ -1,0 +1,12 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Terminal=false
+Exec=gimagereader-qt6
+Comment=Start gImageReader-qt6
+Comment[it_IT]=Avvia gImageReader-qt6
+Icon=gImageReader
+Icon[it_IT]=gImageReader
+Name=gImageReader-qt6
+Name[it_IT]=gImageReader-qt6
+Categories=Utility
