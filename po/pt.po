@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: Portuguese (Brazil) (gImageReader)\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-10-25 14:59+0100\n"
-"PO-Revision-Date: 2023-03-19 11:37+0000\n"
-"Last-Translator: ssantos <ssantos@web.de>\n"
+"PO-Revision-Date: 2026-11-27 20:51+0000\n"
+"Last-Translator: ssantos <ssantos@users.noreply.hosted.weblate.org>\n"
 "Language-Team: Portuguese <https://hosted.weblate.org/projects/gimagereader/"
 "translations/pt/>\n"
 "Language: pt\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 4.16.2-dev\n"
+"X-Generator: Weblate 2026.12.dev0\n"
 
 #: ../data/gimagereader.desktop.in.h:1
 msgid "OCR application"
@@ -1102,7 +1102,7 @@ msgstr "Gráfico"
 
 #: ../gtk/src/hocr/HOCRDocument.cc:812 ../qt/src/hocr/HOCRDocument.cc:704
 msgid "Separator"
-msgstr ""
+msgstr "Separador"
 
 #: ../gtk/src/hocr/HOCROdtExporter.cc:63 ../gtk/src/hocr/HOCROdtExporter.cc:328
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:142
@@ -1818,6 +1818,7 @@ msgstr "Não foi possível conectar ao digitalizador"
 #: ../qt/src/scanner/ScannerSane.cc:259 ../qt/src/scanner/ScannerSane.cc:265
 msgid "The selected scan source is not available on this device"
 msgstr ""
+"A fonte de digitalização selecionada não está disponível neste dispositivo"
 
 #: ../gtk/src/scanner/ScannerSane.cc:417 ../gtk/src/scanner/ScannerTwain.cc:266
 #: ../gtk/src/scanner/ScannerTwain.cc:291 ../qt/src/scanner/ScannerSane.cc:415
@@ -1911,11 +1912,11 @@ msgstr "Falha ao capturar a ecrã."
 
 #: ../gtk/src/SourceManager.cc:323 ../qt/src/SourceManager.cc:344
 msgid "xdg-desktop-portal not available"
-msgstr ""
+msgstr "xdg-desktop-portal não disponível"
 
 #: ../gtk/src/SourceManager.cc:338 ../qt/src/SourceManager.cc:355
 msgid "Grabbing screenshot..."
-msgstr ""
+msgstr "A agarrar a captura de ecrã..."
 
 #: ../gtk/src/SourceManager.cc:360 ../gtk/src/SourceManager.cc:366
 #: ../qt/src/SourceManager.cc:378
@@ -1929,11 +1930,11 @@ msgstr "Captura de ecrã %1"
 
 #: ../gtk/src/SourceManager.cc:386 ../qt/src/SourceManager.cc:392
 msgid "Cancelled or denied"
-msgstr ""
+msgstr "Cancelado ou negado"
 
 #: ../gtk/src/SourceManager.cc:394 ../qt/src/SourceManager.cc:398
 msgid "Invalid screenshot URI"
-msgstr ""
+msgstr "URI de imagem inválida"
 
 #: ../gtk/src/SourceManager.cc:407 ../qt/src/SourceManager.cc:409
 msgid "Saving image..."
@@ -2293,10 +2294,10 @@ msgid ""
 "compression for storing images, but supports complex scripts.</li></ul></"
 "body></html>"
 msgstr ""
-"<html><head/><body><ul> <li> PoDoFo: oferece mais opções de compressão de "
-"imagem, mas não lida com scripts complexos. </li> <li> QPrinter: suporta "
-"apenas a compressão JPEG para armazenar imagens, mas suporta scripts "
-"complexos. </li> </ul> </body> </html>"
+"<html><head/><body><ul> <li>PoDoFo: oferece mais opções de compressão de "
+"imagem, mas não lida com scripts complexos.</li> <li>QPrinter: apoia apenas "
+"a compressão JPEG para armazenar imagens, mas apoia scripts complexos.</li> "
+"</ul> </body></html>"
 
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:480
 #, fuzzy
@@ -2330,23 +2331,23 @@ msgstr "Adicionar ao dicionário"
 
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:486
 msgid "Toggle bold"
-msgstr ""
+msgstr "Alternar em negrito"
 
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:487
 msgid "Toggle italic"
-msgstr ""
+msgstr "Alternar itálico"
 
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:488
 msgid "Divide word at cursor position"
-msgstr ""
+msgstr "Separar palavra na posição do cursor"
 
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:489
 msgid "Merge with previous word"
-msgstr ""
+msgstr "Mesclar com a palavra anterior"
 
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:490
 msgid "Merge with next word"
-msgstr ""
+msgstr "Mesclar com a próxima palavra"
 
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:491
 #, fuzzy
@@ -2355,35 +2356,35 @@ msgstr "Apagar"
 
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:492
 msgid "Move the bounding box up"
-msgstr ""
+msgstr "Deslocar a caixa delimitadora para cima"
 
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:493
 msgid "Move the bounding box down"
-msgstr ""
+msgstr "Deslocar a caixa delimitadora para baixo"
 
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:494
 msgid "Move the bounding box left"
-msgstr ""
+msgstr "Deslocar a caixa delimitadora para a esquerda"
 
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:495
 msgid "Move the bounding box right"
-msgstr ""
+msgstr "Deslocar a caixa delimitadora para a direita"
 
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:496
 msgid "Shrink the bounding box vertically"
-msgstr ""
+msgstr "Encolher a caixa delimitadora verticalmente"
 
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:497
 msgid "Enlarge the bounding box vertically"
-msgstr ""
+msgstr "Ampliar a caixa delimitadora verticalmente"
 
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:498
 msgid "Shrink the bounding box horizontally"
-msgstr ""
+msgstr "Encolher a caixa delimitadora horizontalmente"
 
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:499
 msgid "Enlarge the bounding box horizontally"
-msgstr ""
+msgstr "Ampliar a caixa delimitadora horizontalmente"
 
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:500
 #, fuzzy
